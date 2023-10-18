@@ -25,6 +25,13 @@
         <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
 
+        <!-- Sonarcloud-->
+
+
+            <sonar.organization>anderson92zolis</sonar.organization>
+            <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+
     </properties>
 
 
