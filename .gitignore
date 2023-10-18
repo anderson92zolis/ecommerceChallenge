@@ -55,7 +55,7 @@ data
 *.classpath
 *.project
 *.tern-project
-.gitignore
+#.gitignore
 .recommenders
 .vagrant
 .idea
