@@ -46,7 +46,7 @@ Ensures payment security and handles payment failures gracefully.
 
 -  Provide a high-level architectural diagram that illustrates how these microservices interact with each other. Additionally, describe the communication patterns between microservices and how they handle data storage and retrieval.
 
-**Evolving ideas:**
+**Evolving ideas**:
 
 -  Parent Project 
 -  SonarCloud
