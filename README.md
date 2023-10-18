@@ -1,4 +1,4 @@
-# microservicesChallenge
+# e-commerce platform
 
 **Microservices Architecture Design Challenge**
 
