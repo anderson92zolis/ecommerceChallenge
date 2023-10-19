@@ -10,7 +10,7 @@
     Challenge Description:
     Design the microservices architecture for the e-commerce platform based on the following requirements and constraints:
 
-**Product Service (Microservice 1):**
+**Products Service (Stock) (Microservice 1):**
 
 Manages product listings, including details like name, description, price, and availability.
 Allows for product creation, retrieval, update, and deletion.
