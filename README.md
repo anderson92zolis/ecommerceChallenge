@@ -28,7 +28,11 @@ Manages customer orders, including order creation, status tracking, and order hi
 Links orders to users, so each user can have multiple orders.
 Supports order placement, cancellation, and retrieval.
 
-**Payment Service (Microservice 4):**
+**Inventory Service (Microservice 4):**
+
+A microservice for inventory management, often referred to as an "Inventory Service," is a component of a microservices architecture that is responsible for handling all aspects related to tracking, managing, and controlling an organization's inventory. Here's a high-level definition of a typical Inventory Microservice:
+
+**Payment Service (Microservice 5):**
 
 Handles payment processing for orders.
 Integrates with external payment gateways for payment authorization and capture.
