@@ -10,7 +10,7 @@ spring:
     username: ecommerce
   jpa:
     hibernate:
-      ddl-auto: create-drop # update
+      ddl-auto: update # create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
