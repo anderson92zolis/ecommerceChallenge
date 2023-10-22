@@ -11,6 +11,4 @@ public class ProductResponse {
     private String description;
     private Category category;
     private float price;
-    private String manufacturer;
-    private String supplier;
 }

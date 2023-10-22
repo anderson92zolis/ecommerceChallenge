@@ -5,14 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ecommerce.products.entity.Category;
 
-
-import java.time.LocalDate;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 
-public class ProductsDto {
+public class ProductsRequest {
     private String name;
     private String description;
     private Category category;

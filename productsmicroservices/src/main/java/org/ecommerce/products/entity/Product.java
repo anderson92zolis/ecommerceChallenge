@@ -39,6 +39,7 @@ public class Product {
     @CreationTimestamp
     private LocalDateTime localDatetime;
 
+    /*
     @Override
     public String toString() {
         return "Product{" +
@@ -52,4 +53,5 @@ public class Product {
                 ", localDatetime=" + localDatetime +
                 '}';
     }
+    */
 }
