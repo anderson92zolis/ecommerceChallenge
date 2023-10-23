@@ -17,6 +17,7 @@
 
         <module>productsmicroservices</module>
         <module>ordersMicroservice</module>
+
     </modules>
 
 
@@ -32,7 +33,7 @@
 
         <sonar.organization>anderson92zolis</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>anderson92zolis_ecommerceChallenge</sonar.projectKey>
+        <!--    <sonar.projectKey>anderson92zolis_ecommerceChallenge</sonar.projectKey>  -->
 
 
 
