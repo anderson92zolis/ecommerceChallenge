@@ -50,20 +50,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ordersMicroservice</artifactId>
-            <version>${project.version}</version>
-
-        </dependency>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>productsmicroservices</artifactId>
-            <version>${project.version}</version>
-
-        </dependency>
-
     </dependencies>
 
     <dependencyManagement>
