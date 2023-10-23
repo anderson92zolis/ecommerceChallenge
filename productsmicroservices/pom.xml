@@ -9,9 +9,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.ecommerce</groupId>
+
     <artifactId>productsmicroservices</artifactId>
-    <name>productsmicroservices</name>
+    <name>products microservices</name>
     <description>Allows for product creation, retrieval, update, and deletion.</description>
 
     <properties>
@@ -48,6 +48,7 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
