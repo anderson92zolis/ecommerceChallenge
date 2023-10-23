@@ -28,6 +28,22 @@ services:
       - postgres
     restart: unless-stopped
 
+    ### MySQL database for Orders
+
+  db-orders:
+    container_name: db-orders
+    image: mysql:8.0.33
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ms_orders
+      MYSQL_USER: ecommerce
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+
 networks:
   postgres:
     driver: bridge
