@@ -1,6 +1,5 @@
 # e-commerce platform
 
-**Microservices Architecture Design Challenge**
 
 **Challenge: Microservices Architecture Design Challenge**
 
