@@ -15,6 +15,7 @@
     <modules>
         <module>productsmicroservices</module>
         <module>ordersMicroservice</module>
+        <module>test</module>
     </modules>
 
 
