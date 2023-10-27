@@ -17,6 +17,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
+    @Column(name= "SKU")
+    private int sku;
+
     @Column(name="ProductName", length=100, unique=true,  nullable= false)
     private String name;
 
@@ -33,11 +36,10 @@ public class Product {
 
     private String supplier;
 
-
     @CreationTimestamp
     private LocalDateTime localDatetime;
 
-    /*
+
     @Override
     public String toString() {
         return "Product{" +
@@ -51,5 +53,5 @@ public class Product {
                 ", localDatetime=" + localDatetime +
                 '}';
     }
-    */
+
 }
