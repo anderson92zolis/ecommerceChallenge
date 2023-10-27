@@ -10,6 +10,7 @@ import org.ecommerce.products.entity.Category;
 @Getter
 
 public class ProductsRequest {
+    private int sku;
     private String name;
     private String description;
     private Category category;
