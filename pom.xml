@@ -28,23 +28,14 @@
         <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
 
 
-        <sonar.coverage.jacoco.xmlReportPaths>
-            ${project.basedir}/report-aggregate/target/site/
-            jacoco-aggregate/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
-
         <!-- Sonarcloud-->
 
 
         <sonar.organization>anderson92zolis</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <!--
-       <sonar.projectKey>anderson92zolis_ecommerceChallenge</sonar.projectKey>
-       -->
-
 
        <sonar.coverage.jacoco.xmlReportPaths>
-               ../app-it/target/site/jacoco-aggregate/jacoco.xml
+               ../app-ecommerceChallenge/target/site/jacoco-aggregate/jacoco.xml
        </sonar.coverage.jacoco.xmlReportPaths>
 
 
