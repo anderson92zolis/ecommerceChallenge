@@ -1,6 +1,6 @@
 # e-commerce platform
 
-**Microservices Architecture Design Challenge**
+![Project microservice architecture"](https://github.com/anderson92zolis/ecommerceChallenge/blob/develop/ArchitectureMicro2.png)
 
 **Challenge: Microservices Architecture Design Challenge**
 

@@ -16,6 +16,7 @@
       <module name="ecommerce" target="17" />
       <module name="ecommercea" target="17" />
       <module name="products" target="17" />
+      <module name="test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
