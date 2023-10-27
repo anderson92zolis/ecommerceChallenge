@@ -1,5 +1,6 @@
 package org.ordersMicroservice.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,11 +18,15 @@ import java.util.List;
 @Builder
 public class OrderDto {
 
+    @Schema(description = "This is the id of the order")
     private int id;
+    @Schema(description = "This is the date when the order was created")
     @Temporal(TemporalType.DATE)
     private Calendar orderDate;
     private List<OrderDetailDocument> orderDetail;
+    @Schema(description = "The subtotal is calculated by the program")
     private double subtotal;
+    @Schema(description = "This is the 21% tax and is calculated by the program")
     private double tax;
 
 }

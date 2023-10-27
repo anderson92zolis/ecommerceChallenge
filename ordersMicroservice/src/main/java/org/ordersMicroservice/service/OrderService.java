@@ -1,8 +1,9 @@
 package org.ordersMicroservice.service;
 
+import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.entity.OrderDocument;
 
 public interface OrderService {
 
-    OrderDocument saveOrder (OrderDocument orderDocument);
+    OrderDto saveOrder (OrderDocument orderDocument);
 }

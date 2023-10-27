@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.ordersMicroservice.service.OrderService;
 import org.slf4j.Logger;
@@ -31,10 +32,10 @@ public class OrderController {
         content = {@Content(mediaType = "application/json",
         schema = @Schema(implementation = OrderDocument.class))})
     @PostMapping("/add")
-    public ResponseEntity<OrderDocument> saveOrder (@RequestBody OrderDocument orderDocument){
+    public ResponseEntity<OrderDto> saveOrder (@RequestBody OrderDocument orderDocument){
 
-        OrderDocument documentSaved = orderService.saveOrder(orderDocument);
-        return ResponseEntity.ok(orderDocument);
+        OrderDto documentSaved = orderService.saveOrder(orderDocument);
+        return ResponseEntity.ok(documentSaved);
 
     }
 

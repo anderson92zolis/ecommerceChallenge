@@ -21,6 +21,7 @@ public class OrderDocument {
     private int id;
     @Temporal(TemporalType.DATE)
     private Calendar orderDate;
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<OrderDetailDocument> orderDetail;
     private double subtotal;
     private double tax;
