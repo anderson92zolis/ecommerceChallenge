@@ -34,7 +34,6 @@
         <sonar.organization>anderson92zolis</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
-
    </properties>
 
 
