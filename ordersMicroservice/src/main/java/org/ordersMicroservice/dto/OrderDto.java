@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.ordersMicroservice.entity.OrderDetailDocument;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Calendar;
 import java.util.List;
 
@@ -21,7 +19,6 @@ public class OrderDto {
     @Schema(description = "This is the id of the order")
     private int id;
     @Schema(description = "This is the date when the order was created")
-    @Temporal(TemporalType.DATE)
     private Calendar orderDate;
     private List<OrderDetailDocument> orderDetail;
     @Schema(description = "The subtotal is calculated by the program")

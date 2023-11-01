@@ -16,7 +16,7 @@ public class ConverterEntitiesAndDtos {
 
     public OrderDto entityToDto (OrderDocument orderDocument){
 
-        OrderDto orderDto = modelMapper().map(OrderDocument.class, OrderDto.class);
+        OrderDto orderDto = modelMapper().map(orderDocument, OrderDto.class);
         return orderDto;
     }
 

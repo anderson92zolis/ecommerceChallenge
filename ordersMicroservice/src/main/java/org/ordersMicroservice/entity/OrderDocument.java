@@ -1,11 +1,11 @@
 package org.ordersMicroservice.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor @AllArgsConstructor @Builder
 @Entity
-@Table (name = "order")
+@Table(name = "order_document")
 public class OrderDocument {
 
     @Id
