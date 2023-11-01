@@ -1,5 +1,5 @@
 server:
-  port: 8080   # HTTP (Tomcat) port
+  port: 8081   # HTTP (Tomcat) port
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -11,10 +11,3 @@ spring:
     generate-ddl: true
     show-sql: true
 
-springdoc:
-  swagger-ui:
-    path: "/swagger-ui-custom.html"
-    operationsSorted: method
-  api-docs:
-    enable: true
-    path: "/api-docs"

@@ -4,17 +4,19 @@ import org.modelmapper.ModelMapper;
 import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
-public class Converter {
+@Component
+public class ConverterEntitiesAndDtos {
 
     @Bean
-    public ModelMapper modelMapper1() {
+    public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
     public OrderDto entityToDto (OrderDocument orderDocument){
 
-        OrderDto orderDto = modelMapper1().map(OrderDocument.class, OrderDto.class);
+        OrderDto orderDto = modelMapper().map(OrderDocument.class, OrderDto.class);
         return orderDto;
     }
 
