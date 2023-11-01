@@ -4,9 +4,17 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ms_orders
-    username: ecommerce # name similar to the docker compose orders Db
-    password: password
+    username: root # ecommerce # name similar to the docker compose orders Db
+    password: 12345678 # password
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
+
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui-custom.html"
+    operationsSorted: method
+  api-docs:
+    enable: true
+    path: "/api-docs"
