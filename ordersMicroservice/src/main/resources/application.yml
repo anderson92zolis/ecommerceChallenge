@@ -7,8 +7,8 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ms_orders
-    username: root # ecommerce # name similar to the docker compose orders Db
-    password: 12345678 # password
+    username: root # name similar to the docker compose orders Db
+    password: 12345678 # name similar to the docker compose orders Db
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: true

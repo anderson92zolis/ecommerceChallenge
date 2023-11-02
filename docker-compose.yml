@@ -36,9 +36,9 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ms_orders
-      MYSQL_USER: ecommerce
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_USER: root
+      MYSQL_PASSWORD: 12345678
+      MYSQL_ROOT_PASSWORD: 12345678
     ports:
       - 3306:3306
     expose:

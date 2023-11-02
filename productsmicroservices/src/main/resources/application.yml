@@ -1,5 +1,5 @@
 server:
-  port: 8081   # HTTP (Tomcat) port
+  port: 8080   # HTTP (Tomcat) port
 # Spring properties
 spring:
   application:

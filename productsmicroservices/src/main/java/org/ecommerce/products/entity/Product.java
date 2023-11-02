@@ -3,8 +3,8 @@ package org.ecommerce.products.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="product")

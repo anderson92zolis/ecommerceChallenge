@@ -61,11 +61,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}:{{port}}/api/v1/products/test",
+							"raw": "http://localhost:8081/api/v1/products/test",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
-							"port": "{{port}}",
+							"port": "8081",
 							"path": [
 								"api",
 								"v1",
@@ -91,17 +92,94 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/v1/products/addProduct",
+							"raw": "http://localhost:8080/api/v1/products/addProduct",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
 								"products",
 								"addProduct"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order Micro",
+			"item": [
+				{
+					"name": "get all Orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/orders/getAll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a new order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"orderDate\": \"2023-11-01\", // Replace with the desired date in yyyy-MM-dd format\r\n  \"orderDetail\": [\r\n    {\r\n      \"productId\": 101, // Replace with the product ID\r\n      \"productPrice\": 19.99, // Replace with the product price\r\n      \"productQuantity\": 2, // Replace with the product quantity\r\n      \"itemSubtotal\": 39.98 // Replace with the item subtotal\r\n    }\r\n  ],\r\n  \"subtotal\": 114.95, // Replace with the order subtotal\r\n  \"tax\": 9.16 // Replace with the order tax\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/orders/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"add"
 							],
 							"query": [
 								{
