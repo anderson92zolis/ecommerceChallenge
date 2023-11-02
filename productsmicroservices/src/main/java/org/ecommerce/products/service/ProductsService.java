@@ -20,6 +20,7 @@ public class ProductsService {
     public void saveProducts(ProductsRequest productsRequest){
 
         var product = Product.builder()
+                .sku(productsRequest.getSku())
                 .name(productsRequest.getName())
                 .description(productsRequest.getDescription())
                 .category(productsRequest.getCategory())
