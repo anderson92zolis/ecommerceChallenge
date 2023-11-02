@@ -22,29 +22,35 @@ public class ProductsControllerThymeleaf {
 
     private final ProductsService productsService;
 
-    @GetMapping("/add-product")
-    public String showAddProductForm(Model model) {
-        // Your logic here
-        return "add-product";
+
+    @GetMapping("/")
+    public String viewHomePage(Model model) {
+        model.addAttribute("allProductList", productsService.getAllProducts());
+        return "index";
+    }
+    @GetMapping("/addnewProduct")
+    public String addNewProduct(Model model) {
+        ProductsRequest productsRequest = new ProductsRequest();
+        model.addAttribute("productsRequest", productsRequest);
+        return "addProduct";
+    }
+
+    @PostMapping("/saveProduct")
+    public String saveProduct(@ModelAttribute("productsRequest") ProductsRequest productsRequest) {
+        productsService.saveProducts(productsRequest);
+        return "redirect:/";
     }
 
     @GetMapping(value = "/getAllProducts")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+    public String getAllProducts(Model model) {
         List<ProductResponse> products = productsService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        model.addAttribute("products", products);
+        return "index";
     }
 
 
-    @PostMapping(value = "/addProduct")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String addNewProducts(@Valid ProductsRequest productsRequest, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-Product";
-        }
-        productsService.saveProducts(productsRequest);
-        return "redirect:/index";
-    }
+
 
 
 
