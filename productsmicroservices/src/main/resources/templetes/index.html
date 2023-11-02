@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Página Principal</title>
+    <meta charset="UTF-8">
+    <!-- Agregar enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Bienvenido a la Tienda de Productos</h1>
+    <div class="row mt-5">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Agregar un Producto</h5>
+                    <a th:href="@{/api/v1/products/addProduct}" class="btn btn-primary">Ir a Agregar Producto</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ver Productos</h5>
+                    <a th:href="@{/api/v1/products/getAllProducts}" class="btn btn-primary">Ir a Ver Productos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
