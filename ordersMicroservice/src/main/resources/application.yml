@@ -1,5 +1,5 @@
 server:
-  port: 8080   # HTTP (Tomcat) port
+  port: 8081   # HTTP (Tomcat) port
 # Spring properties
 spring:
   application:
@@ -7,9 +7,12 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ms_orders
-    username: ecommerce # name similar to the docker compose orders Db
-    password: password
+    username: root # ecommerce # name similar to the docker compose orders Db
+    password: 12345678 # password
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+
