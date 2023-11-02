@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Add Product</title>
+    <meta charset="UTF-8">
+    <!-- Include Bootstrap CSS (you can use a local file or a CDN) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+
+    <h1>Add Product</h1>
+
+    <form  action="#" th:action="@{/Thymeleaf/addProduct}" th:object="${productsRequest}" method="post">
+        <!-- SKU input -->
+        <div class="form-group">
+            <label for="sku">SKU</label>
+            <input type="text" id="sku" name="sku" class="form-control" required/>
+        </div>
+        <!-- Name input -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" class="form-control" required/>
+        </div>
+        <!-- Description input -->
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" class="form-control" required/>
+        </div>
+        <!-- Other input fields (Category, Price, Manufacturer, Supplier) go here -->
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+</div>
+</body>
+</html>
