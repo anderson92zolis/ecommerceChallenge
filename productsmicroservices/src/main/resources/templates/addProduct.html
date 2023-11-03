@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Add Product</title>
+    <title>ADD PRODUCT</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <h1>Add Product</h1>
-    <form action="#" th:action="@{/saveProduct}"  th:object="${productsRequest}" method="post">
+    <form action="#" th:action="@{/saveProduct}"  th:object="${productsRequest}" method="POST">
         <div class="form-group">
             <label for="sku">SKU</label>
             <input type="number" th:field="*{sku}" id="sku" name="sku" class="form-control" required/>
@@ -22,11 +22,11 @@
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <input type="text" th:field="*{description}"  id="description" name="description" class="form-control" />
+            <input type="text" th:field="*{description}"  id="description" name="description" class="form-control" required/>
         </div>
         <div class="form-group">
             <label for="category">Category</label>
-            <input type="text" th:field="*{category}"  id="category" name="category" class="form-control" />
+            <input type="text" th:field="*{category}"  id="category" name="category" class="form-control" required/>
         </div>
         <div class="form-group">
             <label for="price">Price</label>
@@ -34,11 +34,11 @@
         </div>
         <div class="form-group">
             <label for="manufacturer">Manufacturer</label>
-            <input type="text" th:field="*{manufacturer}"  id="manufacturer" name="manufacturer" class="form-control" />
+            <input type="text" th:field="*{manufacturer}"  id="manufacturer" name="manufacturer" class="form-control" required/>
         </div>
         <div class="form-group">
             <label for="supplier">Supplier</label>
-            <input type="text" th:field="*{supplier}" id="supplier" name="supplier" class="form-control" />
+            <input type="text" th:field="*{supplier}" id="supplier" name="supplier" class="form-control" required/>
         </div>
         <button type="submit" class="btn btn-primary">Save Product</button>
         <hr>

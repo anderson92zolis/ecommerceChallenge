@@ -8,6 +8,7 @@ import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.service.ProductsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,13 +29,16 @@ public class ProductsControllerThymeleaf {
     public String addNewProduct(Model model) {
         ProductsRequest productsRequest = new ProductsRequest();
         model.addAttribute("productsRequest", productsRequest);
-        return "addProduct";
+        return "addProduct"; // here the page where is going to go
     }
 
     @PostMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute("productsRequest") ProductsRequest productsRequest) {
+    public String saveProduct(@Valid @ModelAttribute("productsRequest") ProductsRequest productsRequest, BindingResult result) {
+        if (result.hasErrors()) {
+            return "addProduct"; // redirection to the addProduct.html again
+        }
         productsService.saveProducts(productsRequest);
-        return "addProduct";
+        return "redirect:/"; // redirection to the index.html again
     }
 
     @GetMapping("/getAllProducts")
