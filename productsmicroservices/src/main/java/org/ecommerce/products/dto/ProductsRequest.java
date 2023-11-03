@@ -1,5 +1,7 @@
 package org.ecommerce.products.dto;
 
+
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +14,7 @@ import org.ecommerce.products.entity.Category;
 @Builder
 public class ProductsRequest {
     private int sku;
+    @NotBlank(message = "Name is mandatory")
     private String name;
     private String description;
     private Category category;

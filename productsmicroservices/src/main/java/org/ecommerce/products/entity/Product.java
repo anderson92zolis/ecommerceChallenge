@@ -1,5 +1,6 @@
 package org.ecommerce.products.entity;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,7 +21,8 @@ public class Product {
     @Column(name= "SKU")
     private int sku;
 
-    @Column(name="ProductName", length=100, unique=true,  nullable= false)
+    //@Column(name="ProductName", length=100, unique=true,  nullable= false)
+    //@NotBlank(message = "Name is mandatory")
     private String name;
 
     @Column(name = "Description")

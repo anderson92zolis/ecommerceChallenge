@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="product : ${products}">
+        <tr th:each="product : ${productsResponse}">
             <td th:text="${product.name}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.category}"></td>
@@ -29,6 +29,9 @@
         </tr>
         </tbody>
     </table>
+
+    <hr>
+    <a th:href="@{/}" class="btn btn-primary">Back Main Page</a>
 </div>
 </body>
 </html>
