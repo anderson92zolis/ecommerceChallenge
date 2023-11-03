@@ -1,5 +1,6 @@
 package org.ecommerce.products.entity;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
