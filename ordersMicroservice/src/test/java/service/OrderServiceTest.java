@@ -12,6 +12,7 @@ import org.ordersMicroservice.helper.ConverterEntitiesAndDtos;
 import org.ordersMicroservice.repository.OrderRepository;
 import org.ordersMicroservice.service.OrderServiceImpl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.mockito.Mockito.*;
@@ -54,6 +55,7 @@ class OrderServiceTest {
         when(orderRepositoryMock.save(orderDocument)).thenReturn(orderDocument);
         int idExpected = 1;
         assertEquals(idExpected, orderDocument.getId());
+        assertThat(orderDocument).isNotNull();
     }
 
     @Test
