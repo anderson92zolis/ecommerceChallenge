@@ -83,8 +83,6 @@ class OrderControllerTest {
                 .andExpect(status().isCreated()).andDo(print())
                 .andExpect(jsonPath("$.id").value(orderDocument.getId()))
                 .andExpect(jsonPath("$.id").value(notNullValue()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(notNullValue())))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(equalTo(orderDocument.getId()))))
                 .andReturn();
     }
 
