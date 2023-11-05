@@ -27,14 +27,14 @@ public class OrderController {
     private OrderService orderService;
 
     @Operation(summary = "Adds an order", description = "Creates a new order and its detail")
-    @ApiResponse(responseCode = "200", description = "Order created correctly",
+    @ApiResponse(responseCode = "201", description = "Order created correctly",
         content = {@Content(mediaType = "application/json",
         schema = @Schema(implementation = OrderDocument.class))})
     @PostMapping("/add")
     public ResponseEntity<OrderDto> saveOrder (@RequestBody OrderDocument orderDocument){
 
         OrderDto documentSaved = orderService.saveOrder(orderDocument);
-        return ResponseEntity.ok(documentSaved);
+        return ResponseEntity.status(201).body(documentSaved);
 
     }
 
