@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping(value = "api/v1/products")
-
 public class ProductsController {
 
     private final ProductsService productsService;
@@ -36,7 +35,6 @@ public class ProductsController {
         List<ProductResponse> products = productsService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-
 
     @PostMapping(value = "/addProduct")
     @ResponseStatus(HttpStatus.CREATED)

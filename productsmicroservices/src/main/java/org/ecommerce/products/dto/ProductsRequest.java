@@ -1,15 +1,15 @@
 package org.ecommerce.products.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 import org.ecommerce.products.entity.Category;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
+@Setter // adding for thymeleaf
 public class ProductsRequest {
     private int sku;
     private String name;
