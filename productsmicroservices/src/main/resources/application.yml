@@ -17,10 +17,19 @@ spring:
         format_sql: true
     show-sql: true
 
-  # for thymeleaf
+# for thymeleaf
   open-in-view: true
 
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     cache: false # Set to true for production, false for development
+
+# for eureka server
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    registerWithEureka: true
+    fetchRegistry: true
+
