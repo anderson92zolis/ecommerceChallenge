@@ -19,7 +19,7 @@ public class Product {
     private int productId;
 
     @Column(name= "SKU")
-    private int sku;
+    private String sku;
 
     @Column(name="ProductName", length=100, unique=true,  nullable= false)
     private String name;

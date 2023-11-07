@@ -11,7 +11,7 @@ import org.ecommerce.products.entity.Category;
 @Builder
 @Setter // adding for thymeleaf
 public class ProductsRequest {
-    private int sku;
+    private String sku;
     private String name;
     private String description;
     private Category category;

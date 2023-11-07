@@ -44,7 +44,7 @@ Ensures payment security and handles payment failures gracefully.
 -  Each microservice should be independently deployable and scalable.
 -  Ensure data consistency and consider eventual consistency where needed.
 -  Implement proper error handling and validation in each microservice.
--  You can choose any technology stack (e.g., Java, Spring Boot, Node.js, Python) for implementing microservices.
+-  You'll choose Java & Spring Boot for implementing microservices.
 
 **Deliverables**:
 

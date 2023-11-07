@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: eureka-server
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+    appname: eureka-server
+  server:
+    enable-self-preservation: false
+
+
+
