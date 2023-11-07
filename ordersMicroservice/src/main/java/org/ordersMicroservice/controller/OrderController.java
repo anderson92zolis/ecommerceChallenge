@@ -26,16 +26,21 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @Operation(summary = "Adds an order", description = "Creates a new order and its detail")
-    @ApiResponse(responseCode = "201", description = "Order created correctly",
-        content = {@Content(mediaType = "application/json",
-        schema = @Schema(implementation = OrderDocument.class))})
+    @Operation(
+            operationId = "OperationId",
+            summary = "Adds an order",
+            description = "Creates a new order and its detail",
+            responses = {
+                @ApiResponse(responseCode = "201", description = "Order created correctly",
+                                content = {@Content(mediaType = "application/json",
+                                schema = @Schema(implementation = OrderDocument.class))}),
+                @ApiResponse(responseCode = "400", description = "The item list is empty.", content = {@Content(schema = @Schema())})
+    })
     @PostMapping("/add")
     public ResponseEntity<OrderDto> saveOrder (@RequestBody OrderDocument orderDocument){
 
         OrderDto documentSaved = orderService.saveOrder(orderDocument);
         return ResponseEntity.status(201).body(documentSaved);
-
     }
 
     @Operation(summary = "Get every order", description = "Creates and displays a list containing every order in the database")
