@@ -30,8 +30,8 @@
         <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>3.0.6</spring.boot.dependencies.version>
 
-        <!-- Eureka server-->
-        <spring.cloud-version>2022.0.4</spring.cloud-version>
+        <!-- Spring cloud-->
+        <spring-cloud.version>2022.0.1</spring-cloud.version>
 
         <!-- Sonarcloud-->
 
@@ -61,7 +61,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud-version}</version>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

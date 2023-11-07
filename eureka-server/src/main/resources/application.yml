@@ -5,9 +5,11 @@ server:
   port: 8761
 
 eureka:
-    client:
-      registerWithEureka: false
-      fetchRegistry: false
+  instance:
+    hostname: localhost
+    appname: eureka-server
+  server:
+    enable-self-preservation: false
 
 
 
