@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -37,18 +35,15 @@ public class OrderServiceImpl implements OrderService{
         toCalculate = orderToSave.getOrderDetail();
 
         List<OrderDetailDocument> orderDetailwithSubtotal = toCalculate.stream()
-                .map(x -> this.calculateItemSubtotal(x))
-                .collect(Collectors.toList());
+                .map(this::calculateItemSubtotal)
+                .toList();
 
         double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
-
-
 
         orderToSave.setOrderDate(Calendar.getInstance());
         orderToSave.setOrderDetail(orderDetailwithSubtotal);
         orderToSave.setSubtotal(subtotal);
         orderToSave.setTax(subtotal * 21 / 100);
-//        OrderDocument orderSaved = orderRepository.save(orderToSave);
 
         return converter.entityToDto(orderRepository.save(orderToSave));
     }
@@ -60,8 +55,6 @@ public class OrderServiceImpl implements OrderService{
         orderDetailDocument.setItemSubtotal(price * quantity);
         return orderDetailDocument;
     }
-
-
 
     @Override
     public List<OrderDto> findAll() {
