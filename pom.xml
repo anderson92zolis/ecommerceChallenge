@@ -20,6 +20,7 @@
         <module>productsmicroservices</module>
         <module>ordersMicroservice</module>
         <module>eureka-server</module>
+        <module>stockMicroservice</module>
     </modules>
 
 

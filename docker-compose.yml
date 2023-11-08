@@ -1,8 +1,13 @@
 services:
-  postgres:
-    container_name: postgres
+
+  #POSTGRESS DB
+
+  #PRODUCTS DB
+  postgresproductsdb:
+    container_name: postgresproductsdb
     image: postgres
     environment:
+      POSTGRES_DB: productsdb
       POSTGRES_USER: ecommerce
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
@@ -13,6 +18,25 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
+  #STOCK DB
+
+  postgresstockdb:
+    container_name: postgresstockdb
+    image: postgres
+    environment:
+      POSTGRES_DB: stocksdb
+      POSTGRES_USER: ecommerce
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgresstock
+    volumes:
+      - postgres:/data/postgresstock
+    ports:
+      - "5433:5433"
+    networks:
+      - postgres
+    restart: unless-stopped
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4

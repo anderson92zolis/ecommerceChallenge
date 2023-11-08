@@ -1,12 +1,12 @@
 server:
-  port: 8080   # HTTP (Tomcat) port
+  port: 8082   # HTTP (Tomcat) port
 # Spring properties
 spring:
   application:
-    name: products
+    name: stocks
   datasource:
     password: password
-    url: jdbc:postgresql://localhost:5432/productsdb
+    url: jdbc:postgresql://localhost:5433/stocksdb
     username: ecommerce
   jpa:
     hibernate:
@@ -17,18 +17,18 @@ spring:
         format_sql: true
     show-sql: true
 
-# for thymeleaf
-  open-in-view: true
+  # for thymeleaf
 
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    cache: false # Set to true for production, false for development
+  #open-in-view: true
+
+  #thymeleaf:
+    #prefix: classpath:/templates/
+    #suffix: .html
+    #cache: false # Set to true for production, false for development
 
 # for eureka server
+
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-
-

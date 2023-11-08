@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ordersMicroservice" />
         <module name="productsmicroservices" />
+        <module name="stockMicroservice" />
+        <module name="ordersMicroservice" />
         <module name="eureka-server" />
       </profile>
     </annotationProcessing>
@@ -25,6 +26,7 @@
       <module name="eureka-server" options="-parameters" />
       <module name="ordersMicroservice" options="-parameters" />
       <module name="productsmicroservices" options="-parameters" />
+      <module name="stockMicroservice" options="-parameters" />
     </option>
   </component>
 </project>
