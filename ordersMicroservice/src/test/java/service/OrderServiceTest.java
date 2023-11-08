@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.entity.OrderDetailDocument;
 import org.ordersMicroservice.entity.OrderDocument;
+import org.ordersMicroservice.exception.EmptyOrderDetailException;
 import org.ordersMicroservice.helper.ConverterEntitiesAndDtos;
 import org.ordersMicroservice.repository.OrderRepository;
 import org.ordersMicroservice.service.OrderServiceImpl;
@@ -15,6 +16,7 @@ import org.ordersMicroservice.service.OrderServiceImpl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -59,6 +61,21 @@ class OrderServiceTest {
     }
 
     @Test
+    void throwsEmptyOrderDetailException(){
+
+        OrderDocument orderDocument = OrderDocument.builder()
+                .id(1)
+                .orderDate(Calendar.getInstance())
+                .orderDetail(orderDetailDocumentList)
+                .subtotal(2)
+                .tax(0.4)
+                .build();
+
+        OrderServiceImpl orderService1 = new OrderServiceImpl();
+        assertThrows(EmptyOrderDetailException.class, () -> orderService1.saveOrder(orderDocument));
+    }
+
+    @Test
     void listAll_ThenCheckSize() {
 
         OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2, 2, 1, 2.0);
@@ -88,6 +105,5 @@ class OrderServiceTest {
         when(orderService.findAll()).thenReturn(orderDtos);
         int dtosCount = 2;
         assertEquals(dtosCount, orderDtos.size());
-
     }
 }

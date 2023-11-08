@@ -24,9 +24,11 @@ public class OrderDocument {
     @Temporal(TemporalType.DATE)
     @Schema(description = "This is the date when the order was created")
     private Calendar orderDate;
-    @OneToMany(cascade = CascadeType.PERSIST)
+
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @Schema(description = "This List contains the data provided by the OrderDetailDocument")
     private List<OrderDetailDocument> orderDetail;
+
     @Schema(description = "The subtotal is calculated by the program")
     private double subtotal;
     @Schema(description = "This is the 21% tax and is calculated by the program")
