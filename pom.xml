@@ -21,6 +21,9 @@
         <module>ordersMicroservice</module>
         <module>eureka-server</module>
         <module>stockMicroservice</module>
+        <module>gateway
+        </module>
+
     </modules>
 
 
@@ -75,7 +78,23 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
+<!--       <dependencyManagement> lo traigo del microservicio gateway pero ya estaba acá, seguramente Andy lo trajo de otro microservicio
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-dependencies</artifactId>
+                    <version>${spring-cloud.version}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+            </dependencies>
+        </dependencyManagement>-->
     </dependencyManagement>
+
+
+
+
+
 
     <build>
         <pluginManagement>

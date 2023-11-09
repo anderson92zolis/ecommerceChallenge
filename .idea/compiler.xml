@@ -11,6 +11,7 @@
         <module name="stockMicroservice" />
         <module name="ordersMicroservice" />
         <module name="eureka-server" />
+        <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +25,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="eureka-server" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="ordersMicroservice" options="-parameters" />
       <module name="productsmicroservices" options="-parameters" />
       <module name="stockMicroservice" options="-parameters" />
