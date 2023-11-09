@@ -3,7 +3,6 @@ package org.ecommerceChallenge.stockMicro.dto;
 
 import lombok.*;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

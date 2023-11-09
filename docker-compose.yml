@@ -1,13 +1,11 @@
 services:
 
-  #POSTGRESS DB
+  #POSTGRESS DB for Products & Stock microservices
 
-  #PRODUCTS DB
-  postgresproductsdb:
-    container_name: postgresproductsdb
+  postgres:
+    container_name: postgres
     image: postgres
     environment:
-      POSTGRES_DB: productsdb
       POSTGRES_USER: ecommerce
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
@@ -15,24 +13,6 @@ services:
       - postgres:/data/postgres
     ports:
       - "5432:5432"
-    networks:
-      - postgres
-    restart: unless-stopped
-
-  #STOCK DB
-
-  postgresstockdb:
-    container_name: postgresstockdb
-    image: postgres
-    environment:
-      POSTGRES_DB: stocksdb
-      POSTGRES_USER: ecommerce
-      POSTGRES_PASSWORD: password
-      PGDATA: /data/postgresstock
-    volumes:
-      - postgres:/data/postgresstock
-    ports:
-      - "5433:5433"
     networks:
       - postgres
     restart: unless-stopped

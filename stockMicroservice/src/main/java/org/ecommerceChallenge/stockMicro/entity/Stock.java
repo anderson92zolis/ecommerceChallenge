@@ -10,7 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="product")
+@Table(name="stock") //name of the table in our database sometime it is not necessary
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,12 +20,12 @@ public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int productId;
+    private int stockId;
 
     @Column(name= "SKU")
     private String sku;
 
-    @Column(name="ProductName", length=100, unique=true,  nullable= false)
+    @Column(name="productName", length=100, unique=true,  nullable= false)
     private String name;
 
     @Column(name = "Quantity")

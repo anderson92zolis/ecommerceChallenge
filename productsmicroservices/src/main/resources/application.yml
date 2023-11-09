@@ -6,7 +6,7 @@ spring:
     name: products
   datasource:
     password: password
-    url: jdbc:postgresql://localhost:5432/productsdb
+    url: jdbc:postgresql://localhost:5432/products
     username: ecommerce
   jpa:
     hibernate:

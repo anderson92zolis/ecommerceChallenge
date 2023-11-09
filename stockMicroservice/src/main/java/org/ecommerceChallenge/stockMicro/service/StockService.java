@@ -40,7 +40,7 @@ public class StockService {
 
     private StockResponse mapToProductResponse(Stock stock) {
         return StockResponse.builder()
-                .productId(stock.getProductId())
+                .stockId(stock.getStockId())
                 .sku(stock.getSku())
                 .name(stock.getName())
                 .quantity(stock.getQuantity())
