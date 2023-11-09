@@ -20,6 +20,7 @@
         <module>productsmicroservices</module>
         <module>ordersMicroservice</module>
         <module>eureka-server</module>
+        <module>stockMicroservice</module>
     </modules>
 
 
@@ -46,11 +47,14 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+       <!--
        <dependency>
            <groupId>org.testcontainers</groupId>
            <artifactId>testcontainers</artifactId>
            <version>1.18.3</version>
        </dependency>
+       -->
 
    </dependencies>
 

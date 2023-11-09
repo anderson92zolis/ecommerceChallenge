@@ -1,4 +1,7 @@
 services:
+
+  #POSTGRESS DB for Products & Stock microservices
+
   postgres:
     container_name: postgres
     image: postgres
@@ -13,6 +16,7 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
