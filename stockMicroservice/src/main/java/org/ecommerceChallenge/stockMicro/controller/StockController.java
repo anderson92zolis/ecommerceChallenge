@@ -26,19 +26,27 @@ public class StockController {
 
 
         return "Hello from Stock DB!!!";
+
+    }
+
+    @GetMapping(path = "/getSKU/{sku}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<StockResponse> getSKU( @PathVariable("sku") String sku) {
+        StockResponse stockResponse = stockService.getSKU(sku);
+        return new ResponseEntity<>(stockResponse, HttpStatus.OK);
     }
 
     @GetMapping(value = "/getAllStocks")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<StockResponse>> getAllProducts() {
+    public ResponseEntity<List<StockResponse>> getAllStock() {
         List<StockResponse> stockResponseList = stockService.getAllStock();
         return new ResponseEntity<>(stockResponseList, HttpStatus.OK);
     }
 
     @PostMapping(value = "/addStock")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewProducts(@RequestBody StockRequest stockRequest){
-        stockService.saveProducts(stockRequest);
+    public void addNewStock(@RequestBody StockRequest stockRequest){
+        stockService.saveStock(stockRequest);
     }
 
 

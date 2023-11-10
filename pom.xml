@@ -21,6 +21,7 @@
         <module>ordersMicroservice</module>
         <module>eureka-server</module>
         <module>stockMicroservice</module>
+        <module>clients</module>
     </modules>
 
 
@@ -55,6 +56,13 @@
            <version>1.18.3</version>
        </dependency>
        -->
+
+       <!--openfeign-->
+
+       <dependency>
+           <groupId>org.springframework.cloud</groupId>
+           <artifactId>spring-cloud-starter-openfeign</artifactId>
+       </dependency>
 
    </dependencies>
 

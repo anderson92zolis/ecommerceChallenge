@@ -6,7 +6,11 @@ import org.ecommerceChallenge.stockMicro.dto.StockRequest;
 import org.ecommerceChallenge.stockMicro.dto.StockResponse;
 import org.ecommerceChallenge.stockMicro.entity.Stock;
 import org.ecommerceChallenge.stockMicro.repository.StockRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -17,7 +21,7 @@ public class StockService {
 
     private final StockRepository stockRepository;
 
-    public void saveProducts(StockRequest stockRequest){
+    public void saveStock(StockRequest stockRequest){
 
         var stock = Stock.builder()
                 .sku(stockRequest.getSku())
@@ -31,11 +35,17 @@ public class StockService {
 
     }
     public List<StockResponse> getAllStock(){
-        var products = stockRepository.findAll();
+        var stocks = stockRepository.findAll();
 
         log.info("stock products to show: {}", stockRepository);
 
-        return products.stream().map(this::mapToProductResponse).toList();
+        return stocks.stream().map(this::mapToProductResponse).toList();
+    }
+
+    public StockResponse getSKU(String sku) {
+        Stock stock = stockRepository.findBySku(sku);
+        StockResponse StockResponse = mapToProductResponse(stock);
+        return StockResponse;
     }
 
     private StockResponse mapToProductResponse(Stock stock) {
@@ -47,8 +57,4 @@ public class StockService {
                 .localDatetime(stock.getLocalDatetime())
                 .build();
     }
-
-
-
-
 }
