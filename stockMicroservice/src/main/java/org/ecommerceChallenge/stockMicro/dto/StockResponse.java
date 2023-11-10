@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class StockResponse {
     private int stockId;
+    private int productId;
     private String sku;
     private String name;
     private int quantity;

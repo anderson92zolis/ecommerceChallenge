@@ -6,11 +6,7 @@ import org.ecommerceChallenge.stockMicro.dto.StockRequest;
 import org.ecommerceChallenge.stockMicro.dto.StockResponse;
 import org.ecommerceChallenge.stockMicro.entity.Stock;
 import org.ecommerceChallenge.stockMicro.repository.StockRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -24,6 +20,7 @@ public class StockService {
     public void saveStock(StockRequest stockRequest){
 
         var stock = Stock.builder()
+                .stockId(stockRequest.getProductId())
                 .sku(stockRequest.getSku())
                 .name(stockRequest.getName())
                 .quantity(stockRequest.getQuantity())
@@ -42,16 +39,22 @@ public class StockService {
         return stocks.stream().map(this::mapToProductResponse).toList();
     }
 
-    public StockResponse getSKU(String sku) {
-        Stock stock = stockRepository.findBySku(sku);
-        StockResponse StockResponse = mapToProductResponse(stock);
-        return StockResponse;
+    public String verifyProductIdByQuantity(int productId, int orderQuantity) {
+        Stock stock = stockRepository.findByProductId(productId);
+        String verifyQuantity= "accepted";
+
+        if (stock.getProductId()<=orderQuantity) {
+            verifyQuantity= "false";
+        }
+
+        return verifyQuantity;
     }
 
     private StockResponse mapToProductResponse(Stock stock) {
         return StockResponse.builder()
                 .stockId(stock.getStockId())
                 .sku(stock.getSku())
+                .productId(stock.getProductId())
                 .name(stock.getName())
                 .quantity(stock.getQuantity())
                 .localDatetime(stock.getLocalDatetime())

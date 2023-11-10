@@ -25,6 +25,9 @@ public class Stock {
     @Column(name= "SKU")
     private String sku;
 
+    @Column(name= "productId")
+    private int productId;
+
     @Column(name="productName", length=100, unique=true,  nullable= false)
     private String name;
 

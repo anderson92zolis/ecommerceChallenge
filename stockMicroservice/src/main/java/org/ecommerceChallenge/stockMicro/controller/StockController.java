@@ -29,13 +29,6 @@ public class StockController {
 
     }
 
-    @GetMapping(path = "/getSKU/{sku}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<StockResponse> getSKU( @PathVariable("sku") String sku) {
-        StockResponse stockResponse = stockService.getSKU(sku);
-        return new ResponseEntity<>(stockResponse, HttpStatus.OK);
-    }
-
     @GetMapping(value = "/getAllStocks")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<StockResponse>> getAllStock() {
@@ -47,6 +40,13 @@ public class StockController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addNewStock(@RequestBody StockRequest stockRequest){
         stockService.saveStock(stockRequest);
+    }
+
+    @GetMapping(path = "/verifyProductId/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    public String verifyProductIdByQuantity(@PathVariable("productId") int productId, int orderQuantity) {
+        String verifyQuantity = stockService.verifyProductIdByQuantity(productId,orderQuantity);
+        return verifyQuantity;
     }
 
 
