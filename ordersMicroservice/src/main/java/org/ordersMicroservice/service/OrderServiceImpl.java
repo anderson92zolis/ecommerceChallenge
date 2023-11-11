@@ -1,8 +1,9 @@
 package org.ordersMicroservice.service;
 
-import org.ecommerceChallenge.clients.stocks.Repository.StockServiceFeignClient;
+import org.ecommerceChallenge.clients.StockServiceFeignClient;
 import org.ordersMicroservice.dto.OrderDto;
-import org.ordersMicroservice.dto.verify.OrderDtoVerify;
+import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
+import org.ordersMicroservice.dto.verify.OrderVerifiedDto;
 import org.ordersMicroservice.entity.OrderDetailDocument;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.ordersMicroservice.exception.EmptyOrderDetailException;
@@ -73,10 +74,9 @@ public class OrderServiceImpl implements OrderService{
         return OrdersToReturn;
     }
 
-
     // OpenFeign
 
-    public OrderDtoVerify verifyOrderStocks(OrderDocument orderDocument) {
+    public OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument) {
 
         if(orderDocument.getOrderDetail().isEmpty()){
             throw new EmptyOrderDetailException("The order detail list is empty.");
@@ -84,18 +84,30 @@ public class OrderServiceImpl implements OrderService{
 
         List<OrderDetailDocument> toCalculate = orderDocument.getOrderDetail();
 
-        List<OrderDetailDocument> orderDetailwithSubtotal = toCalculate.stream()
-                .map(this::calculateItemSubtotal)
+        List<OrderDetailDocumentVerifiedDto> orderDetailwithSubtotal = toCalculate.stream()
+                .map(this::calculateItemSubtotalVerify)
                 .toList();
 
         double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
 
-        orderDocument.setOrderDate(Calendar.getInstance());
-        orderDocument.setOrderDetail(orderDetailwithSubtotal);
-        orderDocument.setSubtotal(subtotal);
-        orderDocument.setTax(subtotal * 21 / 100);
+        OrderVerifiedDto orderVerifiedDto= converter.orderDocumentToOrderDocumentVerifiedDto(orderDocument);
 
-        return converter.entityToDto(orderRepository.save(orderDocument));
+        orderVerifiedDto.setOrderDate(Calendar.getInstance());
+        orderVerifiedDto.setOrderDetailDocumentVerified(orderDetailwithSubtotal);
+        orderVerifiedDto.setSubtotal(subtotal);
+        orderVerifiedDto.setTax(subtotal * 21 / 100);
+
+        return orderVerifiedDto;
+    }
+
+    public OrderDetailDocumentVerifiedDto calculateItemSubtotalVerify(OrderDetailDocument orderDetailDocument){
+
+        double price = orderDetailDocument.getProductPrice();
+        int quantity = orderDetailDocument.getProductQuantity();
+        orderDetailDocument.setItemSubtotal(price * quantity);
+        OrderDetailDocumentVerifiedDto orderDetailDocumentVerified = converter.orderDetailsDocumentsToOrderDetailsDocumentVerifiedDto(orderDetailDocument);
+        orderDetailDocumentVerified.setVerify(stockServiceFeignClient.verifyProductIdByQuantity(orderDetailDocument.getProductId(),orderDetailDocument.getProductQuantity()));
+        return orderDetailDocumentVerified;
     }
 
 

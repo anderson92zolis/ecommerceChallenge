@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor @AllArgsConstructor @Builder
-@Entity
-@Table(name = "order_detail")
-public class OrderDetailDocumentVerified {
+public class OrderDetailDocumentVerifiedDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Schema(description = "product Id")
     private Integer id;
 
     @Schema(description = "This is the id of the product sold")
