@@ -20,6 +20,7 @@ public class StockService {
     public void saveStock(StockRequest stockRequest){
 
         var stock = Stock.builder()
+                .productId(stockRequest.getProductId())
                 .stockId(stockRequest.getProductId())
                 .sku(stockRequest.getSku())
                 .name(stockRequest.getName())
@@ -39,6 +40,7 @@ public class StockService {
         return stocks.stream().map(this::mapToProductResponse).toList();
     }
 
+
     public String verifyProductIdByQuantity(int productId, int orderQuantity) {
         Stock stock = stockRepository.findByProductId(productId);
         String verifyQuantity= "accepted";
@@ -52,6 +54,7 @@ public class StockService {
 
     private StockResponse mapToProductResponse(Stock stock) {
         return StockResponse.builder()
+                .productId(stock.getProductId())
                 .stockId(stock.getStockId())
                 .sku(stock.getSku())
                 .productId(stock.getProductId())
