@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -42,9 +43,9 @@ public class StockController {
         stockService.saveStock(stockRequest);
     }
 
-    @GetMapping(path = "/verifyProductId/{productId}")
+    @PostMapping(path = "/verifyProductId/{productId}")
     @ResponseStatus(HttpStatus.OK)
-    public String verifyProductIdByQuantity(@PathVariable("productId") int productId, int orderQuantity) {
+    public String verifyProductIdByQuantity(@PathVariable("productId") int productId, @RequestParam(value = "orderQuantity") int orderQuantity) {
         String verifyQuantity = stockService.verifyProductIdByQuantity(productId,orderQuantity);
         return verifyQuantity;
     }

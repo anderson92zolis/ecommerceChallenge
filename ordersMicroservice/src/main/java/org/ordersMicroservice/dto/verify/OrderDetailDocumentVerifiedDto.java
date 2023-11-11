@@ -1,7 +1,6 @@
 package org.ordersMicroservice.dto.verify;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +25,6 @@ public class OrderDetailDocumentVerifiedDto {
     @Schema(description = "This is price x quantity")
     private double itemSubtotal;
 
-    @Schema(description = "This is the acepted for product if the order es less that quantity in stock")
+    @Schema(description = "This is the accepted for product if the order es less that quantity in stock")
     private String verify;
 }

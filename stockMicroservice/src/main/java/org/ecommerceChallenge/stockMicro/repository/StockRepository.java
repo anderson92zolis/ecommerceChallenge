@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StockRepository extends JpaRepository<Stock,Integer> {
 
-    Stock findByProductId(int productId);
+
 }

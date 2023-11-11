@@ -11,6 +11,5 @@ public interface OrderService {
 
     List<OrderDto> findAll();
 
-
     OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument);
 }

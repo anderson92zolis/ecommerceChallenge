@@ -1,10 +1,7 @@
 package org.ecommerceChallenge.stockMicro.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -15,18 +12,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Getter
+@Data
 public class Stock {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int stockId;
+    @Column(name= "productId")
+    private int productId;
 
     @Column(name= "SKU")
     private String sku;
 
-    @Column(name= "productId")
-    private int productId;
 
     @Column(name="productName", length=100, unique=true,  nullable= false)
     private String name;

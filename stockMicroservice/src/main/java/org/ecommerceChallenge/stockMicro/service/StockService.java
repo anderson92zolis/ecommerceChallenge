@@ -9,6 +9,7 @@ import org.ecommerceChallenge.stockMicro.repository.StockRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,7 +22,6 @@ public class StockService {
 
         var stock = Stock.builder()
                 .productId(stockRequest.getProductId())
-                .stockId(stockRequest.getProductId())
                 .sku(stockRequest.getSku())
                 .name(stockRequest.getName())
                 .quantity(stockRequest.getQuantity())
@@ -41,11 +41,21 @@ public class StockService {
     }
 
 
+    // PART OF OPENFEIGN
+
     public String verifyProductIdByQuantity(int productId, int orderQuantity) {
-        Stock stock = stockRepository.findByProductId(productId);
+
+        Optional<Stock> stock = stockRepository.findById(productId);
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+        System.out.println(stock);
+
         String verifyQuantity= "accepted";
 
-        if (stock.getProductId()<=orderQuantity) {
+        if ( stock.isPresent() && orderQuantity > stock.get().getQuantity()) {
             verifyQuantity= "false";
         }
 
@@ -55,7 +65,6 @@ public class StockService {
     private StockResponse mapToProductResponse(Stock stock) {
         return StockResponse.builder()
                 .productId(stock.getProductId())
-                .stockId(stock.getStockId())
                 .sku(stock.getSku())
                 .productId(stock.getProductId())
                 .name(stock.getName())

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -90,7 +91,7 @@ public class OrderServiceImpl implements OrderService{
 
         double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
 
-        OrderVerifiedDto orderVerifiedDto= converter.orderDocumentToOrderDocumentVerifiedDto(orderDocument);
+        OrderVerifiedDto orderVerifiedDto= new OrderVerifiedDto();
 
         orderVerifiedDto.setOrderDate(Calendar.getInstance());
         orderVerifiedDto.setOrderDetailDocumentVerified(orderDetailwithSubtotal);
@@ -106,7 +107,11 @@ public class OrderServiceImpl implements OrderService{
         int quantity = orderDetailDocument.getProductQuantity();
         orderDetailDocument.setItemSubtotal(price * quantity);
         OrderDetailDocumentVerifiedDto orderDetailDocumentVerified = converter.orderDetailsDocumentsToOrderDetailsDocumentVerifiedDto(orderDetailDocument);
-        orderDetailDocumentVerified.setVerify(stockServiceFeignClient.verifyProductIdByQuantity(orderDetailDocument.getProductId(),orderDetailDocument.getProductQuantity()));
+
+        orderDetailDocumentVerified.setVerify(stockServiceFeignClient.verifyProductIdByQuantity(orderDetailDocument.getProductId(), orderDetailDocument.getProductQuantity()));
+
+        System.out.println(orderDetailDocumentVerified);
+
         return orderDetailDocumentVerified;
     }
 

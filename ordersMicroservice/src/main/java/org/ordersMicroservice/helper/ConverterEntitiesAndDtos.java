@@ -26,13 +26,6 @@ public class ConverterEntitiesAndDtos {
 
     // to verified
 
-    public OrderVerifiedDto orderDocumentToOrderDocumentVerifiedDto (OrderDocument orderDocument){
-
-        OrderVerifiedDto orderVerifiedDto = modelMapper().map(orderDocument, OrderVerifiedDto.class);
-        return orderVerifiedDto;
-    }
-
-
     public OrderDetailDocumentVerifiedDto orderDetailsDocumentsToOrderDetailsDocumentVerifiedDto (OrderDetailDocument orderDetailDocument){
 
         OrderDetailDocumentVerifiedDto orderDetailDtoDocumentVerified = modelMapper().map(orderDetailDocument, OrderDetailDocumentVerifiedDto.class);
