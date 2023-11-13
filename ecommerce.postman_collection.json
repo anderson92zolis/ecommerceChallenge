@@ -27,12 +27,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/v1/products/getAllProducts",
+							"raw": "http://localhost:8080/api/v1/products/getAllProducts",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -61,12 +61,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/v1/products/test",
+							"raw": "http://localhost:8080/api/v1/products/test",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -84,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"sku\": \"{{$randomInt}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomWords}}\",\r\n    \"category\": \"CLOTHING\",\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
+							"raw": "{\r\n    \"sku\": \"{{$randomSku}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomWords}}\",\r\n    \"category\": \"CLOTHING\",\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -195,7 +195,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"sku\": \"{{$randomInt}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomWords}}\",\r\n    \"category\": \"CLOTHING\",\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
+							"raw": "{\r\n    \"productId\": \"{{$randomInt}}\",\r\n    \"sku\": \"{{$randomInt}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"quantity\": \"{{$randomInt}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -272,7 +272,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 10,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 2,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 3,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"productId\": 3,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}\r\n",
+							"raw": "{\r\n  \"id\": 2,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 34,\r\n      \"productId\": 2,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 3,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 34,\r\n      \"productId\": 3,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -291,6 +291,47 @@
 								"v1",
 								"orders",
 								"add"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify Stock",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 473,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 3,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 154,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/v1/orders/verifyStock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"verifyStock"
 							],
 							"query": [
 								{

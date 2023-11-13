@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="productsmicroservices" />
         <module name="stockMicroservice" />
+        <module name="clients" />
         <module name="ordersMicroservice" />
         <module name="eureka-server" />
       </profile>
@@ -23,6 +24,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="clients" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="ordersMicroservice" options="-parameters" />
       <module name="productsmicroservices" options="-parameters" />

@@ -10,6 +10,7 @@ import lombok.*;
 @Setter // adding for thymeleaf
 public class StockRequest {
 
+    private int productId;
     private String sku;
     private String name;
     private int quantity;
