@@ -16,7 +16,7 @@ class ProductsRequestTest {
     void setUp() {
 
         productsRequest = ProductsRequest.builder()
-                .sku(1000)
+                .sku("00001")
                 .name("Test Product")
                 .description("Test Description")
                 .category(Category.ELECTRONICS)
@@ -33,7 +33,7 @@ class ProductsRequestTest {
 
     @Test
     void testGetSku() {
-        assertEquals(1000,productsRequest.getSku());
+        assertEquals("00001",productsRequest.getSku());
     }
 
     @Test

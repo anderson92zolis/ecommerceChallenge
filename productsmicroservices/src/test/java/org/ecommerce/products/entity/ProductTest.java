@@ -16,7 +16,7 @@ class ProductTest {
 
         product = Product.builder()
                 .productId(1)
-                .sku(1000)
+                .sku("00001")
                 .name("Test Product")
                 .description("Test Description")
                 .category(Category.ELECTRONICS)
@@ -43,7 +43,7 @@ class ProductTest {
 
     @Test
     void testGetSku(){
-        assertEquals(1000,product.getSku(), "not equals");
+        assertEquals("00001",product.getSku(), "not equals");
     }
 
 
