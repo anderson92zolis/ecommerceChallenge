@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -26,19 +27,27 @@ public class StockController {
 
 
         return "Hello from Stock DB!!!";
+
     }
 
     @GetMapping(value = "/getAllStocks")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<StockResponse>> getAllProducts() {
+    public ResponseEntity<List<StockResponse>> getAllStock() {
         List<StockResponse> stockResponseList = stockService.getAllStock();
         return new ResponseEntity<>(stockResponseList, HttpStatus.OK);
     }
 
     @PostMapping(value = "/addStock")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewProducts(@RequestBody StockRequest stockRequest){
-        stockService.saveProducts(stockRequest);
+    public void addNewStock(@RequestBody StockRequest stockRequest){
+        stockService.saveStock(stockRequest);
+    }
+
+    @PostMapping(path = "/verifyProductId/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    public String verifyProductIdByQuantity(@PathVariable("productId") int productId, @RequestParam(value = "orderQuantity") int orderQuantity) {
+        String verifyQuantity = stockService.verifyProductIdByQuantity(productId,orderQuantity);
+        return verifyQuantity;
     }
 
 
