@@ -48,15 +48,13 @@ public class StockService {
         Optional<Stock> stock = stockRepository.findById(productId);
 
         System.out.println();
-        System.out.println();
-        System.out.println();
 
         System.out.println(stock);
 
-        String verifyQuantity= "accepted";
+        String verifyQuantity= "Accepted";
 
         if ( stock.isPresent() && orderQuantity > stock.get().getQuantity()) {
-            verifyQuantity= "false";
+            verifyQuantity= "Not accepted";
         }
 
         return verifyQuantity;
