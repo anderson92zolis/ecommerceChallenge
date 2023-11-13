@@ -9,6 +9,7 @@ import org.ecommerceChallenge.stockMicro.repository.StockRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -17,9 +18,10 @@ public class StockService {
 
     private final StockRepository stockRepository;
 
-    public void saveProducts(StockRequest stockRequest){
+    public void saveStock(StockRequest stockRequest){
 
         var stock = Stock.builder()
+                .productId(stockRequest.getProductId())
                 .sku(stockRequest.getSku())
                 .name(stockRequest.getName())
                 .quantity(stockRequest.getQuantity())
@@ -31,24 +33,41 @@ public class StockService {
 
     }
     public List<StockResponse> getAllStock(){
-        var products = stockRepository.findAll();
+        var stocks = stockRepository.findAll();
 
         log.info("stock products to show: {}", stockRepository);
 
-        return products.stream().map(this::mapToProductResponse).toList();
+        return stocks.stream().map(this::mapToProductResponse).toList();
+    }
+
+
+    // PART OF OPENFEIGN
+
+    public String verifyProductIdByQuantity(int productId, int orderQuantity) {
+
+        Optional<Stock> stock = stockRepository.findById(productId);
+
+        System.out.println();
+
+        System.out.println(stock);
+
+        String verifyQuantity= "Accepted";
+
+        if ( stock.isPresent() && orderQuantity > stock.get().getQuantity()) {
+            verifyQuantity= "Not accepted";
+        }
+
+        return verifyQuantity;
     }
 
     private StockResponse mapToProductResponse(Stock stock) {
         return StockResponse.builder()
-                .stockId(stock.getStockId())
+                .productId(stock.getProductId())
                 .sku(stock.getSku())
+                .productId(stock.getProductId())
                 .name(stock.getName())
                 .quantity(stock.getQuantity())
                 .localDatetime(stock.getLocalDatetime())
                 .build();
     }
-
-
-
-
 }
