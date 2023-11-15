@@ -15,10 +15,13 @@ public class NotificationsApp {
 
     @Bean
     CommandLineRunner commandLineRunner(KafkaTemplate<String, String> kafkaTemplate) {
-        return args -> {
-            kafkaTemplate.send("notificationEcommerce","hello Kafka");
+        return rgs -> {
+            for (int i = 0; i < 10; i++) {
+                kafkaTemplate.send("notificationEcommerce", "hello kafka :"+i);
+            }
         };
     }
+
 }
 
 
