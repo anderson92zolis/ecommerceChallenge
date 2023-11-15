@@ -10,7 +10,7 @@ spring:
     username: root # name similar to the docker compose orders Db
     password: 12345678 # name similar to the docker compose orders Db
   jpa:
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: update # create-drop
     generate-ddl: true
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -18,8 +18,8 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      default-zone: http://localhost:8761/eureka/
     registerWithEureka: true
     fetchRegistry: true
   .instance:
-    instance-id=${spring:application:name}:${spring:application:instance-id:${random:value}}
+    instance-id=${spring:application:name}:${spring:application:instance_id:${random:value}}

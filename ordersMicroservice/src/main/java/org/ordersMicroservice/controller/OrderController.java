@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.ordersMicroservice.dto.OrderDto;
+import org.ordersMicroservice.dto.verify.OrderVerifiedDto;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.ordersMicroservice.service.OrderService;
 import org.slf4j.Logger;
@@ -50,5 +51,21 @@ public class OrderController {
         return ResponseEntity.ok(orderService.findAll());
     }
 
+    // openFeign
 
+    @Operation(
+            operationId = "OperationId",
+            summary = "Verify stock order",
+            description = "Verify a new order and its detail",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Verified Order correctly",
+                            content = {@Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrderDocument.class))}),
+                    @ApiResponse(responseCode = "400", description = "The item list is empty.", content = {@Content(schema = @Schema())})
+            })
+    @GetMapping("/verifyStock")
+    public ResponseEntity<OrderVerifiedDto> verifyOrderStocks (@RequestBody OrderDocument orderDocument){
+        OrderVerifiedDto documentVerified = orderService.verifyOrderStocks(orderDocument);
+        return ResponseEntity.status(201).body(documentVerified);
+    }
 }

@@ -19,8 +19,8 @@
     <modules>
         <module>productsmicroservices</module>
         <module>ordersMicroservice</module>
-        <module>eureka-server</module>
         <module>stockMicroservice</module>
+        <module>clients</module>
         <module>gateway</module>
         <module>discovery-server</module>
     </modules>
@@ -61,6 +61,13 @@
        <dependency>
            <groupId>org.springframework.cloud</groupId>
            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+       </dependency>
+
+       <!--openfeign-->
+
+       <dependency>
+           <groupId>org.springframework.cloud</groupId>
+           <artifactId>spring-cloud-starter-openfeign</artifactId>
        </dependency>
 
    </dependencies>
