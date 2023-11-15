@@ -118,6 +118,49 @@
 			]
 		},
 		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "add a new products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sku\": \"{{$randomSku}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomWords}}\",\r\n    \"category\": \"CLOTHING\",\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products/addProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"addProduct"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "StocksMicro",
 			"item": [
 				{

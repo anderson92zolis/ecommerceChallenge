@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class KafkaListeners {
+
+
     @KafkaListener(
             topics="notificationEcommerce",
             groupId= "groudId"
