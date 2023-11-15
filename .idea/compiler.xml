@@ -12,10 +12,10 @@
         <module name="clients" />
         <module name="ordersMicroservice" />
         <module name="eureka-server" />
+        <module name="notification-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="clients" target="17" />
       <module name="ecommerce" target="17" />
       <module name="ecommercea" target="17" />
       <module name="ecommerceChallenge" target="1.5" />
@@ -27,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clients" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="notification-server" options="-parameters" />
       <module name="ordersMicroservice" options="-parameters" />
       <module name="productsmicroservices" options="-parameters" />
       <module name="stockMicroservice" options="-parameters" />
