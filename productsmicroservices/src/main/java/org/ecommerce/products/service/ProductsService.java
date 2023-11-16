@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.ecommerce.products.dto.ProductResponse;
 import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.entity.Product;
+import org.ecommerce.products.exception.ProductNotFound;
 import org.ecommerce.products.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,14 @@ public class ProductsService {
     }
 
 
+    public ProductResponse findBySku(String sku) {
 
+        Product productFound = productsRepository.getBySku(sku);
+        if(productFound==null){
+            throw new ProductNotFound("The product does not exists");
+        }
 
+        return mapToProductResponse(productFound);
+
+    }
 }
