@@ -46,6 +46,7 @@ public class ProductsService {
 
     private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()
+                .sku(product.getSku())
                 .name(product.getName())
                 .description(product.getDescription())
                 .category(product.getCategory())
