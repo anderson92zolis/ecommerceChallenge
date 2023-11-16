@@ -54,7 +54,7 @@ class OrderControllerTest {
 
         orderDocument = OrderDocument.builder()
                 .id(1)
-                .orderDate(Calendar.getInstance())
+                .orderDate(null)
                 .orderDetail(orderDetailDocumentList)
                 .subtotal(2)
                 .tax(0.4)
@@ -62,7 +62,7 @@ class OrderControllerTest {
 
         orderDto = OrderDto.builder()
                 .id(1)
-                .orderDate(Calendar.getInstance())
+                .orderDate(null)
                 .orderDetail(orderDetailDocumentList)
                 .subtotal(2)
                 .tax(0.4)
@@ -93,7 +93,7 @@ class OrderControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("[0].id").value("1"))
-                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$", hasSize(1)))//;
                 .andExpect(content().json(asJsonString(orderDtos)));
     }
 
