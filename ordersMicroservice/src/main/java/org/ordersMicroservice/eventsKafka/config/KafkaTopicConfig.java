@@ -1,4 +1,4 @@
-package org.ecommerceChallenge.notification.config;
+package org.ordersMicroservice.eventsKafka.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
@@ -7,8 +7,11 @@ import org.springframework.kafka.config.TopicBuilder;
 
 @Configuration
 public class KafkaTopicConfig {
+
+    // Topic config
     @Bean
     public NewTopic notificationTopic() {
-        return TopicBuilder.name("notificationEcommerce").build();
+        return TopicBuilder.name("placeOrder").build();
     }
+
 }

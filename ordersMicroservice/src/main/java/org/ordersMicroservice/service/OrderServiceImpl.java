@@ -6,16 +6,20 @@ import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
 import org.ordersMicroservice.dto.verify.OrderVerifiedDto;
 import org.ordersMicroservice.entity.OrderDetailDocument;
 import org.ordersMicroservice.entity.OrderDocument;
+import org.ordersMicroservice.eventsKafka.entity.Message;
+import org.ordersMicroservice.eventsKafka.enums.OrderStatus;
 import org.ordersMicroservice.exception.EmptyOrderDetailException;
 import org.ordersMicroservice.helper.ConverterEntitiesAndDtos;
 import org.ordersMicroservice.repository.OrderRepository;
+import org.ordersMicroservice.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -27,6 +31,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     StockServiceFeignClient stockServiceFeignClient;
+
+    @Autowired
+    KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public OrderDto saveOrder(OrderDocument orderDocument) {
@@ -98,7 +105,29 @@ public class OrderServiceImpl implements OrderService{
         orderVerifiedDto.setSubtotal(subtotal);
         orderVerifiedDto.setTax(subtotal * 21 / 100);
 
+        Message messageRequest= null;
+
+        for (OrderDetailDocumentVerifiedDto orderDetailDocumentVerifiedDto: orderDetailwithSubtotal){
+
+            if (orderDetailDocumentVerifiedDto.getVerify().equals("Accepted") ){
+
+                messageRequest= new Message("Order created stock is okay", orderDetailDocumentVerifiedDto.getProductId(), OrderStatus.PLACED);
+
+            } else {
+
+                messageRequest= new Message("Order created stock is NOT okay", orderDetailDocumentVerifiedDto.getProductId(), OrderStatus.CANCELLED);
+
+            }
+            kafkaTemplate.send("placeOrder", String.valueOf(messageRequest));
+
+            // with the function util to deserialize
+            // kafkaTemplate.send("placeOrder", JsonUtils.toJson(messageRequest));
+
+        }
+
+
         return orderVerifiedDto;
+
     }
 
     public OrderDetailDocumentVerifiedDto calculateItemSubtotalVerify(OrderDetailDocument orderDetailDocument){

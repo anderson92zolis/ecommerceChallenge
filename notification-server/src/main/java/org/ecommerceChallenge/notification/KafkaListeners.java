@@ -7,12 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaListeners {
 
-
     @KafkaListener(
-            topics="notificationEcommerce",
+            topics="placeOrder",
             groupId= "groudId"
     )  void listener(String data){
-        System.out.println("Listener recived" + data + "😉");
+        System.out.println("the orden is ->" + data + "😉");
     }
 
 

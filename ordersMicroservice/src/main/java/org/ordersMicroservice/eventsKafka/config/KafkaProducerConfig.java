@@ -1,4 +1,4 @@
-package org.ecommerceChallenge.notification.config;
+package org.ordersMicroservice.eventsKafka.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -17,7 +17,7 @@ public class KafkaProducerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String boostrapServers;
 
-    // PRODUCERCONFIG
+    // PRODUCER CONFIG
     public Map<String, Object> producerConfig() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, boostrapServers);
@@ -25,7 +25,6 @@ public class KafkaProducerConfig {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return props;
     }
-
 
     // FACTORY
     @Bean

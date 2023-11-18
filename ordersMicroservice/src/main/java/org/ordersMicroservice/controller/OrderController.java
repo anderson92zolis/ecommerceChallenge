@@ -68,4 +68,6 @@ public class OrderController {
         OrderVerifiedDto documentVerified = orderService.verifyOrderStocks(orderDocument);
         return ResponseEntity.status(201).body(documentVerified);
     }
+
+
 }
