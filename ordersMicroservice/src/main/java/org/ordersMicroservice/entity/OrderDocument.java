@@ -25,7 +25,7 @@ public class OrderDocument {
     @Schema(description = "This is the date when the order was created")
     private Calendar orderDate;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @Schema(description = "This List contains the data provided by the OrderDetailDocument")
     private List<OrderDetailDocument> orderDetail;
 

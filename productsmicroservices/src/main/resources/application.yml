@@ -1,5 +1,5 @@
 server:
-  port: 8080   # HTTP (Tomcat) port
+  port: 0   # HTTP (Tomcat) port
 # Spring properties
 spring:
   application:
@@ -17,7 +17,7 @@ spring:
         format_sql: true
     show-sql: true
 
-# for thymeleaf
+  # for thymeleaf
   open-in-view: true
 
   thymeleaf:
@@ -28,7 +28,10 @@ spring:
 # for eureka server
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  .instance:
+    instance-id=${spring.application.name}:${spring.application.instance_id:${random:value}}
 
