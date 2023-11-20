@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "ca56447e-5166-4252-9d17-08f613848d04",
+		"name": "ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26628613"
+	},
+	"item": [
+		{
+			"name": "ProductsMicro",
+			"item": [
+				{
+					"name": "get all products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products/getAllProducts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"getAllProducts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEST",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Product Name\",\r\n    \"description\": \"Product Description\",\r\n    \"category\": \"ELECTRONICS\",\r\n    \"price\": 49.99,\r\n    \"manufacturer\": \"Manufacturer Name\",\r\n    \"supplier\": \"Supplier Name\",\r\n    \"creationDate\": \"2023-10-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a new products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sku\": \"{{$randomSku}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomWords}}\",\r\n    \"category\": \"CLOTHING\",\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products/addProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"addProduct"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "StocksMicro",
+			"item": [
+				{
+					"name": "get all stocks of the products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/stock/getAllStocks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"stock",
+								"getAllStocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEST",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Product Name\",\r\n    \"description\": \"Product Description\",\r\n    \"category\": \"ELECTRONICS\",\r\n    \"price\": 49.99,\r\n    \"manufacturer\": \"Manufacturer Name\",\r\n    \"supplier\": \"Supplier Name\",\r\n    \"creationDate\": \"2023-10-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/stock/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"stock",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a new stock to the product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"{{$randomInt}}\",\r\n    \"sku\": \"{{$randomInt}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"quantity\": \"{{$randomInt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/stock/addStock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"stock",
+								"addStock"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order Micro",
+			"item": [
+				{
+					"name": "get all Orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/orders/getAll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a new order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 2,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 1,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 3,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"productId\": 2,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/orders/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"add"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify Stock",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 6,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"productId\": 0,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/orders/verifyStock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"verifyStock"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
