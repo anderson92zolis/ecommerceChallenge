@@ -41,7 +41,10 @@ public class ProductsController {
     public void addNewProducts(@RequestBody ProductsRequest productsRequest){
         productsService.saveProducts(productsRequest);
     }
-
+    @GetMapping(value = "/getProduct/{sku}")
+    public ResponseEntity<ProductResponse> getProductById (@PathVariable String sku){
+        return ResponseEntity.ok(productsService.findBySku(sku));
+    }
 
 
 }
