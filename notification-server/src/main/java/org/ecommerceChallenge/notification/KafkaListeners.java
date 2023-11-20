@@ -11,7 +11,7 @@ public class KafkaListeners {
             topics="placeOrder",
             groupId= "groudId"
     )  void listener(String data){
-        System.out.println("the orden is ->" + data + "😉");
+        System.out.println("The orden is ->" + data + "😉");
     }
 
 

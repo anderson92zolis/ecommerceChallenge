@@ -1,5 +1,6 @@
 package org.ordersMicroservice.service;
 
+import org.ecommerceChallenge.clients.ProductServiceFeignClient;
 import org.ecommerceChallenge.clients.StockServiceFeignClient;
 import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
@@ -35,6 +36,10 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     KafkaTemplate<String, String> kafkaTemplate;
 
+    @Autowired
+    ProductServiceFeignClient productServiceFeignClient;
+
+
     @Override
     public OrderDto saveOrder(OrderDocument orderDocument) {
 
@@ -64,8 +69,9 @@ public class OrderServiceImpl implements OrderService{
 
     public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument){
 
-        double price = orderDetailDocument.getProductPrice();
+        double price =  productServiceFeignClient.getProductById(String.valueOf(orderDetailDocument.getProductId())).getPrice();
         int quantity = orderDetailDocument.getProductQuantity();
+        orderDetailDocument.setProductPrice(price);
         orderDetailDocument.setItemSubtotal(price * quantity);
         return orderDetailDocument;
     }
@@ -143,11 +149,4 @@ public class OrderServiceImpl implements OrderService{
 
         return orderDetailDocumentVerified;
     }
-
-
-
-
-
-
-
 }

@@ -98,6 +98,7 @@
 
         <!-- Eureka client-->
 
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -111,6 +112,7 @@
             <scope>compile</scope>
         </dependency>
 
+
         <!-- KAFKA -->
 
         <dependency>
@@ -123,6 +125,10 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
 
     </dependencies>
 
