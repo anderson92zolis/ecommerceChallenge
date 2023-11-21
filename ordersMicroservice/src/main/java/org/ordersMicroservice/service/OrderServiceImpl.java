@@ -47,6 +47,7 @@ public class OrderServiceImpl implements OrderService{
 
         List<OrderDetailDocument> orderDetailwithSubtotal = toCalculate.stream()
                 .map(this::calculateItemSubtotal)
+                .filter(x -> x != null)
                 .toList();
 
         double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
@@ -61,6 +62,10 @@ public class OrderServiceImpl implements OrderService{
 
     public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument){
 
+        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
+        if(!productExist) {
+            return null;
+        }
         double price =  productServiceFeignClient.getProductById(String.valueOf(orderDetailDocument.getProductId())).getPrice();
         int quantity = orderDetailDocument.getProductQuantity();
         orderDetailDocument.setProductPrice(price);

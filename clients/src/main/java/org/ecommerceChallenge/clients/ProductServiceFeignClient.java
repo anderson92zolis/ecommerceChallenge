@@ -11,4 +11,8 @@ public interface ProductServiceFeignClient {
     @GetMapping(path = "api/v1/products/getProduct/{sku}")
     public ProductResponse getProductById (@PathVariable String sku);
 
+    @GetMapping(path = "api/v1/products/confirmProduct/{sku}")
+    public boolean confirmProductBySku (@PathVariable String sku);
+
+
 }

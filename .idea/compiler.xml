@@ -17,7 +17,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="discovery-server" target="17" />
       <module name="ecommerce" target="17" />
       <module name="ecommercea" target="17" />
       <module name="ecommerceChallenge" target="1.5" />
