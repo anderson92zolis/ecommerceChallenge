@@ -39,9 +39,12 @@ public class StockController {
 
     @PostMapping(value = "/addStock")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewStock(@RequestBody StockRequest stockRequest){
+    public void addNewStock(@RequestBody StockRequest stockRequest) {
         stockService.saveStock(stockRequest);
+
     }
+
+
 
     @PostMapping(path = "/verifyProductId/{productId}")
     @ResponseStatus(HttpStatus.OK)
@@ -50,6 +53,9 @@ public class StockController {
         return verifyQuantity;
     }
 
-
+    @GetMapping(value = "/countStock/{sku}")
+    public int countStockBySku (String sku){
+        return stockService.stockBySku(sku);
+    }
 
 }

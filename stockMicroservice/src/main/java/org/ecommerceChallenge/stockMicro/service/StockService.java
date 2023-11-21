@@ -70,4 +70,8 @@ public class StockService {
                 .localDatetime(stock.getLocalDatetime())
                 .build();
     }
+
+    public int stockBySku(String sku) {
+        return stockRepository.getBySku(sku).getQuantity();
+    }
 }

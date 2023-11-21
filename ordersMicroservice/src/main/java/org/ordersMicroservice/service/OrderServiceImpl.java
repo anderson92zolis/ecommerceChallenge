@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderRepository orderRepository;
@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService{
 
         OrderDocument orderToSave = orderDocument;
 
-        if(orderToSave.getOrderDetail().isEmpty()){
+        if (orderToSave.getOrderDetail().isEmpty()) {
             throw new EmptyOrderDetailException("The order detail list is empty.");
         }
 
@@ -60,14 +60,23 @@ public class OrderServiceImpl implements OrderService{
         return converter.entityToDto(orderRepository.save(orderToSave));
     }
 
-    public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument){
+    public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
 
         boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
-        if(!productExist) {
+        if (!productExist) {
             return null;
         }
-        double price =  productServiceFeignClient.getProductById(String.valueOf(orderDetailDocument.getProductId())).getPrice();
+        // TODO replace String.valueOf by sku
+
+        double price = productServiceFeignClient.getProductById(String.valueOf(orderDetailDocument.getProductId())).getPrice();
         int quantity = orderDetailDocument.getProductQuantity();
+        int stock = stockServiceFeignClient.countStockBySku(String.valueOf(orderDetailDocument.getProductId()));
+        if (stock == 0) {
+            return null;
+        }
+        if (stock < quantity) {
+            quantity = stock;
+        }
         orderDetailDocument.setProductPrice(price);
         orderDetailDocument.setItemSubtotal(price * quantity);
         return orderDetailDocument;
@@ -84,9 +93,9 @@ public class OrderServiceImpl implements OrderService{
 
         return OrdersToReturn;
     }
-
+}
     // OpenFeign
-
+/*
     public OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument) {
 
         if(orderDocument.getOrderDetail().isEmpty()){
@@ -124,4 +133,6 @@ public class OrderServiceImpl implements OrderService{
 
         return orderDetailDocumentVerified;
     }
-}
+
+ */
+
