@@ -17,7 +17,7 @@ spring:
         format_sql: true
     show-sql: true
 
-# for thymeleaf
+  # for thymeleaf
   open-in-view: true
 
   thymeleaf:
@@ -33,4 +33,5 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
   .instance:
-    instance-id=${spring.application.name}:${spring.application.instance_id:${random.value}}
+    instance-id=${spring.application.name}:${spring.application.instance_id:${random:value}}
+

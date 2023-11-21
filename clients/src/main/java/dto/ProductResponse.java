@@ -1,8 +1,7 @@
-package org.ecommerce.products.dto;
+package dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.ecommerce.products.entity.Category;
 
 @Builder
 @Getter

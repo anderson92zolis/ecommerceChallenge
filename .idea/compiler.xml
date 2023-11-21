@@ -9,9 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="productsmicroservices" />
         <module name="stockMicroservice" />
+        <module name="discovery-server" />
         <module name="clients" />
         <module name="ordersMicroservice" />
         <module name="eureka-server" />
+        <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,7 +21,7 @@
       <module name="ecommerce" target="17" />
       <module name="ecommercea" target="17" />
       <module name="ecommerceChallenge" target="1.5" />
-      <module name="gateway" target="17" />
+      <module name="eureka-server" target="17" />
       <module name="products" target="17" />
       <module name="test" target="17" />
     </bytecodeTargetLevel>
@@ -27,7 +29,9 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clients" options="-parameters" />
-      <module name="eureka-server" options="" />
+      <module name="discovery-server" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="ordersMicroservice" options="-parameters" />
       <module name="productsmicroservices" options="-parameters" />
       <module name="stockMicroservice" options="-parameters" />
