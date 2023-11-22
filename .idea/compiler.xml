@@ -29,9 +29,9 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clients" options="-parameters" />
-      <module name="discovery-server" options="" />
+      <module name="discovery-server" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
-      <module name="gateway" options="" />
+      <module name="gateway" options="-parameters" />
       <module name="ordersMicroservice" options="-parameters" />
       <module name="productsmicroservices" options="-parameters" />
       <module name="stockMicroservice" options="-parameters" />

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderRepository orderRepository;
@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService{
 
         OrderDocument orderToSave = orderDocument;
 
-        if(orderToSave.getOrderDetail().isEmpty()){
+        if (orderToSave.getOrderDetail().isEmpty()) {
             throw new EmptyOrderDetailException("The order detail list is empty.");
         }
 
@@ -47,6 +47,7 @@ public class OrderServiceImpl implements OrderService{
 
         List<OrderDetailDocument> orderDetailwithSubtotal = toCalculate.stream()
                 .map(this::calculateItemSubtotal)
+                .filter(x -> x != null)
                 .toList();
 
         double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
@@ -59,12 +60,31 @@ public class OrderServiceImpl implements OrderService{
         return converter.entityToDto(orderRepository.save(orderToSave));
     }
 
-    public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument){
+    public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
 
-        double price =  productServiceFeignClient.getProductById(String.valueOf(orderDetailDocument.getProductId())).getPrice();
+        String sku = String.valueOf(orderDetailDocument.getProductId());
+
+        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
+        if (!productExist) {
+            return null;
+        }
+        // TODO replace String.valueOf by sku
+
+        double price = productServiceFeignClient.getProductById(sku).getPrice();
         int quantity = orderDetailDocument.getProductQuantity();
+        int stock = stockServiceFeignClient.countStockBySku(sku);
+
+        if (stock == 0) {
+            return null;
+        }
+        if (stock < quantity) {
+            quantity = stock;
+        }
+        int newStock = stock - quantity;
+        orderDetailDocument.setProductQuantity(quantity);
         orderDetailDocument.setProductPrice(price);
         orderDetailDocument.setItemSubtotal(price * quantity);
+        stockServiceFeignClient.reduceStock(sku, newStock);
         return orderDetailDocument;
     }
 
@@ -79,44 +99,6 @@ public class OrderServiceImpl implements OrderService{
 
         return OrdersToReturn;
     }
-
-    // OpenFeign
-
-    public OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument) {
-
-        if(orderDocument.getOrderDetail().isEmpty()){
-            throw new EmptyOrderDetailException("The order detail list is empty.");
-        }
-
-        List<OrderDetailDocument> toCalculate = orderDocument.getOrderDetail();
-
-        List<OrderDetailDocumentVerifiedDto> orderDetailwithSubtotal = toCalculate.stream()
-                .map(this::calculateItemSubtotalVerify)
-                .toList();
-
-        double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
-
-        OrderVerifiedDto orderVerifiedDto= new OrderVerifiedDto();
-
-        orderVerifiedDto.setOrderDate(Calendar.getInstance());
-        orderVerifiedDto.setOrderDetailDocumentVerified(orderDetailwithSubtotal);
-        orderVerifiedDto.setSubtotal(subtotal);
-        orderVerifiedDto.setTax(subtotal * 21 / 100);
-
-        return orderVerifiedDto;
-    }
-
-    public OrderDetailDocumentVerifiedDto calculateItemSubtotalVerify(OrderDetailDocument orderDetailDocument){
-
-        double price = orderDetailDocument.getProductPrice();
-        int quantity = orderDetailDocument.getProductQuantity();
-        orderDetailDocument.setItemSubtotal(price * quantity);
-        OrderDetailDocumentVerifiedDto orderDetailDocumentVerified = converter.orderDetailsDocumentsToOrderDetailsDocumentVerifiedDto(orderDetailDocument);
-
-        orderDetailDocumentVerified.setVerify(stockServiceFeignClient.verifyProductIdByQuantity(orderDetailDocument.getProductId(), orderDetailDocument.getProductQuantity()));
-
-        System.out.println(orderDetailDocumentVerified);
-
-        return orderDetailDocumentVerified;
-    }
 }
+
+
