@@ -63,6 +63,16 @@ public class ProductsService {
         }
 
         return mapToProductResponse(productFound);
-
     }
+
+    public boolean confirmProductBySku(String sku) {
+
+        boolean confirmProduct = false;
+        Product productFound = productsRepository.getBySku(sku);
+        if(productFound!=null){
+            confirmProduct = true;
+        }
+        return confirmProduct;
+    }
+
 }

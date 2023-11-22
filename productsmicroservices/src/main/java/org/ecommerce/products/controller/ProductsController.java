@@ -46,5 +46,16 @@ public class ProductsController {
         return ResponseEntity.ok(productsService.findBySku(sku));
     }
 
+    /**
+     * @Author darucker
+     * @param sku
+     * @return boolean
+     *
+     */
+    @GetMapping(value = "/confirmProduct/{sku}")
+    public boolean confirmProductBySku (@PathVariable String sku) {
+        return productsService.confirmProductBySku (sku);
+    }
+
 
 }

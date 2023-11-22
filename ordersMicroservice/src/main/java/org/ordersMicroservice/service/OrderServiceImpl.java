@@ -23,7 +23,7 @@ import java.util.List;
 
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderRepository orderRepository;
@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService{
 
         OrderDocument orderToSave = orderDocument;
 
-        if(orderToSave.getOrderDetail().isEmpty()){
+        if (orderToSave.getOrderDetail().isEmpty()) {
             throw new EmptyOrderDetailException("The order detail list is empty.");
         }
 
@@ -55,6 +55,7 @@ public class OrderServiceImpl implements OrderService{
 
         List<OrderDetailDocument> orderDetailwithSubtotal = toCalculate.stream()
                 .map(this::calculateItemSubtotal)
+                .filter(x -> x != null)
                 .toList();
 
         double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
@@ -67,12 +68,31 @@ public class OrderServiceImpl implements OrderService{
         return converter.entityToDto(orderRepository.save(orderToSave));
     }
 
-    public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument){
+    public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
 
-        double price =  productServiceFeignClient.getProductById(String.valueOf(orderDetailDocument.getProductId())).getPrice();
+        String sku = String.valueOf(orderDetailDocument.getProductId());
+
+        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
+        if (!productExist) {
+            return null;
+        }
+        // TODO replace String.valueOf by sku
+
+        double price = productServiceFeignClient.getProductById(sku).getPrice();
         int quantity = orderDetailDocument.getProductQuantity();
+        int stock = stockServiceFeignClient.countStockBySku(sku);
+
+        if (stock == 0) {
+            return null;
+        }
+        if (stock < quantity) {
+            quantity = stock;
+        }
+        int newStock = stock - quantity;
+        orderDetailDocument.setProductQuantity(quantity);
         orderDetailDocument.setProductPrice(price);
         orderDetailDocument.setItemSubtotal(price * quantity);
+        stockServiceFeignClient.reduceStock(sku, newStock);
         return orderDetailDocument;
     }
 
@@ -87,6 +107,7 @@ public class OrderServiceImpl implements OrderService{
 
         return OrdersToReturn;
     }
+
 
     // OpenFeign
 
@@ -117,11 +138,11 @@ public class OrderServiceImpl implements OrderService{
 
             if (orderDetailDocumentVerifiedDto.getVerify().equals("Accepted") ){
 
-                messageRequest= new Message("Order created stock is okay", orderDetailDocumentVerifiedDto.getProductId(), OrderStatus.PLACED);
+                messageRequest= new Message("Order created stock is OKAY ", orderDetailDocumentVerifiedDto.getProductId(), OrderStatus.PLACED);
 
             } else {
 
-                messageRequest= new Message("Order created stock is NOT okay", orderDetailDocumentVerifiedDto.getProductId(), OrderStatus.CANCELLED);
+                messageRequest= new Message("Order NOT created stock is NOT okay ", orderDetailDocumentVerifiedDto.getProductId(), OrderStatus.CANCELLED);
 
             }
             kafkaTemplate.send("placeOrder", String.valueOf(messageRequest));
@@ -131,9 +152,7 @@ public class OrderServiceImpl implements OrderService{
 
         }
 
-
         return orderVerifiedDto;
-
     }
 
     public OrderDetailDocumentVerifiedDto calculateItemSubtotalVerify(OrderDetailDocument orderDetailDocument){
@@ -150,3 +169,5 @@ public class OrderServiceImpl implements OrderService{
         return orderDetailDocumentVerified;
     }
 }
+
+

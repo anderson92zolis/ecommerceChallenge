@@ -19,17 +19,12 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "productId")
     private int productId;
-
     @Column(name= "SKU")
     private String sku;
-
-
     @Column(name="productName", length=100, unique=true,  nullable= false)
     private String name;
-
     @Column(name = "Quantity")
     private int quantity;
-
     @CreationTimestamp
     private LocalDateTime localDatetime;
 
