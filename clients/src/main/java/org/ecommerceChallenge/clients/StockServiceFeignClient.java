@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 
-@FeignClient(name = "stockMicroservice", url = "http://localhost:8082")
+@FeignClient(name = "stocks", url = "http://localhost:8080")
 public interface StockServiceFeignClient {
 
     @PostMapping(path= "api/v1/stock/verifyProductId/{productId}")
     String verifyProductIdByQuantity(@PathVariable("productId") int productId,  @RequestParam(value = "orderQuantity") int  orderQuantity);
 
-    @GetMapping(path= "api/v1/stock/countStock/{sku}")
-    public int countStockBySku (String sku);
+    @GetMapping(path = "api/v1/stock/countStock/{sku}")
+    int countStockBySku (@PathVariable String sku);
 
+    @PostMapping(path = "api/v1/stock/reduceStock/{skuReceived}/{quantityReceived}")
+    void reduceStock (@PathVariable String skuReceived, @PathVariable int quantityReceived);
     }

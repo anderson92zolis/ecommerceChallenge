@@ -53,9 +53,21 @@ public class StockController {
         return verifyQuantity;
     }
 
+    /*
+     * Feign methods
+     */
+
     @GetMapping(value = "/countStock/{sku}")
-    public int countStockBySku (String sku){
+    public int countStockBySku (@PathVariable String sku) {
         return stockService.stockBySku(sku);
     }
+
+    @PostMapping(value = "/reduceStock/{skuReceived}/{quantityReceived}")
+    public void reduceStock (@PathVariable String skuReceived, @PathVariable int quantityReceived){
+
+        stockService.updateStockQuantity(skuReceived, quantityReceived);
+
+    }
+
 
 }

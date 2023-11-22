@@ -72,6 +72,29 @@ public class StockService {
     }
 
     public int stockBySku(String sku) {
-        return stockRepository.getBySku(sku).getQuantity();
+
+        int stockAvailable = stockRepository.getBySku(sku).getQuantity();
+        log.info("Stock available: {}", stockAvailable);
+        return stockAvailable;
+
+    }
+
+    public void updateStockQuantity(String skuReceived, int quantityReceived) {
+
+        var stockActual = stockRepository.getBySku(skuReceived);
+
+        var stockToUpdate = Stock.builder()
+                .productId(stockActual.getProductId())
+                .sku(skuReceived)
+                .name(stockActual.getName())
+                .quantity(quantityReceived)
+                .build();
+
+        this.stockRepository.save(stockToUpdate);
+
+        log.info("Product updated: {}", stockToUpdate);
+
+
+
     }
 }

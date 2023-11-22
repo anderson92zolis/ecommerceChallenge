@@ -62,7 +62,7 @@ public class OrderController {
     }
 
     // openFeign
-
+/*
     @Operation(
             operationId = "OperationId",
             summary = "Verify stock order",
@@ -77,5 +77,5 @@ public class OrderController {
     public ResponseEntity<OrderVerifiedDto> verifyOrderStocks (@RequestBody OrderDocument orderDocument){
         OrderVerifiedDto documentVerified = orderService.verifyOrderStocks(orderDocument);
         return ResponseEntity.status(201).body(documentVerified);
-    }
+    }*/
 }
