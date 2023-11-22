@@ -39,9 +39,12 @@ public class StockController {
 
     @PostMapping(value = "/addStock")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewStock(@RequestBody StockRequest stockRequest){
+    public void addNewStock(@RequestBody StockRequest stockRequest) {
         stockService.saveStock(stockRequest);
+
     }
+
+
 
     @PostMapping(path = "/verifyProductId/{productId}")
     @ResponseStatus(HttpStatus.OK)
@@ -50,6 +53,21 @@ public class StockController {
         return verifyQuantity;
     }
 
+    /*
+     * Feign methods
+     */
+
+    @GetMapping(value = "/countStock/{sku}")
+    public int countStockBySku (@PathVariable String sku) {
+        return stockService.stockBySku(sku);
+    }
+
+    @PostMapping(value = "/reduceStock/{skuReceived}/{quantityReceived}")
+    public void reduceStock (@PathVariable String skuReceived, @PathVariable int quantityReceived){
+
+        stockService.updateStockQuantity(skuReceived, quantityReceived);
+
+    }
 
 
 }
