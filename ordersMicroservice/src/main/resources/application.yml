@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: orders
+  # kafka configuration provider
+  kafka:
+    bootstrap-servers: localhost:9092
+
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ms_orders
@@ -21,5 +25,7 @@ eureka:
       default-zone: http://localhost:8761/eureka/
     registerWithEureka: true
     fetchRegistry: true
+
   .instance:
     instance-id=${spring.application.name}:${spring.application.instance_id:${random:value}}
+

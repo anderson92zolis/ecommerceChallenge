@@ -12,5 +12,7 @@ public interface OrderService {
     OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument);
     List<OrderDto> findAll();
 
+    OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument);
+
 //    OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument);
 }

@@ -14,6 +14,5 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class OrdersApp {
     public static void main(String[] args) {
         SpringApplication.run(OrdersApp.class,args);
-
     }
 }

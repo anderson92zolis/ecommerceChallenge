@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 
+
 @FeignClient(name = "stocks", url = "http://localhost:8080")
+
 public interface StockServiceFeignClient {
 
     @PostMapping(path= "api/v1/stock/verifyProductId/{productId}")

@@ -23,6 +23,8 @@
         <module>clients</module>
         <module>gateway</module>
         <module>discovery-server</module>
+        <module>notification-server</module>
+
     </modules>
 
 

@@ -118,49 +118,6 @@
 			]
 		},
 		{
-			"name": "Notification",
-			"item": [
-				{
-					"name": "add a new products",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"sku\": \"{{$randomSku}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomWords}}\",\r\n    \"category\": \"CLOTHING\",\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/products/addProduct",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"products",
-								"addProduct"
-							],
-							"query": [
-								{
-									"key": null,
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "StocksMicro",
 			"item": [
 				{
@@ -181,12 +138,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/api/v1/stock/getAllStocks",
+							"raw": "http://localhost:8080/api/v1/stock/getAllStocks",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -215,12 +172,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/api/v1/stock/test",
+							"raw": "http://localhost:8080/api/v1/stock/test",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -246,12 +203,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/api/v1/stock/addStock",
+							"raw": "http://localhost:8080/api/v1/stock/addStock",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -292,12 +249,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/v1/orders/getAll",
+							"raw": "http://localhost:8080/api/v1/orders/getAll",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -315,7 +272,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 2,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 34,\r\n      \"productId\": 2,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 3,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 34,\r\n      \"productId\": 3,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}",
+							"raw": "{\r\n  \"id\": 2,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 1,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 3,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"productId\": 6,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -323,12 +280,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/v1/orders/add",
+							"raw": "http://localhost:8080/api/v1/orders/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -356,7 +313,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 473,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 3,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 154,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}\r\n",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 1,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"productId\": 2,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -364,12 +321,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/v1/orders/verifyStock",
+							"raw": "http://localhost:8080/api/v1/orders/verifyStock",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8081",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
