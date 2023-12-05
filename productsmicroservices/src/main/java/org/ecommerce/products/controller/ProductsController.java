@@ -44,8 +44,15 @@ public class ProductsController {
 
     @PutMapping(value = "/updateProduct/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @RequestBody ProductsRequest productsRequest){
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable("id") int id, @RequestBody ProductsRequest productsRequest){
         return ResponseEntity.ok(productsService.updateProduct(id,productsRequest));
+    }
+
+    @DeleteMapping(value = "/deleteProduct/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") int id){
+        productsService.deleteProductById(id);
+        return ResponseEntity.ok("Product deleted correctly with ID: "+ id);
     }
 
     @GetMapping(value = "/getProduct/{sku}")

@@ -61,6 +61,14 @@ public class ProductsService {
 
     }
 
+    public void deleteProductById(int id) {
+        if(productsRepository.existsById(id)){
+            productsRepository.deleteById(id);
+                    } else {
+            throw new ProductNotFound("THE PRODUCT DOES NOT EXISTS, WITH ID: "+id);
+        }
+    }
+
     public List<ProductResponse> getAllProducts(){
         var products = productsRepository.findAll();
 
@@ -98,5 +106,6 @@ public class ProductsService {
         }
         return confirmProduct;
     }
+
 
 }
