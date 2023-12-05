@@ -78,13 +78,13 @@
 					"response": []
 				},
 				{
-					"name": "add a new products",
+					"name": "add a new product",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"sku\": \"{{$randomSku}}\",\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomWords}}\",\r\n    \"category\": \"CLOTHING\",\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
+							"raw": "{\r\n    \"sku\": \"000002\",  // 000002\r\n    \"name\": \"{{$randomProductName}}\",\r\n    \"description\": \"{{$randomWords}}\",\r\n    \"category\": \"CLOTHING\", // ENTERTAINMENT\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -108,6 +108,45 @@
 								{
 									"key": null,
 									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sku\": \"update sku\",\r\n    \"name\": \"update name product 2\",\r\n    \"description\": \"update description\",\r\n    \"category\": \"ELECTRONICS\",\r\n    \"price\": \"{{$randomPrice}}\",\r\n    \"manufacturer\": \"{{$randomCompanyName}}\",\r\n    \"supplier\": \"{{$randomCompanyName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/products/updateProduct/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"updateProduct",
+								"3"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
 									"disabled": true
 								}
 							]
@@ -313,7 +352,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 1,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"productId\": 2,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 2,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}\r\n",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"orderDate\": \"2023-11-06T19:41:16.519Z\",\r\n  \"orderDetail\": [\r\n    {\r\n      \"id\": 1,\r\n      \"productId\": 1,\r\n      \"productPrice\": 4,\r\n      \"productQuantity\": 10,\r\n      \"itemSubtotal\": 0\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"productId\": 2,\r\n      \"productPrice\": 3,\r\n      \"productQuantity\": 10,\r\n      \"itemSubtotal\": 0\r\n    }\r\n  ],\r\n  \"subtotal\": 0,\r\n  \"tax\": 0\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
