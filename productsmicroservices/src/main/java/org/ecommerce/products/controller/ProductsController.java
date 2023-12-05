@@ -38,24 +38,24 @@ public class ProductsController {
 
     @PostMapping(value = "/addProduct")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNewProducts(@RequestBody ProductsRequest productsRequest){
-        productsService.saveProducts(productsRequest);
+    public ResponseEntity<ProductResponse> addNewProducts(@RequestBody ProductsRequest productsRequest){
+        return ResponseEntity.ok(productsService.saveProducts(productsRequest));
     }
+
+    @PutMapping(value = "/updateProduct/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @RequestBody ProductsRequest productsRequest){
+        return ResponseEntity.ok(productsService.updateProduct(id,productsRequest));
+    }
+
     @GetMapping(value = "/getProduct/{sku}")
     public ResponseEntity<ProductResponse> getProductById (@PathVariable String sku){
         return ResponseEntity.ok(productsService.findBySku(sku));
     }
 
-    /**
-     * @Author darucker
-     * @param sku
-     * @return boolean
-     *
-     */
     @GetMapping(value = "/confirmProduct/{sku}")
     public boolean confirmProductBySku (@PathVariable String sku) {
         return productsService.confirmProductBySku (sku);
     }
-
 
 }

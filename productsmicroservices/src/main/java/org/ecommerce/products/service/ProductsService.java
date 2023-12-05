@@ -9,6 +9,7 @@ import org.ecommerce.products.exception.ProductNotFound;
 import org.ecommerce.products.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,7 +19,7 @@ public class ProductsService {
 
     private final ProductsRepository productsRepository;
 
-    public void saveProducts(ProductsRequest productsRequest){
+    public ProductResponse saveProducts(ProductsRequest productsRequest){
 
         var product = Product.builder()
                 .sku(productsRequest.getSku())
@@ -33,8 +34,33 @@ public class ProductsService {
         productsRepository.save(product);
 
         log.info("Product added: {}", product);
+        return mapToProductResponse(product);
+    }
+
+    public ProductResponse updateProduct(int id, ProductsRequest productsRequest){
+
+        Product updatedProduct = productsRepository.findById(id).orElseThrow(()-> new ProductNotFound("THE PRODUCT DOES NOT EXISTS, WITH ID: "+id) );
+
+
+        updatedProduct = Product.builder()
+                .productId(id)
+                .sku(productsRequest.getSku())
+                .name(productsRequest.getName())
+                .description(productsRequest.getDescription())
+                .localDatetime(LocalDateTime.now())
+                .category(productsRequest.getCategory())
+                .price(productsRequest.getPrice())
+                .manufacturer(productsRequest.getManufacturer())
+                .supplier(productsRequest.getSupplier())
+                .build();
+
+        productsRepository.save(updatedProduct);
+
+        log.info("Product updated: {}", updatedProduct);
+        return mapToProductResponse(updatedProduct);
 
     }
+
     public List<ProductResponse> getAllProducts(){
         var products = productsRepository.findAll();
 
@@ -54,14 +80,12 @@ public class ProductsService {
                 .build();
     }
 
-
     public ProductResponse findBySku(String sku) {
 
         Product productFound = productsRepository.getBySku(sku);
         if(productFound==null){
             throw new ProductNotFound("The product does not exists");
         }
-
         return mapToProductResponse(productFound);
     }
 
