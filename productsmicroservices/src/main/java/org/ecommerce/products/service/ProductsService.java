@@ -107,12 +107,4 @@ public class ProductsService {
         }
         return confirmProduct;
     }
-
-    public int suma(int a, int b) {
-        int result;
-        result = a + b;
-
-        return result;
-    }
-
 }
