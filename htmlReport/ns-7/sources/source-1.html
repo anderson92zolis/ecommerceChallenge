@@ -97,7 +97,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    @Autowired
 &nbsp;    private final ProductsRepository productsRepository;
 &nbsp;
-&nbsp;    public ProductResponse saveProducts(ProductsRequest productsRequest){
+&nbsp;    public ProductResponse saveProducts(ProductsRequest productsRequest) {
 &nbsp;
 <b class="nc">&nbsp;        var product = Product.builder()</b>
 <b class="nc">&nbsp;                .sku(productsRequest.getSku())</b>
@@ -115,9 +115,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        return mapToProductResponse(product);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public ProductResponse updateProduct(int id, ProductsRequest productsRequest){
+&nbsp;    public ProductResponse updateProduct(int id, ProductsRequest productsRequest) {
 &nbsp;
-<b class="nc">&nbsp;        Product updatedProduct = productsRepository.findById(id).orElseThrow(()-&gt; new ProductNotFound(&quot;THE PRODUCT DOES NOT EXISTS, WITH ID: &quot;+id) );</b>
+<b class="nc">&nbsp;        Product updatedProduct = productsRepository.findById(id).orElseThrow(() -&gt; new ProductNotFound(&quot;THE PRODUCT DOES NOT EXISTS, WITH ID: &quot; + id));</b>
 &nbsp;
 &nbsp;
 <b class="nc">&nbsp;        updatedProduct = Product.builder()</b>
@@ -140,14 +140,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void deleteProductById(int id) {
-<b class="nc">&nbsp;        if(productsRepository.existsById(id)){</b>
+<b class="nc">&nbsp;        if (productsRepository.existsById(id)) {</b>
 <b class="nc">&nbsp;            productsRepository.deleteById(id);</b>
-&nbsp;                    } else {
-<b class="nc">&nbsp;            throw new ProductNotFound(&quot;THE PRODUCT DOES NOT EXISTS, WITH ID: &quot;+id);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            throw new ProductNotFound(&quot;THE PRODUCT DOES NOT EXISTS, WITH ID: &quot; + id);</b>
 &nbsp;        }
 &nbsp;    }
 &nbsp;
-&nbsp;    public List&lt;ProductResponse&gt; getAllProducts(){
+&nbsp;    public List&lt;ProductResponse&gt; getAllProducts() {
 <b class="nc">&nbsp;        var products = productsRepository.findAll();</b>
 &nbsp;
 <b class="nc">&nbsp;        log.info(&quot;Products to show: {}&quot;, productsRepository);</b>
@@ -169,7 +169,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    public ProductResponse findBySku(String sku) {
 &nbsp;
 <b class="nc">&nbsp;        Product productFound = productsRepository.getBySku(sku);</b>
-<b class="nc">&nbsp;        if(productFound==null){</b>
+<b class="nc">&nbsp;        if (productFound == null) {</b>
 <b class="nc">&nbsp;            throw new ProductNotFound(&quot;The product does not exists&quot;);</b>
 &nbsp;        }
 <b class="nc">&nbsp;        return mapToProductResponse(productFound);</b>
@@ -179,15 +179,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 <b class="nc">&nbsp;        boolean confirmProduct = false;</b>
 <b class="nc">&nbsp;        Product productFound = productsRepository.getBySku(sku);</b>
-<b class="nc">&nbsp;        if(productFound!=null){</b>
+<b class="nc">&nbsp;        if (productFound != null) {</b>
 <b class="nc">&nbsp;            confirmProduct = true;</b>
 &nbsp;        }
 <b class="nc">&nbsp;        return confirmProduct;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public int suma(int a, int b){
+&nbsp;    public int suma(int a, int b) {
 &nbsp;        int result;
-<b class="nc">&nbsp;        result = a+b;</b>
+<b class="nc">&nbsp;        result = a + b;</b>
 &nbsp;
 <b class="nc">&nbsp;        return result;</b>
 &nbsp;    }
@@ -216,7 +216,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-12-06 18:00</div>
+    <div style="float:right;">generated on 2023-12-06 18:23</div>
 </div>
 </body>
 </html>

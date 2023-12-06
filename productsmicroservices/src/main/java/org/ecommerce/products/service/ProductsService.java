@@ -20,7 +20,7 @@ public class ProductsService {
     @Autowired
     private final ProductsRepository productsRepository;
 
-    public ProductResponse saveProducts(ProductsRequest productsRequest){
+    public ProductResponse saveProducts(ProductsRequest productsRequest) {
 
         var product = Product.builder()
                 .sku(productsRequest.getSku())
@@ -38,9 +38,9 @@ public class ProductsService {
         return mapToProductResponse(product);
     }
 
-    public ProductResponse updateProduct(int id, ProductsRequest productsRequest){
+    public ProductResponse updateProduct(int id, ProductsRequest productsRequest) {
 
-        Product updatedProduct = productsRepository.findById(id).orElseThrow(()-> new ProductNotFound("THE PRODUCT DOES NOT EXISTS, WITH ID: "+id) );
+        Product updatedProduct = productsRepository.findById(id).orElseThrow(() -> new ProductNotFound("THE PRODUCT DOES NOT EXISTS, WITH ID: " + id));
 
 
         updatedProduct = Product.builder()
@@ -63,14 +63,14 @@ public class ProductsService {
     }
 
     public void deleteProductById(int id) {
-        if(productsRepository.existsById(id)){
+        if (productsRepository.existsById(id)) {
             productsRepository.deleteById(id);
-                    } else {
-            throw new ProductNotFound("THE PRODUCT DOES NOT EXISTS, WITH ID: "+id);
+        } else {
+            throw new ProductNotFound("THE PRODUCT DOES NOT EXISTS, WITH ID: " + id);
         }
     }
 
-    public List<ProductResponse> getAllProducts(){
+    public List<ProductResponse> getAllProducts() {
         var products = productsRepository.findAll();
 
         log.info("Products to show: {}", productsRepository);
@@ -92,7 +92,7 @@ public class ProductsService {
     public ProductResponse findBySku(String sku) {
 
         Product productFound = productsRepository.getBySku(sku);
-        if(productFound==null){
+        if (productFound == null) {
             throw new ProductNotFound("The product does not exists");
         }
         return mapToProductResponse(productFound);
@@ -102,15 +102,15 @@ public class ProductsService {
 
         boolean confirmProduct = false;
         Product productFound = productsRepository.getBySku(sku);
-        if(productFound!=null){
+        if (productFound != null) {
             confirmProduct = true;
         }
         return confirmProduct;
     }
 
-    public int suma(int a, int b){
+    public int suma(int a, int b) {
         int result;
-        result = a+b;
+        result = a + b;
 
         return result;
     }

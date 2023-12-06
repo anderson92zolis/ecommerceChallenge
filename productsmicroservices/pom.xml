@@ -80,6 +80,7 @@
 
     </dependencies>
 
+    <!--
     <profiles>
         <profile>
             <id>coverage</id>
@@ -113,6 +114,7 @@
             </build>
         </profile>
     </profiles>
+    -->
 
 
 </project>
