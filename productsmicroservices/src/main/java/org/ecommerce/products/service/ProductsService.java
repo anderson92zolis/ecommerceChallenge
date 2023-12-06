@@ -7,6 +7,7 @@ import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.entity.Product;
 import org.ecommerce.products.exception.ProductNotFound;
 import org.ecommerce.products.repository.ProductsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class ProductsService {
-
+    @Autowired
     private final ProductsRepository productsRepository;
 
     public ProductResponse saveProducts(ProductsRequest productsRequest){
@@ -107,5 +108,8 @@ public class ProductsService {
         return confirmProduct;
     }
 
+    public int suma(int a, int b){
+        return a+b;
+    }
 
 }

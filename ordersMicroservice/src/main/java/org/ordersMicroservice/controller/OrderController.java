@@ -81,20 +81,6 @@ public class OrderController {
     }
 
 
-    @Operation(summary = "Get every order", description = "Creates and displays a list containing every order in the database")
-    @GetMapping("/getTestAll")
-    public ResponseEntity<List<OrderDto>> getTestAllOrders (){
-
-        return ResponseEntity.ok(orderService.findAll());
-    }
-
-    @Operation(summary = "Get every order", description = "Creates and displays a list containing every order in the database")
-    @GetMapping("/getTest2All")
-    public ResponseEntity<List<OrderDto>> getTest2AllOrders (){
-
-        return ResponseEntity.ok(orderService.findAll());
-    }
-
 }
 
 
