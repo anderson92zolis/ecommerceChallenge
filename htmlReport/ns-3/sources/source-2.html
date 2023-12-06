@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > ProductsControllerThymeleaf</title>
+  <title>Coverage Report > ProductsRequest</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">org.ecommerce.products.controller</a>
+    <a href="../index.html">org.ecommerce.products.dto</a>
 </div>
 
-<h1>Coverage Summary for Class: ProductsControllerThymeleaf (org.ecommerce.products.controller)</h1>
+<h1>Coverage Summary for Class: ProductsRequest (org.ecommerce.products.dto)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -41,29 +41,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">ProductsControllerThymeleaf</td>
+  <td class="name">ProductsRequest</td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    0%
   </span>
   <span class="absValue">
-    (1/1)
+    (0/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    33,3%
+    0%
   </span>
   <span class="absValue">
-    (2/6)
+    (0/11)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    15,4%
+    0%
   </span>
   <span class="absValue">
-    (2/13)
+    (0/11)
   </span>
 </td>
 </tr>
@@ -75,55 +75,26 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerce.products.controller;
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerce.products.dto;
 &nbsp;
-&nbsp;import jakarta.validation.Valid;
-&nbsp;import lombok.AllArgsConstructor;
-&nbsp;import lombok.extern.slf4j.Slf4j;
-&nbsp;import org.ecommerce.products.dto.ProductResponse;
-&nbsp;import org.ecommerce.products.dto.ProductsRequest;
-&nbsp;import org.ecommerce.products.service.ProductsService;
-&nbsp;import org.springframework.stereotype.Controller;
-&nbsp;import org.springframework.ui.Model;
-&nbsp;import org.springframework.validation.BindingResult;
-&nbsp;import org.springframework.web.bind.annotation.*;
 &nbsp;
-&nbsp;import java.util.List;
+&nbsp;import jakarta.validation.constraints.NotBlank;
+&nbsp;import lombok.*;
+&nbsp;import org.ecommerce.products.entity.Category;
 &nbsp;
-&nbsp;@Controller // always verify this Controler vs RestController
-<b class="fc">&nbsp;@AllArgsConstructor</b>
-<b class="fc">&nbsp;@Slf4j</b>
-&nbsp;public class ProductsControllerThymeleaf {
-&nbsp;
-&nbsp;    private final ProductsService productsService;
-&nbsp;
-&nbsp;    @GetMapping(&quot;/&quot;)
-&nbsp;    public String viewHomePage(ProductsRequest productsRequest) {
-<b class="nc">&nbsp;        return &quot;index&quot;;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @GetMapping(&quot;/addnewProduct&quot;)
-&nbsp;    public String addNewProduct(Model model) {
-<b class="nc">&nbsp;        ProductsRequest productsRequest = new ProductsRequest();</b>
-<b class="nc">&nbsp;        model.addAttribute(&quot;productsRequest&quot;, productsRequest);</b>
-<b class="nc">&nbsp;        return &quot;addProduct&quot;; // here the page where is going to go</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @PostMapping(&quot;/saveProduct&quot;)
-&nbsp;    public String saveProduct(@Valid @ModelAttribute(&quot;productsRequest&quot;) ProductsRequest productsRequest, BindingResult result) {
-<b class="nc">&nbsp;        if (result.hasErrors()) {</b>
-<b class="nc">&nbsp;            return &quot;addProduct&quot;; // redirection to the addProduct.html again</b>
-&nbsp;        }
-<b class="nc">&nbsp;        productsService.saveProducts(productsRequest);</b>
-<b class="nc">&nbsp;        return &quot;redirect:/&quot;; // redirection to the index.html again</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @GetMapping(&quot;/getAllProducts&quot;)
-&nbsp;    public String getAllProducts(Model model) {
-<b class="nc">&nbsp;        List&lt;ProductResponse&gt; productsResponse   = productsService.getAllProducts();</b>
-<b class="nc">&nbsp;        model.addAttribute(&quot;productsResponse&quot;, productsResponse);</b>
-<b class="nc">&nbsp;        return &quot;seeAllProduct&quot;;</b>
-&nbsp;    }
+<b class="nc">&nbsp;@AllArgsConstructor</b>
+<b class="nc">&nbsp;@NoArgsConstructor</b>
+&nbsp;@Getter
+<b class="nc">&nbsp;@Builder</b>
+<b class="nc">&nbsp;@Setter // adding for thymeleaf</b>
+&nbsp;public class ProductsRequest {
+<b class="nc">&nbsp;    private String sku;</b>
+<b class="nc">&nbsp;    private String name;</b>
+<b class="nc">&nbsp;    private String description;</b>
+<b class="nc">&nbsp;    private Category category;</b>
+<b class="nc">&nbsp;    private float price;</b>
+<b class="nc">&nbsp;    private String manufacturer;</b>
+<b class="nc">&nbsp;    private String supplier;</b>
 &nbsp;}
 </code>
 </pre>
@@ -148,7 +119,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-12-06 19:28</div>
+    <div style="float:right;">generated on 2023-12-06 19:54</div>
 </div>
 </body>
 </html>

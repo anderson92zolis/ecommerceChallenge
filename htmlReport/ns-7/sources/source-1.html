@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > Methods</title>
+  <title>Coverage Report > ProductsRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,53 +19,17 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">org.ecommerce.products.service</a>
+    <a href="../index.html">org.ecommerce.products.repository</a>
 </div>
 
-<h1>Coverage Summary for Class: Methods (org.ecommerce.products.service)</h1>
+<h1>Coverage Summary for Class: ProductsRepository (org.ecommerce.products.repository)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
-<th class="coverageStat 
-">
-  Method, %
-</th>
-<th class="coverageStat 
-">
-  Line, %
-</th>
 </tr>
 <tr>
-  <td class="name">Methods</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (1/1)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    50%
-  </span>
-  <span class="absValue">
-    (1/2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    66,7%
-  </span>
-  <span class="absValue">
-    (2/3)
-  </span>
-</td>
+  <td class="name">ProductsRepository</td>
 </tr>
 
 </table>
@@ -75,18 +39,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerce.products.service;
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerce.products.repository;
 &nbsp;
-&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import org.ecommerce.products.entity.Product;
+&nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+&nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
-<b class="nc">&nbsp;@AllArgsConstructor</b>
-&nbsp;public class Methods {
-&nbsp;    public static int suma(int a, int b) {
-&nbsp;        int result;
-<b class="fc">&nbsp;        result = a + b;</b>
+&nbsp;@Repository
+&nbsp;public interface ProductsRepository extends JpaRepository&lt;Product,Integer&gt; {
 &nbsp;
-<b class="fc">&nbsp;        return result;</b>
-&nbsp;    }
+&nbsp;    Product getBySku(String sku);
+&nbsp;
+&nbsp;    //Product findProduct(String ksu);
 &nbsp;}
 </code>
 </pre>
@@ -111,7 +75,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-12-06 19:28</div>
+    <div style="float:right;">generated on 2023-12-06 19:54</div>
 </div>
 </body>
 </html>

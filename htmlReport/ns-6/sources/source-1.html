@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > GlobalExceptionHandler</title>
+  <title>Coverage Report > Methods</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">org.ecommerce.products.exception</a>
+    <a href="../index.html">org.ecommerce.products.service</a>
 </div>
 
-<h1>Coverage Summary for Class: GlobalExceptionHandler (org.ecommerce.products.exception)</h1>
+<h1>Coverage Summary for Class: Methods (org.ecommerce.products.service)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -41,7 +41,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">GlobalExceptionHandler</td>
+  <td class="name">Methods</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -52,18 +52,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    100%
   </span>
   <span class="absValue">
-    (1/2)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    20%
+    100%
   </span>
   <span class="absValue">
-    (1/5)
+    (5/5)
   </span>
 </td>
 </tr>
@@ -75,26 +75,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerce.products.exception;
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerce.products.service;
 &nbsp;
-&nbsp;import org.bouncycastle.cert.ocsp.RespData;
-&nbsp;import org.ecommerce.products.dto.ErrorDto;
-&nbsp;import org.springframework.http.HttpStatus;
-&nbsp;import org.springframework.http.ResponseEntity;
-&nbsp;import org.springframework.web.bind.annotation.ExceptionHandler;
-&nbsp;import org.springframework.web.bind.annotation.ResponseStatus;
-&nbsp;import org.springframework.web.bind.annotation.RestControllerAdvice;
+&nbsp;import lombok.AllArgsConstructor;
 &nbsp;
-&nbsp;@RestControllerAdvice
-<b class="fc">&nbsp;public class GlobalExceptionHandler {</b>
+<b class="fc">&nbsp;@AllArgsConstructor</b>
+&nbsp;public class Methods {
+&nbsp;    public static int suma(int a, int b) {
+&nbsp;        int result;
+<b class="fc">&nbsp;        result = a + b;</b>
 &nbsp;
-&nbsp;    @ExceptionHandler(ProductNotFound.class)
-&nbsp;    @ResponseStatus(HttpStatus.OK)
-&nbsp;    public ResponseEntity&lt;ErrorDto&gt; handleProductNotFoundException(ProductNotFound ex){
-<b class="nc">&nbsp;        ErrorDto errorDto = ErrorDto.builder()</b>
-<b class="nc">&nbsp;                .message(ex.getMessage())</b>
-<b class="nc">&nbsp;                .build();</b>
-<b class="nc">&nbsp;        return new ResponseEntity&lt;&gt;(errorDto, HttpStatus.NOT_FOUND);</b>
+<b class="fc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static int subtract (int a, int b) {
+&nbsp;        int result;
+<b class="fc">&nbsp;        result = a - b;</b>
+&nbsp;
+<b class="fc">&nbsp;        return result;</b>
 &nbsp;    }
 &nbsp;}
 </code>
@@ -120,7 +118,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-12-06 19:28</div>
+    <div style="float:right;">generated on 2023-12-06 19:54</div>
 </div>
 </body>
 </html>

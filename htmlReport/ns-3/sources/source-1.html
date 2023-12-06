@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > ProductsController</title>
+  <title>Coverage Report > ProductResponse</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">org.ecommerce.products.controller</a>
+    <a href="../index.html">org.ecommerce.products.dto</a>
 </div>
 
-<h1>Coverage Summary for Class: ProductsController (org.ecommerce.products.controller)</h1>
+<h1>Coverage Summary for Class: ProductResponse (org.ecommerce.products.dto)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -41,29 +41,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">ProductsController</td>
+  <td class="name">ProductResponse</td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    0%
   </span>
   <span class="absValue">
-    (1/1)
+    (0/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    22,2%
+    0%
   </span>
   <span class="absValue">
-    (2/9)
+    (0/6)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    16,7%
+    0%
   </span>
   <span class="absValue">
-    (2/12)
+    (0/6)
   </span>
 </td>
 </tr>
@@ -75,73 +75,20 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerce.products.controller;
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerce.products.dto;
 &nbsp;
-&nbsp;import lombok.AllArgsConstructor;
-&nbsp;import lombok.extern.slf4j.Slf4j;
-&nbsp;import org.ecommerce.products.dto.ProductResponse;
-&nbsp;import org.ecommerce.products.dto.ProductsRequest;
-&nbsp;import org.ecommerce.products.service.ProductsService;
-&nbsp;import org.springframework.http.HttpStatus;
-&nbsp;import org.springframework.http.ResponseEntity;
-&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import lombok.Builder;
+&nbsp;import lombok.Getter;
+&nbsp;import org.ecommerce.products.entity.Category;
 &nbsp;
-&nbsp;import java.util.List;
-&nbsp;
-&nbsp;@RestController
-<b class="fc">&nbsp;@AllArgsConstructor</b>
-<b class="fc">&nbsp;@Slf4j</b>
-&nbsp;@RequestMapping(value = &quot;api/v1/products&quot;)
-&nbsp;public class ProductsController {
-&nbsp;
-&nbsp;    private final ProductsService productsService;
-&nbsp;
-&nbsp;
-&nbsp;    @ResponseStatus(HttpStatus.CREATED)
-&nbsp;    @GetMapping(value = &quot;/test&quot;)
-&nbsp;    public String test() {
-<b class="nc">&nbsp;        log.info(&quot;** Saludos desde el logger **&quot;);</b>
-&nbsp;
-&nbsp;
-<b class="nc">&nbsp;        return &quot;Hello from Products DB!!!&quot;;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @GetMapping(value = &quot;/getAllProducts&quot;)
-&nbsp;    @ResponseStatus(HttpStatus.OK)
-&nbsp;    public ResponseEntity&lt;List&lt;ProductResponse&gt;&gt; getAllProducts() {
-<b class="nc">&nbsp;        List&lt;ProductResponse&gt; products = productsService.getAllProducts();</b>
-<b class="nc">&nbsp;        return new ResponseEntity&lt;&gt;(products, HttpStatus.OK);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @PostMapping(value = &quot;/addProduct&quot;)
-&nbsp;    @ResponseStatus(HttpStatus.CREATED)
-&nbsp;    public ResponseEntity&lt;ProductResponse&gt; addNewProducts(@RequestBody ProductsRequest productsRequest){
-<b class="nc">&nbsp;        return ResponseEntity.ok(productsService.saveProducts(productsRequest));</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @PutMapping(value = &quot;/updateProduct/{id}&quot;)
-&nbsp;    @ResponseStatus(HttpStatus.CREATED)
-&nbsp;    public ResponseEntity&lt;ProductResponse&gt; updateProduct(@PathVariable(&quot;id&quot;) int id, @RequestBody ProductsRequest productsRequest){
-<b class="nc">&nbsp;        return ResponseEntity.ok(productsService.updateProduct(id,productsRequest));</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @DeleteMapping(value = &quot;/deleteProduct/{id}&quot;)
-&nbsp;    @ResponseStatus(HttpStatus.CREATED)
-&nbsp;    public ResponseEntity&lt;String&gt; deleteProduct(@PathVariable(&quot;id&quot;) int id){
-<b class="nc">&nbsp;        productsService.deleteProductById(id);</b>
-<b class="nc">&nbsp;        return ResponseEntity.ok(&quot;Product deleted correctly with ID: &quot;+ id);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @GetMapping(value = &quot;/getProduct/{sku}&quot;)
-&nbsp;    public ResponseEntity&lt;ProductResponse&gt; getProductById (@PathVariable String sku){
-<b class="nc">&nbsp;        return ResponseEntity.ok(productsService.findBySku(sku));</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @GetMapping(value = &quot;/confirmProduct/{sku}&quot;)
-&nbsp;    public boolean confirmProductBySku (@PathVariable String sku) {
-<b class="nc">&nbsp;        return productsService.confirmProductBySku (sku);</b>
-&nbsp;    }
-&nbsp;
+<b class="nc">&nbsp;@Builder</b>
+&nbsp;@Getter
+&nbsp;public class ProductResponse {
+<b class="nc">&nbsp;    private String sku; // TODO: for debuging porpouse</b>
+<b class="nc">&nbsp;    private String name;</b>
+<b class="nc">&nbsp;    private String description;</b>
+<b class="nc">&nbsp;    private Category category;</b>
+<b class="nc">&nbsp;    private float price;</b>
 &nbsp;}
 </code>
 </pre>
@@ -166,7 +113,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-12-06 19:28</div>
+    <div style="float:right;">generated on 2023-12-06 19:54</div>
 </div>
 </body>
 </html>

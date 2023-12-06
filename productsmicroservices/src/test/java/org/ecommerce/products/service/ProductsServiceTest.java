@@ -11,9 +11,5 @@ public class ProductsServiceTest {
 //    @Autowired
 //    private ProductsService productsService;
 
-    @Test
-    void suma() {
-        assertEquals(5, Methods.suma(2,3), "All good");
-        assertNotEquals(5, Methods.suma(3,3), "Bad");
-    }
+
 }
