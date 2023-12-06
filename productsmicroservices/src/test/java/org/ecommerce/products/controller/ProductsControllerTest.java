@@ -2,17 +2,20 @@ package org.ecommerce.products.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ecommerce.products.dto.ProductResponse;
+import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.entity.Product;
 import org.ecommerce.products.service.ProductsService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.invocation.InvocationOnMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
@@ -22,11 +25,12 @@ import static org.ecommerce.products.entity.Category.CLOTHING;
 import static org.ecommerce.products.entity.Category.ELECTRONICS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(ProductsController.class)
@@ -44,8 +48,38 @@ class ProductsControllerTest {
     private Product product1;
     private Product product2;
 
+    private ProductResponse productResponse1;
+    private ProductResponse productResponse2;
+
+    private ProductsRequest productRequest1;
+    private ProductsRequest productRequest2;
+
+
     @BeforeEach
     void setUp() {
+
+         productRequest1 = ProductsRequest
+                .builder()
+                .sku("000001")
+                .name("name test 1")
+                .description("this is product 1")
+                .category(CLOTHING)
+                .price(11.11f)
+                .manufacturer("test manufacturer")
+                .supplier("test supplier")
+                .build();
+
+        productRequest2 = ProductsRequest
+                .builder()
+                .sku("000002")
+                .name("name test 2")
+                .description("this is product 2")
+                .category(ELECTRONICS)
+                .price(22.22f)
+                .manufacturer("test manufacturer 2")
+                .supplier("test supplier 2")
+                .build();
+
 
         product1 = Product.builder()
                 .sku("000001")
@@ -67,8 +101,21 @@ class ProductsControllerTest {
                 .supplier("test supplier 2")
                 .build();
 
+         productResponse1 = ProductResponse.builder()
+                .sku(product1.getSku())
+                .name(product1.getName())
+                .description(product1.getDescription())
+                .category(product1.getCategory())
+                .price(product1.getPrice())
+                .build();
 
-
+         productResponse2 = ProductResponse.builder()
+                .sku(product2.getSku())
+                .name(product2.getName())
+                .description(product2.getDescription())
+                .category(product2.getCategory())
+                .price(product2.getPrice())
+                .build();
     }
 
     @AfterEach
@@ -90,21 +137,7 @@ class ProductsControllerTest {
     @Test
     void getAllProductsTest()  throws Exception{
         //given
-        ProductResponse productResponse1 = ProductResponse.builder()
-                .sku(product1.getSku())
-                .name(product1.getName())
-                .description(product1.getDescription())
-                .category(product1.getCategory())
-                .price(product1.getPrice())
-                .build();
 
-        ProductResponse productResponse2 = ProductResponse.builder()
-                .sku(product2.getSku())
-                .name(product2.getName())
-                .description(product2.getDescription())
-                .category(product2.getCategory())
-                .price(product2.getPrice())
-                .build();
 
         List<ProductResponse> productResponseList = new ArrayList<ProductResponse>();
         productResponseList.add(productResponse1);
@@ -121,7 +154,27 @@ class ProductsControllerTest {
     }
 
     @Test
-    void addNewProducts() {
+    void addNewProductsTest() throws Exception {
+
+        //given
+
+         given(productsServiceMock.saveProducts(any(ProductsRequest.class))).willReturn(productResponse1);
+
+        //when
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/products/addProduct")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(productRequest1)))
+
+        //then
+
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.sku").value(productResponse1.getSku()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(productRequest1.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description").value(productResponse1.getDescription()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.category").value(productResponse1.getCategory().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(productResponse1.getPrice()));
     }
 
     @Test
