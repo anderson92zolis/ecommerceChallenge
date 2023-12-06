@@ -22,7 +22,7 @@ public class ProductsController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping(value = "/test")
-    public String test() {
+    public String greetings() {
         log.info("** Saludos desde el logger **");
 
 
