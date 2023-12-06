@@ -28,4 +28,11 @@ class MethodsTest {
         assertEquals(8, Methods.suma3(2,3, 3), "All good");
         assertNotEquals(5, Methods.suma3(3,3, 3), "Bad");
     }
+
+    @Test
+    void suma4() {
+        assertEquals(10, Methods.suma4(2,3, 3, 2), "All good");
+        assertNotEquals(5, Methods.suma4(3,3, 3, 2), "Bad");
+
+    }
 }
