@@ -19,9 +19,9 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-
+        <!--
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-
+        -->
 
     </properties>
 
@@ -109,46 +109,80 @@
                             </configuration>
                         </execution>
                     </executions>
+                    <configuration>
+                        <destFile>${project.build.directory}/jacocoXml/jacoco.xml</destFile>
+
+                        <!-- Other configurations ... -->
+                        <dataFile>target/jacoco.exec</dataFile>
+                        <outputDirectory>target/jacocoHtml</outputDirectory>
+                        <rules>
+                            <rule>
+                                <element>BUNDLE</element>
+                                <limits>
+                                    <limit>
+                                        <counter>LINE</counter>
+                                        <value>COVEREDRATIO</value>
+                                        <minimum>0.7</minimum>
+                                    </limit>
+                                </limits>
+                            </rule>
+                        </rules>
+                        <!--
+                        <sonar.jacoco.reportPaths>${jacoco.reportsDirectory}</sonar.jacoco.reportPaths>
+                        -->
+                    </configuration>
                 </plugin>
+
+                <!--
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.plugin.version}</version>
+
+                    <configuration>
+                        <argLine>${jacocoArgLine}</argLine>
+                    </configuration>
+
+                </plugin>
+                -->
             </plugins>
         </pluginManagement>
     </build>
 
 
-
     <!--
     <profiles>
-        <profile>
-            <id>coverage</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.7</version>
-                        <executions>
-                            <execution>
-                                <id>prepare-agent</id>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>report</id>
-                                <goals>
-                                    <goal>report</goal>
-                                </goals>
-                                <configuration>
-                                    <formats>
-                                        <format>XML</format>
-                                    </formats>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+    <profile>
+    <id>coverage</id>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <formats>
+                                <format>XML</format>
+                            </formats>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    </profile>
     </profiles>
     -->
 
