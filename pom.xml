@@ -43,36 +43,41 @@
         <sonar.organization>anderson92zolis</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
-   </properties>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/report-aggregate/target/site/
+            jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
+
+    </properties>
 
 
-   <dependencies>  <!--   here the dependencies for our child microservices   -->
+    <dependencies>  <!--   here the dependencies for our child microservices   -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
 
-       <!--
-       <dependency>
-           <groupId>org.testcontainers</groupId>
-           <artifactId>testcontainers</artifactId>
-           <version>1.18.3</version>
-       </dependency>
-       -->
+        <!--
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.18.3</version>
+        </dependency>
+        -->
 
-       <dependency>
-           <groupId>org.springframework.cloud</groupId>
-           <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-       </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
 
-       <!--openfeign-->
+        <!--openfeign-->
 
-       <dependency>
-           <groupId>org.springframework.cloud</groupId>
-           <artifactId>spring-cloud-starter-openfeign</artifactId>
-       </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
 
-   </dependencies>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -91,22 +96,18 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-<!--       <dependencyManagement> lo traigo del microservicio gateway pero ya estaba acá, seguramente Andy lo trajo de otro microservicio
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-dependencies</artifactId>
-                    <version>${spring-cloud.version}</version>
-                    <type>pom</type>
-                    <scope>import</scope>
-                </dependency>
-            </dependencies>
-        </dependencyManagement>-->
+        <!--       <dependencyManagement> lo traigo del microservicio gateway pero ya estaba acá, seguramente Andy lo trajo de otro microservicio
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.springframework.cloud</groupId>
+                            <artifactId>spring-cloud-dependencies</artifactId>
+                            <version>${spring-cloud.version}</version>
+                            <type>pom</type>
+                            <scope>import</scope>
+                        </dependency>
+                    </dependencies>
+                </dependencyManagement>-->
     </dependencyManagement>
-
-
-
-
 
 
     <build>
@@ -131,6 +132,7 @@
         </pluginManagement>
     </build>
 
+<!--
     <profiles>
         <profile>
             <id>coverage</id>
@@ -164,6 +166,7 @@
             </build>
         </profile>
     </profiles>
+-->
 
     <repositories>
         <repository>
@@ -175,7 +178,6 @@
             </snapshots>
         </repository>
     </repositories>
-
 
 
 </project>
