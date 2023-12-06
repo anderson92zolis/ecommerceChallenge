@@ -1,0 +1,277 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > OrderServiceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.ordersMicroservice.service</a>
+</div>
+
+<h1>Coverage Summary for Class: OrderServiceImpl (org.ordersMicroservice.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OrderServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/65)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ordersMicroservice.service;
+&nbsp;
+&nbsp;import org.ecommerceChallenge.clients.ProductServiceFeignClient;
+&nbsp;import org.ecommerceChallenge.clients.StockServiceFeignClient;
+&nbsp;import org.ordersMicroservice.dto.OrderDto;
+&nbsp;import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
+&nbsp;import org.ordersMicroservice.dto.verify.OrderVerifiedDto;
+&nbsp;import org.ordersMicroservice.entity.OrderDetailDocument;
+&nbsp;import org.ordersMicroservice.entity.OrderDocument;
+&nbsp;import org.ordersMicroservice.eventsKafka.entity.Message;
+&nbsp;import org.ordersMicroservice.eventsKafka.enums.OrderStatus;
+&nbsp;import org.ordersMicroservice.exception.EmptyOrderDetailException;
+&nbsp;import org.ordersMicroservice.helper.ConverterEntitiesAndDtos;
+&nbsp;import org.ordersMicroservice.repository.OrderRepository;
+&nbsp;import org.ordersMicroservice.utils.JsonUtils;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.kafka.core.KafkaTemplate;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Calendar;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;
+&nbsp;@Service
+<b class="nc">&nbsp;public class OrderServiceImpl implements OrderService {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    OrderRepository orderRepository;
+&nbsp;    @Autowired
+&nbsp;    ConverterEntitiesAndDtos converter;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    StockServiceFeignClient stockServiceFeignClient;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    KafkaTemplate&lt;String, String&gt; kafkaTemplate;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    ProductServiceFeignClient productServiceFeignClient;
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public OrderDto saveOrder(OrderDocument orderDocument) {
+&nbsp;
+<b class="nc">&nbsp;        OrderDocument orderToSave = orderDocument;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (orderToSave.getOrderDetail().isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new EmptyOrderDetailException(&quot;The order detail list is empty.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        List&lt;OrderDetailDocument&gt; toCalculate = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        toCalculate = orderToSave.getOrderDetail();</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;OrderDetailDocument&gt; orderDetailwithSubtotal = toCalculate.stream()</b>
+<b class="nc">&nbsp;                .map(this::calculateItemSubtotal)</b>
+<b class="nc">&nbsp;                .filter(x -&gt; x != null)</b>
+<b class="nc">&nbsp;                .toList();</b>
+&nbsp;
+<b class="nc">&nbsp;        double subtotal = toCalculate.stream().mapToDouble(s -&gt; s.getItemSubtotal()).sum();</b>
+&nbsp;
+<b class="nc">&nbsp;        orderToSave.setOrderDate(Calendar.getInstance());</b>
+<b class="nc">&nbsp;        orderToSave.setOrderDetail(orderDetailwithSubtotal);</b>
+<b class="nc">&nbsp;        orderToSave.setSubtotal(subtotal);</b>
+<b class="nc">&nbsp;        orderToSave.setTax(subtotal * 21 / 100);</b>
+&nbsp;
+<b class="nc">&nbsp;        return converter.entityToDto(orderRepository.save(orderToSave));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
+&nbsp;
+<b class="nc">&nbsp;        String sku = String.valueOf(orderDetailDocument.getProductId());</b>
+&nbsp;
+<b class="nc">&nbsp;        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));</b>
+<b class="nc">&nbsp;        if (!productExist) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;        // TODO replace String.valueOf by sku
+&nbsp;
+<b class="nc">&nbsp;        double price = productServiceFeignClient.getProductById(sku).getPrice();</b>
+<b class="nc">&nbsp;        int quantity = orderDetailDocument.getProductQuantity();</b>
+<b class="nc">&nbsp;        int stock = stockServiceFeignClient.countStockBySku(sku);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (stock == 0) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (stock &lt; quantity) {</b>
+<b class="nc">&nbsp;            quantity = stock;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        int newStock = stock - quantity;</b>
+<b class="nc">&nbsp;        orderDetailDocument.setProductQuantity(quantity);</b>
+<b class="nc">&nbsp;        orderDetailDocument.setProductPrice(price);</b>
+<b class="nc">&nbsp;        orderDetailDocument.setItemSubtotal(price * quantity);</b>
+<b class="nc">&nbsp;        stockServiceFeignClient.reduceStock(sku, newStock);</b>
+<b class="nc">&nbsp;        return orderDetailDocument;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;OrderDto&gt; findAll() {
+&nbsp;
+<b class="nc">&nbsp;        List&lt;OrderDocument&gt; orderDocumentList = orderRepository.findAll();</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;OrderDto&gt; OrdersToReturn = orderDocumentList.stream()</b>
+<b class="nc">&nbsp;                .map(s -&gt; converter.entityToDto(s))</b>
+<b class="nc">&nbsp;                .toList();</b>
+&nbsp;
+<b class="nc">&nbsp;        return OrdersToReturn;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // OpenFeign
+&nbsp;
+&nbsp;    public OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument) {
+&nbsp;
+<b class="nc">&nbsp;        if(orderDocument.getOrderDetail().isEmpty()){</b>
+<b class="nc">&nbsp;            throw new EmptyOrderDetailException(&quot;The order detail list is empty.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        List&lt;OrderDetailDocument&gt; toCalculate = orderDocument.getOrderDetail();</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;OrderDetailDocumentVerifiedDto&gt; orderDetailwithSubtotal = toCalculate.stream()</b>
+<b class="nc">&nbsp;                .map(this::calculateItemSubtotalVerify)</b>
+<b class="nc">&nbsp;                .toList();</b>
+&nbsp;
+<b class="nc">&nbsp;        double subtotal = toCalculate.stream().mapToDouble(s -&gt; s.getItemSubtotal()).sum();</b>
+&nbsp;
+<b class="nc">&nbsp;        OrderVerifiedDto orderVerifiedDto= new OrderVerifiedDto();</b>
+&nbsp;
+<b class="nc">&nbsp;        orderVerifiedDto.setOrderDate(Calendar.getInstance());</b>
+<b class="nc">&nbsp;        orderVerifiedDto.setOrderDetailDocumentVerified(orderDetailwithSubtotal);</b>
+<b class="nc">&nbsp;        orderVerifiedDto.setSubtotal(subtotal);</b>
+<b class="nc">&nbsp;        orderVerifiedDto.setTax(subtotal * 21 / 100);</b>
+&nbsp;
+<b class="nc">&nbsp;        Message messageRequest= null;</b>
+&nbsp;
+<b class="nc">&nbsp;        for (OrderDetailDocumentVerifiedDto orderDetailDocumentVerifiedDto: orderDetailwithSubtotal){</b>
+&nbsp;
+<b class="nc">&nbsp;            if (orderDetailDocumentVerifiedDto.getVerify().equals(&quot;Accepted&quot;) ){</b>
+&nbsp;
+<b class="nc">&nbsp;                messageRequest= new Message(&quot;Order created stock is OKAY &quot;, orderDetailDocumentVerifiedDto.getProductId(), OrderStatus.PLACED);</b>
+&nbsp;
+&nbsp;            } else {
+&nbsp;
+<b class="nc">&nbsp;                messageRequest= new Message(&quot;Order NOT created stock is NOT okay &quot;, orderDetailDocumentVerifiedDto.getProductId(), OrderStatus.CANCELLED);</b>
+&nbsp;
+&nbsp;            }
+<b class="nc">&nbsp;            kafkaTemplate.send(&quot;placeOrder&quot;, String.valueOf(messageRequest));</b>
+&nbsp;
+&nbsp;            // with the function util to deserialize
+&nbsp;            // kafkaTemplate.send(&quot;placeOrder&quot;, JsonUtils.toJson(messageRequest));
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return orderVerifiedDto;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public OrderDetailDocumentVerifiedDto calculateItemSubtotalVerify(OrderDetailDocument orderDetailDocument){
+&nbsp;
+<b class="nc">&nbsp;        double price = orderDetailDocument.getProductPrice();</b>
+<b class="nc">&nbsp;        int quantity = orderDetailDocument.getProductQuantity();</b>
+<b class="nc">&nbsp;        orderDetailDocument.setItemSubtotal(price * quantity);</b>
+<b class="nc">&nbsp;        OrderDetailDocumentVerifiedDto orderDetailDocumentVerified = converter.orderDetailsDocumentsToOrderDetailsDocumentVerifiedDto(orderDetailDocument);</b>
+&nbsp;
+<b class="nc">&nbsp;        orderDetailDocumentVerified.setVerify(stockServiceFeignClient.verifyProductIdByQuantity(orderDetailDocument.getProductId(), orderDetailDocument.getProductQuantity()));</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(orderDetailDocumentVerified);</b>
+&nbsp;
+<b class="nc">&nbsp;        return orderDetailDocumentVerified;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 18:00</div>
+</div>
+</body>
+</html>

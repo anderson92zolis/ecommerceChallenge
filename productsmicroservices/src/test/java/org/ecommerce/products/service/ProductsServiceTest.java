@@ -14,5 +14,6 @@ class ProductsServiceTest {
     @Test
     void suma() {
         assertEquals(5, productsService.suma(2,3), "All good");
+        assertNotEquals(5, productsService.suma(3,3), "All good");
     }
 }

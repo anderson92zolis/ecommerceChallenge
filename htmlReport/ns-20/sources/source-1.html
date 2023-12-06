@@ -1,0 +1,86 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > ProductServiceFeignClient</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.ecommerceChallenge.clients</a>
+</div>
+
+<h1>Coverage Summary for Class: ProductServiceFeignClient (org.ecommerceChallenge.clients)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ProductServiceFeignClient</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerceChallenge.clients;
+&nbsp;
+&nbsp;import dto.ProductResponse;
+&nbsp;import org.springframework.cloud.openfeign.FeignClient;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+&nbsp;
+&nbsp;@FeignClient(name = &quot;products&quot;, url = &quot;http://localhost:8080&quot;)
+&nbsp;public interface ProductServiceFeignClient {
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;api/v1/products/getProduct/{sku}&quot;)
+&nbsp;    public ProductResponse getProductById (@PathVariable String sku);
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;api/v1/products/confirmProduct/{sku}&quot;)
+&nbsp;    public boolean confirmProductBySku (@PathVariable String sku);
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 18:00</div>
+</div>
+</body>
+</html>

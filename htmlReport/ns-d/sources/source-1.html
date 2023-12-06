@@ -1,0 +1,177 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > StockController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.ecommerceChallenge.stockMicro.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: StockController (org.ecommerceChallenge.stockMicro.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StockController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerceChallenge.stockMicro.controller;
+&nbsp;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.ecommerceChallenge.stockMicro.dto.StockRequest;
+&nbsp;import org.ecommerceChallenge.stockMicro.dto.StockResponse;
+&nbsp;import org.ecommerceChallenge.stockMicro.service.StockService;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@RestController
+<b class="nc">&nbsp;@AllArgsConstructor</b>
+<b class="nc">&nbsp;@Slf4j</b>
+&nbsp;@RequestMapping(value = &quot;api/v1/stock&quot;)
+&nbsp;public class StockController {
+&nbsp;
+&nbsp;    private final StockService stockService;
+&nbsp;
+&nbsp;    @ResponseStatus(HttpStatus.CREATED)
+&nbsp;    @GetMapping(value = &quot;/test&quot;)
+&nbsp;    public String test() {
+<b class="nc">&nbsp;        log.info(&quot;** Saludos desde el logger **&quot;);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        return &quot;Hello from Stock DB!!!&quot;;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(value = &quot;/getAllStocks&quot;)
+&nbsp;    @ResponseStatus(HttpStatus.OK)
+&nbsp;    public ResponseEntity&lt;List&lt;StockResponse&gt;&gt; getAllStock() {
+<b class="nc">&nbsp;        List&lt;StockResponse&gt; stockResponseList = stockService.getAllStock();</b>
+<b class="nc">&nbsp;        return new ResponseEntity&lt;&gt;(stockResponseList, HttpStatus.OK);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(value = &quot;/addStock&quot;)
+&nbsp;    @ResponseStatus(HttpStatus.CREATED)
+&nbsp;    public void addNewStock(@RequestBody StockRequest stockRequest) {
+<b class="nc">&nbsp;        stockService.saveStock(stockRequest);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;/verifyProductId/{productId}&quot;)
+&nbsp;    @ResponseStatus(HttpStatus.OK)
+&nbsp;    public String verifyProductIdByQuantity(@PathVariable(&quot;productId&quot;) int productId, @RequestParam(value = &quot;orderQuantity&quot;) int orderQuantity) {
+<b class="nc">&nbsp;        String verifyQuantity = stockService.verifyProductIdByQuantity(productId,orderQuantity);</b>
+<b class="nc">&nbsp;        return verifyQuantity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /*
+&nbsp;     * Feign methods
+&nbsp;     */
+&nbsp;
+&nbsp;    @GetMapping(value = &quot;/countStock/{sku}&quot;)
+&nbsp;    public int countStockBySku (@PathVariable String sku) {
+<b class="nc">&nbsp;        return stockService.stockBySku(sku);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(value = &quot;/reduceStock/{skuReceived}/{quantityReceived}&quot;)
+&nbsp;    public void reduceStock (@PathVariable String skuReceived, @PathVariable int quantityReceived){
+&nbsp;
+<b class="nc">&nbsp;        stockService.updateStockQuantity(skuReceived, quantityReceived);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 18:00</div>
+</div>
+</body>
+</html>

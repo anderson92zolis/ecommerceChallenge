@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > OrderDetailDocumentVerifiedDto</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.ordersMicroservice.dto.verify</a>
+</div>
+
+<h1>Coverage Summary for Class: OrderDetailDocumentVerifiedDto (org.ordersMicroservice.dto.verify)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OrderDetailDocumentVerifiedDto</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">OrderDetailDocumentVerifiedDto$OrderDetailDocumentVerifiedDtoBuilder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ordersMicroservice.dto.verify;
+&nbsp;
+&nbsp;import io.swagger.v3.oas.annotations.media.Schema;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.Builder;
+&nbsp;import lombok.Data;
+&nbsp;import lombok.NoArgsConstructor;
+&nbsp;
+<b class="nc">&nbsp;@Data</b>
+<b class="nc">&nbsp;@NoArgsConstructor @AllArgsConstructor @Builder</b>
+&nbsp;public class OrderDetailDocumentVerifiedDto {
+&nbsp;
+&nbsp;    @Schema(description = &quot;product Id&quot;)
+<b class="nc">&nbsp;    private Integer id;</b>
+&nbsp;
+&nbsp;    @Schema(description = &quot;This is the id of the product sold&quot;)
+<b class="nc">&nbsp;    private int productId;</b>
+&nbsp;
+&nbsp;    @Schema(description = &quot;This is the price of the product sold&quot;)
+<b class="nc">&nbsp;    private double productPrice;</b>
+&nbsp;
+&nbsp;    @Schema(description = &quot;This is the quantity sold of this product&quot;)
+<b class="nc">&nbsp;    private int productQuantity;</b>
+&nbsp;
+&nbsp;    @Schema(description = &quot;This is price x quantity&quot;)
+<b class="nc">&nbsp;    private double itemSubtotal;</b>
+&nbsp;
+&nbsp;    @Schema(description = &quot;This is the accepted for product if the order es less that quantity in stock&quot;)
+<b class="nc">&nbsp;    private String verify;</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 18:00</div>
+</div>
+</body>
+</html>

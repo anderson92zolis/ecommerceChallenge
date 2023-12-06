@@ -1,0 +1,86 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > OrderService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.ordersMicroservice.service</a>
+</div>
+
+<h1>Coverage Summary for Class: OrderService (org.ordersMicroservice.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">OrderService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ordersMicroservice.service;
+&nbsp;
+&nbsp;import org.ordersMicroservice.dto.OrderDto;
+&nbsp;import org.ordersMicroservice.dto.verify.OrderVerifiedDto;
+&nbsp;import org.ordersMicroservice.entity.OrderDetailDocument;
+&nbsp;import org.ordersMicroservice.entity.OrderDocument;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public interface OrderService {
+&nbsp;
+&nbsp;    OrderDto saveOrder (OrderDocument orderDocument);
+&nbsp;    OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument);
+&nbsp;    List&lt;OrderDto&gt; findAll();
+&nbsp;
+&nbsp;    OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument);
+&nbsp;
+&nbsp;//    OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 18:00</div>
+</div>
+</body>
+</html>

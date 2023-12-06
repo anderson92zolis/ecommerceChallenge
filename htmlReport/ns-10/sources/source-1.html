@@ -1,0 +1,204 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > StockService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.ecommerceChallenge.stockMicro.service</a>
+</div>
+
+<h1>Coverage Summary for Class: StockService (org.ecommerceChallenge.stockMicro.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StockService</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/40)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.ecommerceChallenge.stockMicro.service;
+&nbsp;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.ecommerceChallenge.stockMicro.dto.StockRequest;
+&nbsp;import org.ecommerceChallenge.stockMicro.dto.StockResponse;
+&nbsp;import org.ecommerceChallenge.stockMicro.entity.Stock;
+&nbsp;import org.ecommerceChallenge.stockMicro.repository.StockRepository;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Service
+<b class="nc">&nbsp;@AllArgsConstructor</b>
+<b class="nc">&nbsp;@Slf4j</b>
+&nbsp;public class StockService {
+&nbsp;
+&nbsp;    private final StockRepository stockRepository;
+&nbsp;
+&nbsp;    public void saveStock(StockRequest stockRequest){
+&nbsp;
+<b class="nc">&nbsp;        var stock = Stock.builder()</b>
+<b class="nc">&nbsp;                .productId(stockRequest.getProductId())</b>
+<b class="nc">&nbsp;                .sku(stockRequest.getSku())</b>
+<b class="nc">&nbsp;                .name(stockRequest.getName())</b>
+<b class="nc">&nbsp;                .quantity(stockRequest.getQuantity())</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;
+<b class="nc">&nbsp;        this.stockRepository.save(stock);</b>
+&nbsp;
+<b class="nc">&nbsp;        log.info(&quot;Product added to stock: {}&quot;, stock);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    public List&lt;StockResponse&gt; getAllStock(){
+<b class="nc">&nbsp;        var stocks = stockRepository.findAll();</b>
+&nbsp;
+<b class="nc">&nbsp;        log.info(&quot;stock products to show: {}&quot;, stockRepository);</b>
+&nbsp;
+<b class="nc">&nbsp;        return stocks.stream().map(this::mapToProductResponse).toList();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // PART OF OPENFEIGN
+&nbsp;
+&nbsp;    public String verifyProductIdByQuantity(int productId, int orderQuantity) {
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;Stock&gt; stock = stockRepository.findById(productId);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println();</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(stock);</b>
+&nbsp;
+<b class="nc">&nbsp;        String verifyQuantity= &quot;Accepted&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;        if ( stock.isPresent() &amp;&amp; orderQuantity &gt; stock.get().getQuantity()) {</b>
+<b class="nc">&nbsp;            verifyQuantity= &quot;Not accepted&quot;;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return verifyQuantity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private StockResponse mapToProductResponse(Stock stock) {
+<b class="nc">&nbsp;        return StockResponse.builder()</b>
+<b class="nc">&nbsp;                .productId(stock.getProductId())</b>
+<b class="nc">&nbsp;                .sku(stock.getSku())</b>
+<b class="nc">&nbsp;                .productId(stock.getProductId())</b>
+<b class="nc">&nbsp;                .name(stock.getName())</b>
+<b class="nc">&nbsp;                .quantity(stock.getQuantity())</b>
+<b class="nc">&nbsp;                .localDatetime(stock.getLocalDatetime())</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int stockBySku(String sku) {
+&nbsp;
+<b class="nc">&nbsp;        int stockAvailable = stockRepository.getBySku(sku).getQuantity();</b>
+<b class="nc">&nbsp;        log.info(&quot;Stock available: {}&quot;, stockAvailable);</b>
+<b class="nc">&nbsp;        return stockAvailable;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public void updateStockQuantity(String skuReceived, int quantityReceived) {
+&nbsp;
+<b class="nc">&nbsp;        var stockActual = stockRepository.getBySku(skuReceived);</b>
+&nbsp;
+<b class="nc">&nbsp;        var stockToUpdate = Stock.builder()</b>
+<b class="nc">&nbsp;                .productId(stockActual.getProductId())</b>
+<b class="nc">&nbsp;                .sku(skuReceived)</b>
+<b class="nc">&nbsp;                .name(stockActual.getName())</b>
+<b class="nc">&nbsp;                .quantity(quantityReceived)</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;
+<b class="nc">&nbsp;        this.stockRepository.save(stockToUpdate);</b>
+&nbsp;
+<b class="nc">&nbsp;        log.info(&quot;Product updated: {}&quot;, stockToUpdate);</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 18:00</div>
+</div>
+</body>
+</html>
