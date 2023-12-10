@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ecommerce.products.dto.ProductResponse;
 import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.entity.Product;
+import org.ecommerce.products.repository.ProductsRepository;
 import org.ecommerce.products.service.ProductsService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +28,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -128,6 +128,7 @@ class ProductsControllerTest {
     void greetingsTest() throws Exception{
         mockMvc.perform(get("/api/v1/products/test")
                         .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().string(equalTo("Hello from Products DB!!!")));
     }
@@ -178,7 +179,59 @@ class ProductsControllerTest {
     }
 
     @Test
-    void updateProduct() {
+    void updateProductTest() throws Exception {
+
+        /*
+        // given
+
+        int id= 1;
+        ProductResponse updatedProductResponse1 = ProductResponse.builder()
+                .sku("0000222")
+                .name("UPDATED name test 2")
+                .description("this is UPDATED product 2")
+                .category(CLOTHING)
+                .price(222.22f)
+                .build();
+
+        given(productsServiceMock.updateProduct(1, productRequest1)).willReturn(updatedProductResponse1);
+
+        // when
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/products/updateProduct/{id}",id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)  // Set Accept header
+                        .content(objectMapper.writeValueAsString(updatedProductResponse1))
+                )
+
+                // then
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.sku").value("0000222"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("UPDATED name test 2"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("this is UPDATED product 2"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.category").value(CLOTHING))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(222.22f));
+
+         */
+
+        ProductsRequest productsRequest = new ProductsRequest();
+        productsRequest.setSku("000001");
+        productsRequest.setName("name test 1");
+        productsRequest.setDescription("this is product 1");
+        productsRequest.setCategory(CLOTHING);
+        productsRequest.setPrice(11.11f);
+        productsRequest.setManufacturer("test manufacturer");
+        productsRequest.setSupplier("test supplier");
+
+        mockMvc.perform(put("/api/v1/products/updateProduct/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)  // Set Accept header
+                        .content(new ObjectMapper().writeValueAsString(productsRequest)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.sku").value("0000222"))
+                .andExpect(content().string(equalTo("Product updated successfully")));
+
     }
 
     @Test
