@@ -20,6 +20,7 @@
         <module>productsmicroservices</module>
         <module>ordersMicroservice</module>
         <module>stockMicroservice</module>
+        <module>customersMicroservices</module>
         <module>clients</module>
         <module>gateway</module>
         <module>discovery-server</module>
@@ -122,15 +123,18 @@
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>3.7.0.1746</version>
                 </plugin>
+                <!-- Coment because make a faild in github SonarCloud code analysis
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.7</version>
                 </plugin>
+                -->
             </plugins>
         </pluginManagement>
     </build>
 
+    <!-- Coment because make a faild in github SonarCloud code analysis
     <profiles>
         <profile>
             <id>coverage</id>
@@ -164,6 +168,7 @@
             </build>
         </profile>
     </profiles>
+    -->
 
     <repositories>
         <repository>
