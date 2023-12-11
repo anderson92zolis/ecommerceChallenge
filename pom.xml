@@ -20,6 +20,7 @@
         <module>productsmicroservices</module>
         <module>ordersMicroservice</module>
         <module>stockMicroservice</module>
+        <module>customerMicroservices</module>
         <module>clients</module>
         <module>gateway</module>
         <module>discovery-server</module>
