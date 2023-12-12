@@ -3,12 +3,11 @@ package org.ecommerce.products.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ecommerce.products.dto.ProductResponse;
 import org.ecommerce.products.dto.ProductsRequest;
-import org.ecommerce.products.entity.Product;
 import org.ecommerce.products.service.ProductsService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,29 +33,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ProductsController.class)
 class ProductsControllerTest {
 
-
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private ProductsService productsServiceMock;
 
-    @InjectMocks
-    private ProductsController productsController;
-
     @Autowired
     private ObjectMapper objectMapper;
-
-
-    private Product product1;
-    private Product product2;
-
-
 
     private ProductResponse productResponse1;
     private ProductResponse productResponse2;
 
     private ProductsRequest productRequest1;
-    private ProductsRequest productRequest2;
+
 
 
     @BeforeEach
@@ -71,38 +60,6 @@ class ProductsControllerTest {
                 .price(11.11f)
                 .manufacturer("test manufacturer")
                 .supplier("test supplier")
-                .build();
-
-        productRequest2 = ProductsRequest
-                .builder()
-                .sku("000002")
-                .name("name test 2")
-                .description("this is product 2")
-                .category(ELECTRONICS)
-                .price(22.22f)
-                .manufacturer("test manufacturer 2")
-                .supplier("test supplier 2")
-                .build();
-
-
-        product1 = Product.builder()
-                .sku("000001")
-                .name("name test 1")
-                .description("this is product 1")
-                .category(CLOTHING)
-                .price(11.11f)
-                .manufacturer("test manufacturer")
-                .supplier("test supplier")
-                .build();
-
-        product2 = Product.builder()
-                .sku("000002")
-                .name("name test 2")
-                .description("this is product 2")
-                .category(ELECTRONICS)
-                .price(22.22f)
-                .manufacturer("test manufacturer 2")
-                .supplier("test supplier 2")
                 .build();
 
 
@@ -127,23 +84,27 @@ class ProductsControllerTest {
     void tearDown() {
     }
 
-    // methods testing
 
     @Test
+    @DisplayName("greeting test")
     void greetingsTest() throws Exception{
+
+        //when
         mockMvc.perform(get("/api/v1/products/test")
                         .contentType(MediaType.APPLICATION_JSON))
+
+        //then
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().string(equalTo("Hello from Products DB!!!")));
     }
 
 
-
     @Test
+    @DisplayName("get all products test")
     void getAllProductsTest()  throws Exception{
-        //given
 
+        //given
 
         List<ProductResponse> productResponseList = new ArrayList<ProductResponse>();
         productResponseList.add(productResponse1);
@@ -151,16 +112,18 @@ class ProductsControllerTest {
         given(productsServiceMock.getAllProducts()).willReturn(productResponseList);
 
         //when
+
         mockMvc.perform(get("/api/v1/products/getAllProducts"))
 
         //then
 
-        .andExpect(status().isOk()).andDo(print())
+                .andExpect(status().isOk()).andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()",is(productResponseList.size())));
 
     }
 
     @Test
+    @DisplayName("add product test")
     void addNewProductsTest() throws Exception {
 
         //given
@@ -185,6 +148,7 @@ class ProductsControllerTest {
     }
 
     @Test
+    @DisplayName("update product test")
     void updateProductTest() throws Exception {
 
 
@@ -211,7 +175,7 @@ class ProductsControllerTest {
                         .accept(MediaType.APPLICATION_JSON)  // Set Accept header
                 )
 
-                // then
+        // then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.sku").value(updatedProductResponse1.getSku()))
                 .andExpect(jsonPath("$.name").value(updatedProductResponse1.getName()))
@@ -219,23 +183,27 @@ class ProductsControllerTest {
                 .andExpect(jsonPath("$.category").value(updatedProductResponse1.getCategory().toString()))
                 .andExpect(jsonPath("$.price").value(updatedProductResponse1.getPrice()));
 
-
-
     }
 
     @Test
+    @DisplayName("delete product test")
     void deleteProduct() throws Exception {
 
-        mockMvc.perform(delete("/api/v1/products/deleteProduct/{id}", 1) )
-                .andExpect(status().isOk());
+        // when
 
+        mockMvc.perform(delete("/api/v1/products/deleteProduct/{id}", 1) )
+
+        // then
+                .andExpect(status().isOk());
 
     }
 
     @Test
+    @DisplayName("get product test by sku")
     void getProductById() throws Exception {
 
         //given
+
         String sku= "000001";
         given(productsServiceMock.findBySku(sku)).willReturn(productResponse1);
 
@@ -251,11 +219,10 @@ class ProductsControllerTest {
         .andExpect(jsonPath("$.category").value(productResponse1.getCategory().toString()))
         .andExpect(jsonPath("$.price").value(productResponse1.getPrice()));
 
-
-
     }
 
     @Test
+    @DisplayName("product exits test by sku")
     void confirmProductBySku() throws Exception{
 
         //given
@@ -281,4 +248,5 @@ class ProductsControllerTest {
             throw new RuntimeException(e);
         }
     }
+
 }
