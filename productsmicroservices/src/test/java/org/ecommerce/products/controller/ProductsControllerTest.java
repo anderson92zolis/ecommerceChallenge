@@ -14,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -26,10 +25,9 @@ import static org.ecommerce.products.entity.Category.ELECTRONICS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -48,8 +46,11 @@ class ProductsControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+
     private Product product1;
     private Product product2;
+
+
 
     private ProductResponse productResponse1;
     private ProductResponse productResponse2;
@@ -104,20 +105,21 @@ class ProductsControllerTest {
                 .supplier("test supplier 2")
                 .build();
 
+
          productResponse1 = ProductResponse.builder()
-                .sku(product1.getSku())
-                .name(product1.getName())
-                .description(product1.getDescription())
-                .category(product1.getCategory())
-                .price(product1.getPrice())
+                 .sku("000001")
+                 .name("name test 1")
+                 .description("this is product 1")
+                 .category(CLOTHING)
+                 .price(11.11f)
                 .build();
 
          productResponse2 = ProductResponse.builder()
-                .sku(product2.getSku())
-                .name(product2.getName())
-                .description(product2.getDescription())
-                .category(product2.getCategory())
-                .price(product2.getPrice())
+                 .sku("000002")
+                 .name("name test 2")
+                 .description("this is product 2")
+                 .category(ELECTRONICS)
+                 .price(22.22f)
                 .build();
     }
 
@@ -149,11 +151,12 @@ class ProductsControllerTest {
         given(productsServiceMock.getAllProducts()).willReturn(productResponseList);
 
         //when
-        ResultActions response = mockMvc.perform(get("/api/v1/products/getAllProducts"));
+        mockMvc.perform(get("/api/v1/products/getAllProducts"))
 
         //then
 
-        response.andExpect(status().isOk()).andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("$.size()",is(productResponseList.size())));
+        .andExpect(status().isOk()).andDo(print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()",is(productResponseList.size())));
 
     }
 
@@ -168,17 +171,17 @@ class ProductsControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/products/addProduct")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(productRequest1)))
+                .content(asJsonString(productRequest1)))
 
         //then
 
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.sku").value(productResponse1.getSku()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(productRequest1.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description").value(productResponse1.getDescription()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.category").value(productResponse1.getCategory().toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(productResponse1.getPrice()));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.sku").value(productResponse1.getSku()))
+                .andExpect(jsonPath("$.name").value(productRequest1.getName()))
+                .andExpect(jsonPath("$.description").value(productResponse1.getDescription()))
+                .andExpect(jsonPath("$.category").value(productResponse1.getCategory().toString()))
+                .andExpect(jsonPath("$.price").value(productResponse1.getPrice()));
     }
 
     @Test
@@ -199,22 +202,22 @@ class ProductsControllerTest {
                 .price(222.22f)
                 .build();
 
-        given(productsServiceMock.updateProduct(1, productRequest1)).willReturn(updatedProductResponse1);
+        given(productsServiceMock.updateProduct(eq(id), any(ProductsRequest.class))).willReturn(updatedProductResponse1);
 
         // when
         mockMvc.perform(put("/api/v1/products/updateProduct/{id}",id)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(productRequest1))
+                        .content(asJsonString(updatedProductResponse1))
                         .accept(MediaType.APPLICATION_JSON)  // Set Accept header
                 )
 
                 // then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.sku").value(updatedProductResponse1.getSku()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("UPDATED name test 2"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("this is UPDATED product 2"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.category").value(CLOTHING))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(222.22f));
+                .andExpect(jsonPath("$.name").value(updatedProductResponse1.getName()))
+                .andExpect(jsonPath("$.description").value(updatedProductResponse1.getDescription()))
+                .andExpect(jsonPath("$.category").value(updatedProductResponse1.getCategory().toString()))
+                .andExpect(jsonPath("$.price").value(updatedProductResponse1.getPrice()));
 
 
 
@@ -223,18 +226,51 @@ class ProductsControllerTest {
     @Test
     void deleteProduct() throws Exception {
 
-        mockMvc.perform( MockMvcRequestBuilders.delete("/api/v1/products/deleteProduct/{id}", 1) )
+        mockMvc.perform(delete("/api/v1/products/deleteProduct/{id}", 1) )
                 .andExpect(status().isOk());
 
 
     }
 
     @Test
-    void getProductById() {
+    void getProductById() throws Exception {
+
+        //given
+        String sku= "000001";
+        given(productsServiceMock.findBySku(sku)).willReturn(productResponse1);
+
+        //when
+        mockMvc.perform(get("/api/v1/products/getProduct/{sku}",sku))
+
+        //then
+
+        .andExpect(status().isOk()).andDo(print())
+        .andExpect(jsonPath("$.sku").value(productResponse1.getSku()))
+        .andExpect(jsonPath("$.name").value(productResponse1.getName()))
+        .andExpect(jsonPath("$.description").value(productResponse1.getDescription()))
+        .andExpect(jsonPath("$.category").value(productResponse1.getCategory().toString()))
+        .andExpect(jsonPath("$.price").value(productResponse1.getPrice()));
+
+
+
     }
 
     @Test
-    void confirmProductBySku() {
+    void confirmProductBySku() throws Exception{
+
+        //given
+        String sku= "000001";
+        Boolean mockResult=true;
+        given(productsServiceMock.confirmProductBySku(sku)).willReturn(mockResult);
+
+        //when
+        mockMvc.perform(get("/api/v1/products/confirmProduct/{sku}",sku))
+
+        //then
+
+        .andExpect(status().isOk()).andDo(print())
+        .andExpect(content().string(String.valueOf(mockResult)));
+
     }
 
     private static String asJsonString(final Object obj) {
