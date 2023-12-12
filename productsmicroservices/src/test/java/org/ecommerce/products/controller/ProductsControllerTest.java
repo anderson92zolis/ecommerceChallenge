@@ -4,12 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ecommerce.products.dto.ProductResponse;
 import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.entity.Product;
-import org.ecommerce.products.repository.ProductsRepository;
 import org.ecommerce.products.service.ProductsService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.invocation.InvocationOnMock;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,10 +27,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 @WebMvcTest(ProductsController.class)
 class ProductsControllerTest {
@@ -41,6 +41,9 @@ class ProductsControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private ProductsService productsServiceMock;
+
+    @InjectMocks
+    private ProductsController productsController;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -181,7 +184,10 @@ class ProductsControllerTest {
     @Test
     void updateProductTest() throws Exception {
 
-        /*
+
+        // link  https://howtodoinjava.com/spring-boot2/testing/spring-boot-mockmvc-example/
+
+
         // given
 
         int id= 1;
@@ -196,46 +202,31 @@ class ProductsControllerTest {
         given(productsServiceMock.updateProduct(1, productRequest1)).willReturn(updatedProductResponse1);
 
         // when
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/products/updateProduct/{id}",id)
+        mockMvc.perform(put("/api/v1/products/updateProduct/{id}",id)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(productRequest1))
                         .accept(MediaType.APPLICATION_JSON)  // Set Accept header
-                        .content(objectMapper.writeValueAsString(updatedProductResponse1))
                 )
 
                 // then
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.sku").value("0000222"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sku").value(updatedProductResponse1.getSku()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("UPDATED name test 2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("this is UPDATED product 2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.category").value(CLOTHING))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(222.22f));
 
-         */
 
-        ProductsRequest productsRequest = new ProductsRequest();
-        productsRequest.setSku("000001");
-        productsRequest.setName("name test 1");
-        productsRequest.setDescription("this is product 1");
-        productsRequest.setCategory(CLOTHING);
-        productsRequest.setPrice(11.11f);
-        productsRequest.setManufacturer("test manufacturer");
-        productsRequest.setSupplier("test supplier");
-
-        mockMvc.perform(put("/api/v1/products/updateProduct/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)  // Set Accept header
-                        .content(new ObjectMapper().writeValueAsString(productsRequest)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.sku").value("0000222"))
-                .andExpect(content().string(equalTo("Product updated successfully")));
 
     }
 
     @Test
-    void deleteProduct() {
+    void deleteProduct() throws Exception {
+
+        mockMvc.perform( MockMvcRequestBuilders.delete("/api/v1/products/deleteProduct/{id}", 1) )
+                .andExpect(status().isOk());
+
+
     }
 
     @Test
@@ -244,5 +235,14 @@ class ProductsControllerTest {
 
     @Test
     void confirmProductBySku() {
+    }
+
+    private static String asJsonString(final Object obj) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
