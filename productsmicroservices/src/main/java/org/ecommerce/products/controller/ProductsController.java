@@ -30,6 +30,15 @@ public class ProductsController {
         return "Hello from Products DB!!!";
     }
 
+    @GetMapping(value = "/getOneProduct/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ProductResponse> getOneProductById(@PathVariable("id") int id) {
+        ProductResponse products = productsService.getOneProductById(id);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+
+
     @GetMapping(value = "/getAllProducts")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<ProductResponse>> getAllProducts() {
