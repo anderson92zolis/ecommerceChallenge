@@ -90,7 +90,7 @@ class ProductsRepositoryTest {
 
         productsRepository.save(product1);
         productsRepository.save(product2);
-        productsRepository.flush();
+        //productsRepository.flush();
     }
 
     @AfterEach
