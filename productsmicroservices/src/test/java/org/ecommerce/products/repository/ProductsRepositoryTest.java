@@ -1,5 +1,6 @@
 package org.ecommerce.products.repository;
 
+import org.ecommerce.products.entity.Product;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +9,11 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.ecommerce.products.entity.Category.*;
 
 @Testcontainers
 @SpringBootTest
@@ -20,6 +26,10 @@ class ProductsRepositoryTest {
 
     @Autowired
     ProductsRepository productsRepository;
+
+    private Product product1;
+
+    private Product product2;
 
 
     // properties
@@ -51,8 +61,36 @@ class ProductsRepositoryTest {
     void setUp() {
 
         //clean the postgresql db
+
         productsRepository.deleteAll();
 
+        product1 = Product
+                .builder()
+                .productId(1)
+                .sku("000001")
+                .name("name test 1")
+                .description("this is product 1")
+                .category(CLOTHING)
+                .price(11.11f)
+                .manufacturer("test manufacturer 1")
+                .supplier("test supplier 1")
+                .build();
+
+        product2 = Product
+                .builder()
+                .productId(2)
+                .sku("000002")
+                .name("name test 2")
+                .description("this is product 2")
+                .category(ELECTRONICS)
+                .price(22.22f)
+                .manufacturer("test manufacturer 2")
+                .supplier("test supplier 2")
+                .build();
+
+        productsRepository.save(product1);
+        productsRepository.save(product2);
+        productsRepository.flush();
     }
 
     @AfterEach
@@ -66,12 +104,200 @@ class ProductsRepositoryTest {
         Assertions.assertNotNull(productsRepository);
     }
 
-    /*
+
     @Test
-    void getBySku() {
+    @Order(value = 2)
+    @DisplayName("find product by id")
+    void findById() throws Exception {
+
+        // TESTING WHEN THE PRODUCT EXIST WITH THE ID
+
+
+        //given
+        int productIdExist= 6;
+
+        // when
+        Optional<Product> productExist = productsRepository.findById(productIdExist);
+
+        // then
+
+        Assertions.assertTrue(productExist.isPresent(), "Product with ID " + productIdExist + " should be present");
+
+        // TESTING WHEN THE PRODUCT DOESN'T EXIST WITH THE ID
+
+        //given
+        int productIdDoesNotExist= 1000;
+
+        // when
+        Optional<Product> productDoesNotExist = productsRepository.findById(productIdDoesNotExist);
+
+        // then
+        Assertions.assertTrue(!productDoesNotExist.isPresent());
+
     }
 
-     */
+    @Test
+    @Order(value = 3)
+    @DisplayName("save product test")
+    void saveProduct() throws Exception {
+
+        //given
+        Product product3 = Product
+                .builder()
+                .productId(3)
+                .sku("000003")
+                .name("name test 3")
+                .description("this is product 3")
+                .category(AUTOMOTIVE)
+                .price(33.33f)
+                .manufacturer("test manufacturer 3")
+                .supplier("test supplier 3")
+                .build();
+
+        productsRepository.save(product3);
+
+        //when
+        List<Product> productsList = productsRepository.findAll();
+
+        //then
+        Assertions.assertEquals(3, productsList.size());
+
+        Assertions.assertNotEquals(0, productsList.size());
+
+    }
+
+
+
+    @Test
+    @Order(value = 4)
+    @DisplayName("save all products test")
+    void findAllProduct() throws Exception {
+
+        //given
+            // already saved two products
+
+        // when
+        List<Product> productsList = productsRepository.findAll();
+
+        // then
+
+        //the size of obtained products are the same with the products saved in DB
+        Assertions.assertEquals(2, productsList.size());
+
+        //the size of obtained products aren't the same with the products saved in DB
+        Assertions.assertNotEquals(0, productsList.size());
+    }
+
+    @Test
+    @Order(value = 5)
+    @DisplayName("update product test")
+    void updateProduct() throws Exception {
+
+        // WHEN THE ID EXIST
+        //when
+
+        int  productIdExist= 1; // already exist
+
+        //given
+
+        Product productToSave = Product
+                .builder()
+                .productId(productIdExist)
+                .sku("11111111")
+                .name("name test 1 updated")
+                .description("this is product 1 updated")
+                .category(CLOTHING)
+                .price(33.33f)
+                .manufacturer("test manufacturer 1 updated")
+                .supplier("test supplier 1 updated")
+                .build();
+
+        Product productupdatedAfterSaved = productsRepository.save(productToSave); // it is going save overwriting the changes
+        List<Product> productsList = productsRepository.findAll();
+
+        //then
+        Assertions.assertEquals(productsList.size(),2); // to verify if the size of BD is the same
+        Assertions.assertEquals(productToSave.getProductId(),productupdatedAfterSaved.getProductId());
+        Assertions.assertEquals(productToSave.getSku(), productupdatedAfterSaved.getSku());
+        Assertions.assertEquals(productToSave.getDescription(), productupdatedAfterSaved.getDescription());
+        Assertions.assertEquals(productToSave.getCategory(), productupdatedAfterSaved.getCategory());
+        Assertions.assertEquals(productToSave.getCategory(), productupdatedAfterSaved.getCategory());
+        Assertions.assertEquals(productToSave.getPrice(), productupdatedAfterSaved.getPrice());
+        Assertions.assertEquals(productToSave.getManufacturer(), productupdatedAfterSaved.getManufacturer());
+        Assertions.assertEquals(productToSave.getSupplier(), productupdatedAfterSaved.getSupplier());
+
+        // WHEN THE ID DOES NOT EXIST
+
+        //when
+
+        int  productIdDoesNotExist= 8; // already exist
+
+        //given
+
+        productToSave.setName("newProduct");
+        productToSave.setProductId(productIdDoesNotExist);
+
+
+        Product productupdatedAfterSavedNotExist= productsRepository.save(productToSave); // save in database like new product
+        List<Product> productsListExist = productsRepository.findAll();
+
+        //then
+        Assertions.assertEquals(productsListExist.size(),3); // to verify if the size of BD is the same
+
+    }
+
+    @Test
+    @Order(value = 6)
+    @DisplayName("delete a product by id")
+    void deleteProduct() throws Exception {
+
+        //given
+        int productId=2;
+        // already saved two products
+
+        // when
+        productsRepository.deleteById(2);
+
+        // then
+
+        //the size of obtained products are the same with the products saved in DB
+        Assertions.assertTrue(productsRepository.findById(productId).isEmpty());
+
+
+    }
+
+    @Test
+    @Order(value = 6)
+    @DisplayName("get product by SKU")
+    void getBySku() {
+
+        // TESTING WHEN THE PRODUCT EXISTS WITH THE SKU
+
+        //given
+
+        String skuCorrect= "000002";
+
+        // when
+
+        Product productExist = productsRepository.getBySku(skuCorrect);
+
+        // then
+
+        Assertions.assertEquals(productExist.getSku(), product2.getSku());
+
+        // TESTING WHEN THE PRODUCT DOESN'T EXIST WITH THE ID
+
+        //given
+        String skuIncorrect= "000006";
+
+        // when
+        Product productIdDoesNotExist = productsRepository.getBySku(skuIncorrect);;
+
+        // then
+        Assertions.assertNull(productIdDoesNotExist);
+
+    }
+
 
 
 }
