@@ -12,11 +12,19 @@ spring:
   # MongoDB DDBB
   data:
     mongodb:
-      host: db-customers
-      port: 27017
-      username: root
-      password: 12345678
-      database: CustomersDB
+      #host: db-customers
+      #host: localhost
+      #port: 28017
+      #database: CustomersDDBB
+      #username: root
+      #password: 12345678
+      #uri: mongodb://localhost:28017/
+      #uri: mongodb://root:1234567891011@localhost:28017/?authMechanism=DEFAULT
+      uri: mongodb://root:1234567891011@localhost:28017/CustomersDB
+      #uri: mongodb://root:12345678@localhost:28017/CustomersDB
+      #uri: mongodb://root:12345678@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-1
+      #uri: mongodb://root:12345678@localhost:28017
+      uuid-representation: standard
 
 eureka:
   client:
