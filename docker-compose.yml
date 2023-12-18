@@ -48,6 +48,21 @@ services:
     expose:
       - 3306
 
+  # MONGODB DDBB FOR CUSTOMER MICROSERVICE
+  db-customers:
+    container_name: db-customers
+    image: mongodb/mongodb-community-server:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 12345678
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+    expose:
+      - 27017
+    volumes:
+      - ./datadir:/var/lib/mongo
+
   ### Zookeeper
   zookeeper:
     container_name: zookeeper

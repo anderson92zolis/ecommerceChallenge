@@ -144,6 +144,32 @@ class CustomerDTO_Test {
     }
 
     @Test
+    void setAddress(){
+        //region VARIABLES
+        AddressDTO address = AddressDTO.builder()
+                .street("Cartagena, 2")
+                .city("Barcelona")
+                .postalCode(8023)
+                .country("España").build();
+
+        //endregion VARIABLES
+
+
+        //region TEST
+        customer1.getAddress().setStreet(address.getStreet());
+        customer1.getAddress().setCity(address.getCity());
+        customer1.getAddress().setPostalCode(address.getPostalCode());
+        customer1.getAddress().setCountry(address.getCountry());
+
+        assertEquals(address.getStreet(), customer1.getAddress().getStreet());
+        assertEquals(address.getCity(), customer1.getAddress().getCity());
+        assertEquals(address.getPostalCode(), customer1.getAddress().getPostalCode());
+        assertEquals(address.getCountry(), customer1.getAddress().getCountry());
+
+        //endregion TEST
+    }
+
+    @Test
     void setOrdersList() {
         //region VARIABLES
         ArrayList<Integer> ordersList = new ArrayList<>(Arrays.asList(1254, 1287, 1348, 1852, 1899, 2201, 2287, 2354));
