@@ -252,6 +252,7 @@ class ProductsRepositoryTest {
     void deleteProduct() throws Exception {
 
         //given
+
         int productId=2;
         // already saved two products
 
