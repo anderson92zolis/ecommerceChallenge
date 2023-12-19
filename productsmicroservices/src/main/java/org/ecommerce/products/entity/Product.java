@@ -13,6 +13,7 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
