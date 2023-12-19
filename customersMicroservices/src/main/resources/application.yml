@@ -16,15 +16,21 @@ spring:
       #host: localhost
       #port: 28017
       #database: CustomersDDBB
+      #authentication-database: CustomersDDBB
+      #repositories:
+       # enable: true
       #username: root
+      #password: 1234567891011
       #password: 12345678
       #uri: mongodb://localhost:28017/
+      #uri: mongodb://root:1234567891011@localhost:28017/CustomersDDBB?authMechanism=DEFAULT
       #uri: mongodb://root:1234567891011@localhost:28017/?authMechanism=DEFAULT
-      uri: mongodb://root:1234567891011@localhost:28017/CustomersDB
+      #uri: mongodb://root:1234567891011@localhost:28017/CustomersDDBB
+      #uri: mongodb://admin:A123456789@localhost:28017/CustomersDDBB
       #uri: mongodb://root:12345678@localhost:28017/CustomersDB
-      #uri: mongodb://root:12345678@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-1
+      uri: mongodb://root:1234567891011@localhost:28017/CustomersDDBB?authSource=admin&authMechanism=SCRAM-SHA-1
       #uri: mongodb://root:12345678@localhost:28017
-      uuid-representation: standard
+      #uuid-representation: standard
 
 eureka:
   client:

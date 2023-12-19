@@ -1,12 +1,11 @@
 package org.customerMicroservices.documents;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
+import nonapi.io.github.classgraph.json.Id;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.UUID;
-
 
 @Getter
 @Setter
@@ -16,16 +15,14 @@ import java.util.UUID;
 @Document(collection = "customers")
 public class CustomerDocument {
     //region ATTRIBUTES
+    ////* @Field
     @Id
-    @Field
+    private ObjectId _id;
     private UUID uuid;
 
-    @Field(name="name")
+    ////* @Field(name="name")
     private String name;
 
     //endregion ATTRIBUTES
 
 }
-
-
-
