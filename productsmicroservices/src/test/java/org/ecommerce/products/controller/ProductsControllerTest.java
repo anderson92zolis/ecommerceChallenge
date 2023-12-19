@@ -99,6 +99,32 @@ class ProductsControllerTest {
                 .andExpect(content().string(equalTo("Hello from Products DB!!!")));
     }
 
+    @Test
+    @DisplayName("get product by Id test")
+    void getProductByIdTest()  throws Exception{
+
+        //given
+
+        int productId= 1;
+        given(productsServiceMock.getOneProductById(productId)).willReturn(productResponse1);
+
+        //when
+
+        mockMvc.perform(get("/api/v1/products/getOneProduct/{productId}", productId) )
+
+                //then
+
+                .andExpect(status().isOk()).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.sku").value(productResponse1.getSku()))
+                .andExpect(jsonPath("$.name").value(productRequest1.getName()))
+                .andExpect(jsonPath("$.description").value(productResponse1.getDescription()))
+                .andExpect(jsonPath("$.category").value(productResponse1.getCategory().toString()))
+                .andExpect(jsonPath("$.price").value(productResponse1.getPrice()));;
+
+    }
+
 
     @Test
     @DisplayName("get all products test")
