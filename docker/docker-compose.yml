@@ -55,9 +55,10 @@ services:
       MONGO_INITDB_DATABASE: CustomersDDBB
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 1234567891011
-      #MONGO_INITDB_CREATE_DATABASE: CustomersDDBB
     volumes:
+      # Link project folder to container folder
       - ./datadir:/var/lib/mongo
+      # Execute "init.js" file to create users, ddbb, collections, etc..
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     ports:
       - 28017:27017
