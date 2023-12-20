@@ -27,6 +27,27 @@ class CustomerController_Test {
                 .isEqualTo("Hello from CUSTOMER!!!");
     }
 
+    @Test
+    void getAll() {
+        //region VARIABLES
+
+
+        //endregion VARIABLES
+
+
+        //region TEST INITIALIZATION
+
+
+        //endregion TEST INITIALIZATION
+
+
+        //region TEST
+
+
+        //endregion TEST
+
+    }
+
     //endregion TESTS
 
 }
