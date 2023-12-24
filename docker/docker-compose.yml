@@ -1,7 +1,6 @@
 services:
 
   #POSTGRESS DB for Products & Stock microservices
-
   postgres:
     container_name: postgres
     image: postgres
@@ -32,8 +31,7 @@ services:
       - postgres
     restart: unless-stopped
 
-    ### MySQL database for Orders
-
+  ### MySQL database for Orders
   db-orders:
     container_name: db-orders
     image: mysql:8.0.33
@@ -47,6 +45,27 @@ services:
       - 3306:3306
     expose:
       - 3306
+
+  ## MONGODB DDBB FOR CUSTOMER MICROSERVICE
+  db-customers:
+    container_name: db-customers
+    image: mongodb/mongodb-community-server:latest
+    restart: always #unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: CustomersDDBB
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234567891011
+    volumes:
+      # Link project folder to container folder
+      - ./datadir:/var/lib/mongo
+      # Execute "init.js" file to create users, ddbb, collections, etc..
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - 28017:27017
+    #expose:
+    #  - 27017
+    #networks:
+    #  - postgres
 
   ### Zookeeper
   zookeeper:
