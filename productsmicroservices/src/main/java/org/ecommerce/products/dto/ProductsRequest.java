@@ -1,7 +1,6 @@
 package org.ecommerce.products.dto;
 
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.ecommerce.products.entity.Category;
 

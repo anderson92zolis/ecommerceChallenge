@@ -6,6 +6,7 @@ import org.ecommerce.products.dto.ProductResponse;
 import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.service.ProductsService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,21 @@ public class ProductsController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping(value = "/test")
-    public String test() {
+    public String greetings() {
         log.info("** Saludos desde el logger **");
 
 
         return "Hello from Products DB!!!";
     }
+
+    @GetMapping(value = "/getOneProduct/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ProductResponse> getOneProductById(@PathVariable("id") int id) {
+        ProductResponse products = productsService.getOneProductById(id);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+
 
     @GetMapping(value = "/getAllProducts")
     @ResponseStatus(HttpStatus.OK)

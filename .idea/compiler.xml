@@ -12,12 +12,14 @@
         <module name="discovery-server" />
         <module name="clients" />
         <module name="ordersMicroservice" />
+        <module name="customersMicroservices" />
         <module name="eureka-server" />
         <module name="gateway" />
         <module name="notification-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="clientsMicroservices" target="17" />
       <module name="ecommerce" target="17" />
       <module name="ecommercea" target="17" />
       <module name="ecommerceChallenge" target="1.5" />
@@ -29,6 +31,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clients" options="-parameters" />
+      <module name="customersMicroservices" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="gateway" options="-parameters" />
