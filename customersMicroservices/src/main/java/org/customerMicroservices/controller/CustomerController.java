@@ -32,8 +32,7 @@ public class CustomerController {
 
         return "Hello from CUSTOMER!!!";
     }
-
-    ////* @ResponseStatus(HttpStatus.OK)
+    
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<CustomerDocument>> getAll(){
         List<CustomerDocument> customers = customersService.getAllCustomers();
