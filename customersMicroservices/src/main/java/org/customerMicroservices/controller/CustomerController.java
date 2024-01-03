@@ -32,12 +32,14 @@ public class CustomerController {
 
         return "Hello from CUSTOMER!!!";
     }
-    
+
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<CustomerDocument>> getAll(){
         List<CustomerDocument> customers = customersService.getAllCustomers();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
+
+
 
     //endregion ENDPOINTS
 
