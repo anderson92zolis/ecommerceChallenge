@@ -1,5 +1,6 @@
 package org.customerMicroservices.dto;
 
+import org.customerMicroservices.helpers.APPMthd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -216,19 +217,19 @@ class CustomerDTO_Test {
 
         //region TEST
         // Goods DNI
-        assertTrue(CustomerDTO.validateDNI(dniGood1));
-        assertTrue(CustomerDTO.validateDNI(dniGood2));
-        assertTrue(CustomerDTO.validateDNI(dniGood3));
-        assertTrue(CustomerDTO.validateDNI(dniGood4));
-        assertTrue(CustomerDTO.validateDNI(dniGood5));
-        assertTrue(CustomerDTO.validateDNI(dniGood6));
+        assertTrue(APPMthd.isValidDNI(dniGood1));
+        assertTrue(APPMthd.isValidDNI(dniGood2));
+        assertTrue(APPMthd.isValidDNI(dniGood3));
+        assertTrue(APPMthd.isValidDNI(dniGood4));
+        assertTrue(APPMthd.isValidDNI(dniGood5));
+        assertTrue(APPMthd.isValidDNI(dniGood6));
         // Bad DNI
-        assertFalse(CustomerDTO.validateDNI(dniBad1));
-        assertFalse(CustomerDTO.validateDNI(dniBad2));
-        assertFalse(CustomerDTO.validateDNI(dniBad3));
-        assertFalse(CustomerDTO.validateDNI(dniBad4));
-        assertFalse(CustomerDTO.validateDNI(dniBad5));
-        assertFalse(CustomerDTO.validateDNI(dniBad6));
+        assertFalse(APPMthd.isValidDNI(dniBad1));
+        assertFalse(APPMthd.isValidDNI(dniBad2));
+        assertFalse(APPMthd.isValidDNI(dniBad3));
+        assertFalse(APPMthd.isValidDNI(dniBad4));
+        assertFalse(APPMthd.isValidDNI(dniBad5));
+        assertFalse(APPMthd.isValidDNI(dniBad6));
 
         //endregion TEST
 

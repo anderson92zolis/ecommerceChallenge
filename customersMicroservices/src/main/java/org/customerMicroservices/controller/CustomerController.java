@@ -1,6 +1,7 @@
 package org.customerMicroservices.controller;
 
 import org.customerMicroservices.documents.CustomerDocument;
+import org.customerMicroservices.dto.CustomerDTO;
 import org.customerMicroservices.service.CustomersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +34,30 @@ public class CustomerController {
         return "Hello from CUSTOMER!!!";
     }
 
-    @GetMapping(value = "/getAll")
-    public ResponseEntity<List<CustomerDocument>> getAll(){
-        List<CustomerDocument> customers = customersService.getAllCustomers();
-        return new ResponseEntity<>(customers, HttpStatus.OK);
+    @PostMapping(value= "/create")
+    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO){
+        return customersService.createCustomer(customerDTO);
     }
 
+    @DeleteMapping(value ="/delete/{uuid}")
+    public ResponseEntity<Boolean> delete(@PathVariable("uuid") String uuid){
+        return customersService.delete(uuid);
+    }
+
+    @GetMapping(value = "/getAll")
+    public ResponseEntity<List<CustomerDTO>> getAll(){
+        return customersService.getAllCustomers();
+    }
+
+    @GetMapping(value = "/get/{uuid}")
+    public ResponseEntity<CustomerDTO> getOne(@PathVariable("uuid") String uuid){
+        return customersService.getOne(uuid);
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<CustomerDTO> update(@RequestBody CustomerDTO customerDTO){
+        return customersService.update(customerDTO);
+    }
 
 
     //endregion ENDPOINTS
