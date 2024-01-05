@@ -32,7 +32,7 @@ class CustomerDTO_Test {
                 .postalCode(8023)
                 .country("España").build();
         customer1 = CustomerDTO.builder()
-                .id(uuid1)
+                .uuid(uuid1)
                 .name("Fernadno")
                 .dni("78124592D")
                 .address(address1)
@@ -50,7 +50,7 @@ class CustomerDTO_Test {
     @Test
     void getId() {
         //region TEST
-        assertEquals(uuid1, customer1.getId());
+        assertEquals(uuid1, customer1.getUuid());
 
         //endregion TEST
 
@@ -105,8 +105,8 @@ class CustomerDTO_Test {
 
 
         //region TEST
-        customer1.setId(uuid2);
-        assertEquals(uuid2, customer1.getId());
+        customer1.setUuid(uuid2);
+        assertEquals(uuid2, customer1.getUuid());
 
         //endregion TEST
 

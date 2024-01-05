@@ -142,7 +142,7 @@ public class CustomersService {
                     .collect(Collectors.toList());
 
             // CREATE CORRECT ANSWER
-            responseEntity = new ResponseEntity<>(customersDTOList, httpHeaders, HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>(customersDTOList, httpHeaders, HttpStatus.OK);
         } catch (Exception ex) {
             // CREATE ERROR ANSWER
             responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
