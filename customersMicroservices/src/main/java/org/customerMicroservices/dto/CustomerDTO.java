@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 public class CustomerDTO {
     //region ATTRIBUTES
-    private UUID id;
+    private UUID uuid;
     private String pass;
     private String name;
     private String dni;

@@ -28,7 +28,7 @@ public class APPMthd {
         try {
             // CHECK UUID
             if (customerDTO != null &&
-                    (!checkUUID || isValidUUID(customerDTO.getId().toString())) &&
+                    (!checkUUID || isValidUUID(customerDTO.getUuid().toString())) &&
                     !customerDTO.getPass().isEmpty() && !customerDTO.getPass().isBlank() &&
                     !customerDTO.getName().isEmpty() && !customerDTO.getName().isBlank() &&
                     isValidDNI(customerDTO.getDni())) {
