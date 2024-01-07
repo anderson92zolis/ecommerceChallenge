@@ -2,13 +2,26 @@
 server:
   port: 0
 
-# Spring properties
+# SPRING PROPERTIES
 spring:
   application:
     name: customers
   # kafka configuration provider
   kafka:
     bootstrap-servers: localhost:9092
+  # MongoDB DDBB
+  data:
+    mongodb:
+      #uri: mongodb://localhost:28017/
+      #host: localhost
+      #port: 28017
+      #database: CustomersDDBB
+      #username: root
+      #password: 1234567891011
+      #authentication-database: root
+
+      uri: mongodb://root:1234567891011@localhost:28017/CustomersDDBB?authSource=admin&authMechanism=SCRAM-SHA-1
+      #uuid-representation: standard
 
 eureka:
   client:
@@ -18,5 +31,6 @@ eureka:
     fetchRegistry: true
   .instance:
     instance-id=${spring.application.name}:${spring.application.instance_id:${random:value}}
+
 
 

@@ -36,6 +36,12 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- Spring WebFlux (Use in Endpoint test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<!-- Spring Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -61,6 +67,16 @@
 			<version>3.1.0</version>
 		</dependency>
 
+		<!-- DDBB -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+		</dependency>
+
 		<!-- TEST CONTAINERS -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
@@ -74,12 +90,22 @@
 			<version>1.19.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mongodb</artifactId>
+			<version>1.19.3</version>
+			<scope>test</scope>
+		</dependency>
+		-->
+		<!--
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>mysql</artifactId>
 			<version>1.19.1</version>
 			<scope>test</scope>
 		</dependency>
+		-->
 
 		<!-- EUREKA CLIENT: Get from parent -->
 
