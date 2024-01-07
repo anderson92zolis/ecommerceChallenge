@@ -33,6 +33,7 @@ class CustomerDTO_Test {
                 .country("España").build();
         customer1 = CustomerDTO.builder()
                 .uuid(uuid1)
+                .pass("fernandoPassword")
                 .name("Fernadno")
                 .dni("78124592D")
                 .address(address1)
@@ -47,6 +48,55 @@ class CustomerDTO_Test {
 
 
     //region TESTS
+    @Test
+    void globalTest(){
+        //region VARIABLES
+        String password2;
+        AddressDTO addressDTO2;
+        CustomerDTO customerDTO;
+
+        //endregion VARIABLES
+
+
+        //region TEST INITIALIZATION
+        password2 = "pasword2";
+        addressDTO2 = new AddressDTO();
+        customerDTO = new CustomerDTO();
+
+        //endregion TEST INITIALIZATION
+
+
+        //region TEST
+        // Password
+        assertEquals("fernandoPassword", customer1.getPass());
+        customer1.setPass(password2);
+        assertEquals(password2, customer1.getPass());
+
+        //endregion TEST
+
+    }
+
+    @Test
+    void getAddress() {
+        //region TEST
+        assertEquals(address1.getStreet(), customer1.getAddress().getStreet());
+        assertEquals(address1.getCity(), customer1.getAddress().getCity());
+        assertEquals(address1.getPostalCode(), customer1.getAddress().getPostalCode());
+        assertEquals(address1.getCountry(), customer1.getAddress().getCountry());
+
+        //endregion TEST
+
+    }
+
+    @Test
+    void getDni() {
+        //region TEST
+        assertEquals("78124592D", customer1.getDni());
+
+        //endregion TEST
+
+    }
+
     @Test
     void getId() {
         //region TEST
@@ -66,31 +116,52 @@ class CustomerDTO_Test {
     }
 
     @Test
-    void getDni() {
-        //region TEST
-        assertEquals("78124592D", customer1.getDni());
-
-        //endregion TEST
-
-    }
-
-    @Test
-    void getAddress() {
-        //region TEST
-        assertEquals(address1.getStreet(), customer1.getAddress().getStreet());
-        assertEquals(address1.getCity(), customer1.getAddress().getCity());
-        assertEquals(address1.getPostalCode(), customer1.getAddress().getPostalCode());
-        assertEquals(address1.getCountry(), customer1.getAddress().getCountry());
-
-        //endregion TEST
-
-    }
-
-    @Test
     void getOrdersList() {
         //region TEST
         assertEquals(ordersList1.get(1), customer1.getOrdersList().get(1));
         assertEquals(ordersList1.get(3), customer1.getOrdersList().get(3));
+
+        //endregion TEST
+
+    }
+
+    @Test
+    void setAddress(){
+        //region VARIABLES
+        AddressDTO address = AddressDTO.builder()
+                .street("Cartagena, 2")
+                .city("Barcelona")
+                .postalCode(8023)
+                .country("España").build();
+
+        //endregion VARIABLES
+
+
+        //region TEST
+        customer1.getAddress().setStreet(address.getStreet());
+        customer1.getAddress().setCity(address.getCity());
+        customer1.getAddress().setPostalCode(address.getPostalCode());
+        customer1.getAddress().setCountry(address.getCountry());
+
+        assertEquals(address.getStreet(), customer1.getAddress().getStreet());
+        assertEquals(address.getCity(), customer1.getAddress().getCity());
+        assertEquals(address.getPostalCode(), customer1.getAddress().getPostalCode());
+        assertEquals(address.getCountry(), customer1.getAddress().getCountry());
+
+        //endregion TEST
+    }
+
+    @Test
+    void setDni() {
+        //region VARIABLES
+        String dni = "658154785X";
+
+        //endregion VARIABLES
+
+
+        //region TEST
+        customer1.setDni(dni);
+        assertEquals(dni, customer1.getDni());
 
         //endregion TEST
 
@@ -126,48 +197,6 @@ class CustomerDTO_Test {
 
         //endregion TEST
 
-    }
-
-    @Test
-    void setDni() {
-        //region VARIABLES
-        String dni = "658154785X";
-
-        //endregion VARIABLES
-
-
-        //region TEST
-        customer1.setDni(dni);
-        assertEquals(dni, customer1.getDni());
-
-        //endregion TEST
-
-    }
-
-    @Test
-    void setAddress(){
-        //region VARIABLES
-        AddressDTO address = AddressDTO.builder()
-                .street("Cartagena, 2")
-                .city("Barcelona")
-                .postalCode(8023)
-                .country("España").build();
-
-        //endregion VARIABLES
-
-
-        //region TEST
-        customer1.getAddress().setStreet(address.getStreet());
-        customer1.getAddress().setCity(address.getCity());
-        customer1.getAddress().setPostalCode(address.getPostalCode());
-        customer1.getAddress().setCountry(address.getCountry());
-
-        assertEquals(address.getStreet(), customer1.getAddress().getStreet());
-        assertEquals(address.getCity(), customer1.getAddress().getCity());
-        assertEquals(address.getPostalCode(), customer1.getAddress().getPostalCode());
-        assertEquals(address.getCountry(), customer1.getAddress().getCountry());
-
-        //endregion TEST
     }
 
     @Test

@@ -1,10 +1,8 @@
 package org.customerMicroservices.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.customerMicroservices.documents.CustomerDocument;
 import org.customerMicroservices.dto.CustomerDTO;
 import org.customerMicroservices.service.CustomersService;
-import org.customerMicroservices.utilities.APPCnst;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -21,7 +19,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 ////* @WebMvcTest
 @SpringBootTest
 @AutoConfigureMockMvc
-class CustomerController_Test {
+class CustomerControllerTest {
     private CustomerDTO customerDTONew;
     private List<CustomerDTO> customersList;
 
