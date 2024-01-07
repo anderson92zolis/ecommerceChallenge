@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 @UtilityClass
 public class APPMthd {
     //region METHODS: Publics
-
     /**
      * Methode to verify if the CustomerDTO has been created correctly
      * @param customerDTO Customer structure

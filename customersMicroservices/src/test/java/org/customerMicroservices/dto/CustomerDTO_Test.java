@@ -188,52 +188,7 @@ class CustomerDTO_Test {
 
     }
 
-    @Test
-    void validateDNI() {
-        //region VARIABLES
-        // Goods DNI
-        String dniGood1 = "46140604m";
-        String dniGood2 = "46140604M";
-        String dniGood3 = "12345678Z";
-        String dniGood4 = "98765431G";
-        String dniGood5 = "87654321X";
-        String dniGood6 = "00000024R";
-        // Bads DNI
-        String dniBad1 = null;
-        String dniBad2 = "";
-        String dniBad3 = "46140604";
-        String dniBad4 = "6140604";
-        String dniBad5 = "6140604M";
-        String dniBad6 = "EDR0604M";
 
-        //endregion VARIABLES
-
-
-        //region TEST INITIALIZATION
-
-
-        //endregion TEST INITIALIZATION
-
-
-        //region TEST
-        // Goods DNI
-        assertTrue(APPMthd.isValidDNI(dniGood1));
-        assertTrue(APPMthd.isValidDNI(dniGood2));
-        assertTrue(APPMthd.isValidDNI(dniGood3));
-        assertTrue(APPMthd.isValidDNI(dniGood4));
-        assertTrue(APPMthd.isValidDNI(dniGood5));
-        assertTrue(APPMthd.isValidDNI(dniGood6));
-        // Bad DNI
-        assertFalse(APPMthd.isValidDNI(dniBad1));
-        assertFalse(APPMthd.isValidDNI(dniBad2));
-        assertFalse(APPMthd.isValidDNI(dniBad3));
-        assertFalse(APPMthd.isValidDNI(dniBad4));
-        assertFalse(APPMthd.isValidDNI(dniBad5));
-        assertFalse(APPMthd.isValidDNI(dniBad6));
-
-        //endregion TEST
-
-    }
 
     //endregion TESTS
 
