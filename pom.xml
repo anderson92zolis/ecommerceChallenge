@@ -40,7 +40,6 @@
         <spring-cloud.version>2022.0.1</spring-cloud.version>
 
         <!-- Sonarcloud-->
-
         <sonar.organization>anderson92zolis</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
