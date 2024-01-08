@@ -6,11 +6,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-@Component
+//// @Component
 public class ConverterDocsAndDtos {
     //region METHODS: Bean
-    @Bean
-    public ModelMapper modelMaper(){
+//    @Bean
+//    public ModelMapper modelMaper(){
+//        return new ModelMapper();
+//    }
+
+    private static ModelMapper modelMaper(){
         return new ModelMapper();
     }
 
@@ -18,11 +22,11 @@ public class ConverterDocsAndDtos {
 
 
     //region METHODS: Public
-    public CustomerDTO docToDto(CustomerDocument customerDocument){
+    public static CustomerDTO docToDto(CustomerDocument customerDocument){
         return modelMaper().map(customerDocument, CustomerDTO.class);
     }
 
-    public CustomerDocument dtoToDoc(CustomerDTO customerDTO){
+    public static CustomerDocument dtoToDoc(CustomerDTO customerDTO){
         return modelMaper().map(customerDTO, CustomerDocument.class);
     }
 

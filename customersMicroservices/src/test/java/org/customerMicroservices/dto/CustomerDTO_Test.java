@@ -1,6 +1,5 @@
 package org.customerMicroservices.dto;
 
-import org.customerMicroservices.helpers.APPMthd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

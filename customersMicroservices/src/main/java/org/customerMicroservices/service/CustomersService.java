@@ -24,8 +24,6 @@ public class CustomersService {
     private final HttpHeaders httpHeaders = new HttpHeaders();
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private ConverterDocsAndDtos converters;
 
     //endregion VARIABLES
 
@@ -33,38 +31,56 @@ public class CustomersService {
     //region METHODS: Public
     public ResponseEntity<CustomerDTO> createCustomer(CustomerDTO customerDTO) {
         //region VARIABLES
+        boolean error;
         CustomerDTO customerDTOSvd;
         CustomerDocument customerDocToSvd;
         CustomerDocument customerDocSvd;
-        ResponseEntity<CustomerDTO> responseEntity;
+        ResponseEntity<CustomerDTO> responseEntity = null;
 
         //endregion VARIABLES
 
 
         //region ACTIONS
         try {
-            // CHECK IF THE CUSTOMERDTO CONTAINS THE NECESSERY INFO
-            if (APPMthd.isCorrectCustomerDTO(customerDTO, false)) {
+            // INITIALIZATIONS
+            error = false;
+
+            // INITIAL CHECKS
+            // CustomerDTO contains the necessary info?
+            if (!APPMthd.isCorrectCustomerDTO(customerDTO, false)) {
+                // CREATE ERROR ANSWER: CustomerDTO sended for client, doesn't has all necessary info.
+                responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.NO_CONTENT);
+                error = true;
+            }
+
+            // Name exist on DDBB
+            if (!error && customerRepository.existByName(customerDTO.getName())) {
+                // CREATE ERROR ANSWER: User NAME already exist on DDBB
+                responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.CONFLICT);
+                error = true;
+            }
+
+            // If there isn't any error, we can continue
+            if (!error) {
                 // GENERATE UUID
                 customerDTO.setUuid(generatedUUID());
 
                 // TRANSFORM FROM DTO TO DOCUMENT
-                customerDocToSvd = converters.dtoToDoc(customerDTO);
+                customerDocToSvd = ConverterDocsAndDtos.dtoToDoc(customerDTO);
 
                 // ADD TO DDBB
                 customerDocSvd = customerRepository.save(customerDocToSvd);
 
-                // TRANSFORM FROM DOCUMENT TO DTO
-                customerDTOSvd = converters.docToDto(customerDocSvd);
-
-                //todo verification the customer is created correctly.
-
-                // CREATE CORRECT ANSWER
-                responseEntity = new ResponseEntity<>(customerDTOSvd, httpHeaders, HttpStatus.CREATED);
-
-            } else {
-                // CREATE ERROR ANSWER
-                responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.NO_CONTENT);
+                // CHECK IF THE CUSTOMER IS CREATED CORRECTLY
+                if (customerDocSvd.get_id() != null) {
+                    // TRANSFORM FROM DOCUMENT TO DTO
+                    customerDTOSvd = ConverterDocsAndDtos.docToDto(customerDocSvd);
+                    // CREATE CORRECT ANSWER
+                    responseEntity = new ResponseEntity<>(customerDTOSvd, httpHeaders, HttpStatus.CREATED);
+                } else {
+                    // CREATE ERROR ANSWER: Customer isn't created correctly.
+                    responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
         } catch (Exception ex) {
             // CREATE ERROR ANSWER
@@ -93,14 +109,14 @@ public class CustomersService {
             // CHECK UUID
             if (APPMthd.isValidUUID(uuid)) {
                 customerDocDDBB = customerRepository.findByUuid(UUID.fromString(uuid));
-                if (customerDocDDBB!=null) {
+                if (customerDocDDBB != null) {
                     // DELETE CUSTOMER WITH ID
                     ////* customerRepository.deleteById(customerDocDDBB.get_id());
                     customerRepository.delete(customerDocDDBB);
 
                     // CREATE CORRECT ANSWER
-                    responseEntity = new ResponseEntity<>(true, httpHeaders, HttpStatus.CREATED);
-                }else{
+                    responseEntity = new ResponseEntity<>(true, httpHeaders, HttpStatus.OK);
+                } else {
                     // CREATE ERROR ANSWER
                     responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.NOT_FOUND);
                 }
@@ -124,7 +140,7 @@ public class CustomersService {
 
     public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
         //region VARIABLES
-        List<CustomerDocument> customersDocList;
+        List<CustomerDocument> customersDocList = null;
         List<CustomerDTO> customersDTOList;
         ResponseEntity<List<CustomerDTO>> responseEntity;
 
@@ -136,13 +152,19 @@ public class CustomersService {
             // GET ALL CUSTOMERS FROM DDBB
             customersDocList = customerRepository.findAll();
 
-            // TRANSFORM FROM DOCUMENT TO DTO
-            customersDTOList = customersDocList.stream()
-                    .map(converters::docToDto)
-                    .collect(Collectors.toList());
+            // CHECK IF RETURN CUSTOMERS
+            if(customersDocList != null && !customersDocList.isEmpty()) {
+                // TRANSFORM FROM DOCUMENT TO DTO
+                customersDTOList = customersDocList.stream()
+                        .map(ConverterDocsAndDtos::docToDto)
+                        .collect(Collectors.toList());
 
-            // CREATE CORRECT ANSWER
-            responseEntity = new ResponseEntity<>(customersDTOList, httpHeaders, HttpStatus.OK);
+                // CREATE CORRECT ANSWER
+                responseEntity = new ResponseEntity<>(customersDTOList, httpHeaders, HttpStatus.OK);
+            }else{
+                // CREATE ERROR ANSWER: No elements on DDBB
+                responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.NOT_FOUND);
+            }
         } catch (Exception ex) {
             // CREATE ERROR ANSWER
             responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -176,7 +198,7 @@ public class CustomersService {
                     customerDoc = customerRepository.findByUuid(UUID.fromString(uuid));
 
                     // TRANSFORM FROM DOCUMENT TO DTO
-                    customerDTO = converters.docToDto(customerDoc);
+                    customerDTO = ConverterDocsAndDtos.docToDto(customerDoc);
 
                     // CREATE CORRECT ANSWER
                     responseEntity = new ResponseEntity<>(customerDTO, httpHeaders, HttpStatus.CREATED);
@@ -218,16 +240,16 @@ public class CustomersService {
             if (APPMthd.isCorrectCustomerDTO(customerDTO, true)) {
                 // CHECK IF CUSTOMER EXIST
                 customerDocDDBB = customerRepository.findByUuid(customerDTO.getUuid());
-                if (customerDocDDBB!=null) {
+                if (customerDocDDBB != null) {
                     // TRANSFORM FROM DTO TO DOCUMENT
-                    customerDocToSvd = converters.dtoToDoc(customerDTO);
+                    customerDocToSvd = ConverterDocsAndDtos.dtoToDoc(customerDTO);
                     customerDocToSvd.set_id(customerDocDDBB.get_id());
 
                     // MODIFY ELEMENT TO DDBB
                     customerDocSvd = customerRepository.save(customerDocToSvd);
 
                     // TRANSFORM FROM DOCUMENT TO DTO
-                    customerDTOSvd = converters.docToDto(customerDocSvd);
+                    customerDTOSvd = ConverterDocsAndDtos.docToDto(customerDocSvd);
 
                     // CREATE CORRECT ANSWER
                     responseEntity = new ResponseEntity<>(customerDTOSvd, httpHeaders, HttpStatus.CREATED);
