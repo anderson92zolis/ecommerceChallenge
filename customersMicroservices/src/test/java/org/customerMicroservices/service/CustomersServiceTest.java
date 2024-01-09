@@ -9,7 +9,6 @@ import org.customerMicroservices.repository.CustomerRepository;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -92,14 +91,11 @@ class CustomersServiceTest {
                 .address(address1)
                 .ordersList(ordersList1).build();
 
-        customersList.add(new CustomerDocument(
-                null, uuid1, "sandrapass", "Sandra", "26721434B",
+        customersList.add(new CustomerDocument(null, uuid1, "sandrapass", "Sandra", "26721434B",
                 address1, ordersList1));
-        customersList.add(new CustomerDocument(
-                null, UUID.randomUUID(), "laiapass", "Laia", "89003777X",
+        customersList.add(new CustomerDocument(null, UUID.randomUUID(), "laiapass", "Laia", "89003777X",
                 address1, ordersList1));
-        customersList.add(new CustomerDocument(
-                null, UUID.randomUUID(), "carlespass", "Carles", "07190088N",
+        customersList.add(new CustomerDocument(null, UUID.randomUUID(), "carlespass", "Carles", "07190088N",
                 address1, ordersList1));
 
         //endregion ACTIONS
@@ -112,8 +108,8 @@ class CustomersServiceTest {
     //region TESTS
     @Test
     @Order(1)
-    /**
-     * Correct test, create customer without problems.
+    /*
+      Correct test, create customer without problems.
      */
     void createCustomer() {
         //region VARIABLES
@@ -128,10 +124,9 @@ class CustomersServiceTest {
         customerDoc1.set_id(new ObjectId("61f8bc12b674ad0c1b1ddbec"));
         // Prepare mock answers
         ArgumentCaptor<CustomerDocument> captor = ArgumentCaptor.forClass(CustomerDocument.class);
-        when(customerRepositoryMock
-                .save(captor.capture()))
+        when(customerRepositoryMock.save(captor.capture()))
                 .thenAnswer(invocation -> customerDoc1);
-        when(customerRepositoryMock.existByName(customerDoc1.getName())).thenReturn(false);
+        when(customerRepositoryMock.existsByName(customerDoc1.getName())).thenReturn(false);
 
         //endregion TEST INITIALIZATION
 
@@ -148,8 +143,8 @@ class CustomersServiceTest {
 
     @Test
     @Order(2)
-    /**
-     * Check wrong 2, pass CustomerDTO = null and customer's name exist on DDBB.
+    /*
+      Check wrong 2, pass CustomerDTO = null and customer's name exist on DDBB.
      */
     void createCustomer2() {
         //region VARIABLES
@@ -163,10 +158,9 @@ class CustomersServiceTest {
         customerDoc1 = ConverterDocsAndDtos.dtoToDoc(customer1);
         // Prepare mock answers
         ArgumentCaptor<CustomerDocument> captor = ArgumentCaptor.forClass(CustomerDocument.class);
-        when(customerRepositoryMock
-                .save(captor.capture()))
+        when(customerRepositoryMock.save(captor.capture()))
                 .thenAnswer(invocation -> customerDoc1);
-        when(customerRepositoryMock.existByName(customerDoc1.getName())).thenReturn(false);
+        when(customerRepositoryMock.existsByName(customerDoc1.getName())).thenReturn(false);
 
         //endregion TEST INITIALIZATION
 
@@ -178,7 +172,7 @@ class CustomersServiceTest {
         assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
 
         // Wrong test 2: Customer's name exist in DDBB
-        when(customerRepositoryMock.existByName(customerDoc1.getName())).thenReturn(true);
+        when(customerRepositoryMock.existsByName(customerDoc1.getName())).thenReturn(true);
         responseEntity = customersService.createCustomer(customer1);
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());
@@ -189,8 +183,8 @@ class CustomersServiceTest {
 
     @Test
     @Order(3)
-    /**
-     * Check Repository return error.
+    /*
+      Check Repository return error.
      */
     void createCustomer3() {
         //region VARIABLES
@@ -204,10 +198,9 @@ class CustomersServiceTest {
         customerDoc1 = ConverterDocsAndDtos.dtoToDoc(customer1);
         // Prepare mock answers
         ArgumentCaptor<CustomerDocument> captor = ArgumentCaptor.forClass(CustomerDocument.class);
-        when(customerRepositoryMock
-                .save(captor.capture()))
+        when(customerRepositoryMock.save(captor.capture()))
                 .thenAnswer(invocation -> customerDoc1);
-        when(customerRepositoryMock.existByName(customerDoc1.getName())).thenReturn(false);
+        when(customerRepositoryMock.existsByName(customerDoc1.getName())).thenReturn(false);
 
         //endregion TEST INITIALIZATION
 
@@ -224,8 +217,8 @@ class CustomersServiceTest {
 
     @Test
     @Order(4)
-    /**
-     * Check Exception.
+    /*
+      Check Exception.
      */
     void createCustomer4() {
         //region VARIABLES
@@ -239,10 +232,9 @@ class CustomersServiceTest {
         customerDoc1 = ConverterDocsAndDtos.dtoToDoc(customer1);
         // Prepare mock answers
         ArgumentCaptor<CustomerDocument> captor = ArgumentCaptor.forClass(CustomerDocument.class);
-        when(customerRepositoryMock
-                .save(captor.capture()))
+        when(customerRepositoryMock.save(captor.capture()))
                 .thenAnswer(invocation -> customerDoc1);
-        when(customerRepositoryMock.existByName(customerDoc1.getName())).thenThrow(new RuntimeException());
+        when(customerRepositoryMock.existsByName(customerDoc1.getName())).thenThrow(new RuntimeException());
 
         //endregion TEST INITIALIZATION
 

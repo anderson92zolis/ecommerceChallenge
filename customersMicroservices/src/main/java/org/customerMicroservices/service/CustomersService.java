@@ -12,11 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import static org.springframework.kafka.listener.ConsumerAwareRebalanceListener.LOGGER;
 
 @Service
 public class CustomersService {
@@ -54,7 +51,7 @@ public class CustomersService {
             }
 
             // Name exist on DDBB
-            if (!error && customerRepository.existByName(customerDTO.getName())) {
+            if (!error && customerRepository.existsByName(customerDTO.getName())) {
                 // CREATE ERROR ANSWER: User NAME already exist on DDBB
                 responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.CONFLICT);
                 error = true;
