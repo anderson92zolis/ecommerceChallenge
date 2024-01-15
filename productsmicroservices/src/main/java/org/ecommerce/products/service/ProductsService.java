@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -79,18 +78,6 @@ public class ProductsService {
 
     }
 
-    private ProductResponse mapToProductResponse(Product product) {
-        return ProductResponse.builder()
-                .sku(product.getSku())
-                .name(product.getName())
-                .description(product.getDescription())
-                .category(product.getCategory())
-                .price(product.getPrice())
-                .build();
-    }
-
-
-
     public ProductResponse getOneProductById(int id) {
         Product productFound = productsRepository.findById(id).orElseThrow(()-> new ProductNotFound("THE PRODUCT DOES NOT EXISTS, WITH ID: "+id) );
         return mapToProductResponse(productFound);
@@ -115,6 +102,17 @@ public class ProductsService {
         }
         return confirmProduct;
     }
+
+    public ProductResponse mapToProductResponse(Product product) {
+        return ProductResponse.builder()
+                .sku(product.getSku())
+                .name(product.getName())
+                .description(product.getDescription())
+                .category(product.getCategory())
+                .price(product.getPrice())
+                .build();
+    }
+
 
 
 

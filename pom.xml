@@ -33,7 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
+        <!--  <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version> -->
         <spring.boot.dependencies.version>3.0.6</spring.boot.dependencies.version>
 
         <!-- Spring cloud-->
@@ -52,14 +52,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
-       <!--
-       <dependency>
-           <groupId>org.testcontainers</groupId>
-           <artifactId>testcontainers</artifactId>
-           <version>1.18.3</version>
-       </dependency>
-       -->
 
        <dependency>
            <groupId>org.springframework.cloud</groupId>
@@ -92,23 +84,7 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-<!--       <dependencyManagement> lo traigo del microservicio gateway pero ya estaba acá, seguramente Andy lo trajo de otro microservicio
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-dependencies</artifactId>
-                    <version>${spring-cloud.version}</version>
-                    <type>pom</type>
-                    <scope>import</scope>
-                </dependency>
-            </dependencies>
-        </dependencyManagement>-->
     </dependencyManagement>
-
-
-
-
-
 
     <build>
         <pluginManagement>
@@ -116,25 +92,27 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring.boot.maven.plugin.version}</version>
+                    <!-- <version>${spring.boot.maven.plugin.version}</version> -->
                 </plugin>
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>3.7.0.1746</version>
                 </plugin>
-                <!-- Coment because make a faild in github SonarCloud code analysis
+
+                <!-- Coment because make a faild in github SonarCloud code analysis -->
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.7</version>
                 </plugin>
-                -->
+
             </plugins>
+
         </pluginManagement>
     </build>
 
-    <!-- Coment because make a faild in github SonarCloud code analysis
+    <!-- Coment because make a faild in github SonarCloud code analysis  -->
     <profiles>
         <profile>
             <id>coverage</id>
@@ -168,7 +146,8 @@
             </build>
         </profile>
     </profiles>
-    -->
+
+
 
     <repositories>
         <repository>
@@ -180,7 +159,5 @@
             </snapshots>
         </repository>
     </repositories>
-
-
 
 </project>
