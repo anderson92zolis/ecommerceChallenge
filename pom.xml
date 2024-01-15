@@ -33,7 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
+        <!--  <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version> -->
         <spring.boot.dependencies.version>3.0.6</spring.boot.dependencies.version>
 
         <!-- Spring cloud-->
@@ -86,18 +86,13 @@
         </dependencies>
     </dependencyManagement>
 
-
-
-
-
-
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring.boot.maven.plugin.version}</version>
+                    <!-- <version>${spring.boot.maven.plugin.version}</version> -->
                 </plugin>
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
@@ -151,6 +146,7 @@
             </build>
         </profile>
     </profiles>
+
 
 
     <repositories>
