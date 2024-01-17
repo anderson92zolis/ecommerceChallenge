@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
             throw new EmptyOrderDetailException("The order detail list is empty.");
         }
 
-        // TODO : check CustomerUuid if customer not exist then throw excetion
+        // TODO : check CustomerUuid if customer do not exist then throw exception
 
 
         List<OrderDetailDocument> toCalculate = new ArrayList<>();
@@ -77,9 +77,10 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
 
-        String sku = String.valueOf(orderDetailDocument.getProductId());
-
-        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
+//        String sku = String.valueOf(orderDetailDocument.getProductId());
+        String sku = orderDetailDocument.getSku();
+//        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
+        boolean productExist = productServiceFeignClient.confirmProductBySku(sku);
         if (!productExist) {
             return null;
         }
