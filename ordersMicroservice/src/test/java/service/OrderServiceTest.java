@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.ordersMicroservice.dto.OrderDto;
+import org.ordersMicroservice.dto.OrderRequest;
 import org.ordersMicroservice.entity.OrderDetailDocument;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.ordersMicroservice.exception.EmptyOrderDetailException;
@@ -63,16 +64,21 @@ class OrderServiceTest {
     @Test
     void throwsEmptyOrderDetailException(){
 
-        OrderDocument orderDocument = OrderDocument.builder()
+/*        OrderDocument orderDocument = OrderDocument.builder()
                 .id(1)
                 .orderDate(Calendar.getInstance())
                 .orderDetail(orderDetailDocumentList)
                 .subtotal(2)
                 .tax(0.4)
                 .build();
+*/
+        OrderRequest orderRequest = OrderRequest.builder()
+                .customerUuid(null)
+                .orderDetail(orderDetailDocumentList)
+                .build();
 
         OrderServiceImpl orderService1 = new OrderServiceImpl();
-        assertThrows(EmptyOrderDetailException.class, () -> orderService1.saveOrder(orderDocument));
+        assertThrows(EmptyOrderDetailException.class, () -> orderService1.saveOrder(orderRequest));
     }
 
     @Test

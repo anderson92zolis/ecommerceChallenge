@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.ordersMicroservice.dto.OrderDto;
+import org.ordersMicroservice.dto.OrderRequest;
 import org.ordersMicroservice.entity.OrderDetailDocument;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.ordersMicroservice.service.OrderService;
@@ -67,7 +68,7 @@ class OrderControllerTest {
                 .subtotal(2)
                 .tax(0.4)
                 .build();
-       when(orderServiceMock.saveOrder(Mockito.any(OrderDocument.class))).thenReturn(orderDto);
+       when(orderServiceMock.saveOrder(Mockito.any(OrderRequest.class))).thenReturn(orderDto);
 
        orderDtos.add(orderDto);
        when(orderServiceMock.findAll()).thenReturn(orderDtos);
