@@ -49,7 +49,7 @@ class OrderControllerTest {
 
         MockitoAnnotations.openMocks(this);
 
-        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2, 2, 1, 2.0);
+        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2,null, 2, 1, 2.0);
 
         orderDetailDocumentList.add(orderDetailDocument);
 

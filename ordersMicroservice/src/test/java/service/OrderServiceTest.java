@@ -43,7 +43,7 @@ class OrderServiceTest {
     @Test
     void saveOrder_ThenGetExpectedId() {
 
-        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2, 2, 1, 2.0);
+        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2,null, 2, 1, 2.0);
 
         orderDetailDocumentList.add(orderDetailDocument);
 
@@ -84,7 +84,7 @@ class OrderServiceTest {
     @Test
     void listAll_ThenCheckSize() {
 
-        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2, 2, 1, 2.0);
+        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2,null, 2, 1, 2.0);
 
         orderDetailDocumentList.add(orderDetailDocument);
 

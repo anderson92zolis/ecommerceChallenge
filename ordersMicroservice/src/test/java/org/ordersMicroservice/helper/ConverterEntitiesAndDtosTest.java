@@ -17,12 +17,13 @@ class ConverterEntitiesAndDtosTest {
     @Test
     void entityToDtoTest() {
 
-    OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2, 2, 1, 2.0);
+    OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2,"000001", 2, 1, 2.0);
     List<OrderDetailDocument> orderDetailDocumentList = new ArrayList<>();
     orderDetailDocumentList.add(orderDetailDocument);
 
     OrderDocument orderDocument = OrderDocument.builder()
                 .id(1)
+                .customerUuid(null)
                 .orderDate(Calendar.getInstance())
                 .orderDetail(orderDetailDocumentList)
                 .subtotal(2)
