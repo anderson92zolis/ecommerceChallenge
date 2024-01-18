@@ -71,8 +71,10 @@ public class OrderServiceImpl implements OrderService {
         orderToSave.setOrderDetail(orderDetailwithSubtotal);
         orderToSave.setSubtotal(subtotal);
         orderToSave.setTax(subtotal * 21 / 100);
-
-        return converter.entityToDto(orderRepository.save(orderToSave));
+        orderToSave.setCustomerUuid(orderRequest.getCustomerUuid());
+        orderRepository.save(orderToSave);
+        return converter.entityToDto(orderToSave);
+//        return converter.entityToDto(orderRepository.save(orderToSave));
     }
 
     public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
