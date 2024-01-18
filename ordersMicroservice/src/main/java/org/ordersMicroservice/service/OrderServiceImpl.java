@@ -3,6 +3,7 @@ package org.ordersMicroservice.service;
 import org.ecommerceChallenge.clients.ProductServiceFeignClient;
 import org.ecommerceChallenge.clients.StockServiceFeignClient;
 import org.ordersMicroservice.dto.OrderDto;
+import org.ordersMicroservice.dto.OrderRequest;
 import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
 import org.ordersMicroservice.dto.verify.OrderVerifiedDto;
 import org.ordersMicroservice.entity.OrderDetailDocument;
@@ -41,17 +42,21 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public OrderDto saveOrder(OrderDocument orderDocument) {
+    public OrderDto saveOrder(OrderRequest orderRequest) {
 
-        OrderDocument orderToSave = orderDocument;
+        OrderRequest orderInProcess = orderRequest;
+//        OrderDocument orderToSave = orderDocument;
 
-        if (orderToSave.getOrderDetail().isEmpty()) {
+        if (orderInProcess.getOrderDetail().isEmpty()) {
             throw new EmptyOrderDetailException("The order detail list is empty.");
         }
 
+        // TODO : check CustomerUuid if customer do not exist then throw exception
+
+
         List<OrderDetailDocument> toCalculate = new ArrayList<>();
 
-        toCalculate = orderToSave.getOrderDetail();
+        toCalculate = orderInProcess.getOrderDetail();
 
         List<OrderDetailDocument> orderDetailwithSubtotal = toCalculate.stream()
                 .map(this::calculateItemSubtotal)
@@ -60,19 +65,24 @@ public class OrderServiceImpl implements OrderService {
 
         double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
 
+        OrderDocument orderToSave = new OrderDocument();
+
         orderToSave.setOrderDate(Calendar.getInstance());
         orderToSave.setOrderDetail(orderDetailwithSubtotal);
         orderToSave.setSubtotal(subtotal);
         orderToSave.setTax(subtotal * 21 / 100);
-
-        return converter.entityToDto(orderRepository.save(orderToSave));
+        orderToSave.setCustomerUuid(orderRequest.getCustomerUuid());
+        orderRepository.save(orderToSave);
+        return converter.entityToDto(orderToSave);
+//        return converter.entityToDto(orderRepository.save(orderToSave));
     }
 
     public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
 
-        String sku = String.valueOf(orderDetailDocument.getProductId());
-
-        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
+//        String sku = String.valueOf(orderDetailDocument.getProductId());
+        String sku = orderDetailDocument.getSku();
+//        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
+        boolean productExist = productServiceFeignClient.confirmProductBySku(sku);
         if (!productExist) {
             return null;
         }

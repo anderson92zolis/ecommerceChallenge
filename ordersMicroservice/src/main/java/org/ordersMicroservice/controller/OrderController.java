@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.ordersMicroservice.dto.OrderDto;
+import org.ordersMicroservice.dto.OrderRequest;
 import org.ordersMicroservice.dto.verify.OrderVerifiedDto;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.ordersMicroservice.service.OrderService;
@@ -48,9 +49,8 @@ public class OrderController {
                 @ApiResponse(responseCode = "400", description = "The item list is empty.", content = {@Content(schema = @Schema())})
     })
     @PostMapping("/add")
-    public ResponseEntity<OrderDto> saveOrder (@RequestBody OrderDocument orderDocument){
-
-        OrderDto documentSaved = orderService.saveOrder(orderDocument);
+    public ResponseEntity<OrderDto> saveOrder (@RequestBody OrderRequest orderRequest){
+        OrderDto documentSaved = orderService.saveOrder(orderRequest);
         return ResponseEntity.status(201).body(documentSaved);
     }
 
@@ -79,9 +79,4 @@ public class OrderController {
         return ResponseEntity.status(201).body(documentVerified);
 
     }
-
-
-
 }
-
-

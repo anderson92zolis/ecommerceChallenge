@@ -20,6 +20,9 @@ public class OrderDetailDocument {
     @Schema(description = "This is the id of the product sold")
     private int productId;
 
+    @Schema(description = "This is the sku of the product sold")
+    private String sku;
+
     @Schema(description = "This is the price of the product sold")
     private double productPrice;
 

@@ -46,7 +46,7 @@ class OrderRepositoryTest {
     @BeforeEach
     void setUp(){
 
-        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(null, 2, 2, 1, 2.0);
+        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(null, 2,null, 2, 1, 2.0);
 
         orderDetailDocumentList.add(orderDetailDocument);
 
