@@ -1,7 +1,12 @@
 package org.ordersMicroservice.service;
 
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.customerMicroservices.documents.CustomerDocument;
 import org.ecommerceChallenge.clients.ProductServiceFeignClient;
 import org.ecommerceChallenge.clients.StockServiceFeignClient;
+import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
+import org.ordersMicroservice.dto.BaseResponse;
 import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.dto.OrderRequest;
 import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
@@ -10,6 +15,7 @@ import org.ordersMicroservice.entity.OrderDetailDocument;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.ordersMicroservice.eventsKafka.entity.Message;
 import org.ordersMicroservice.eventsKafka.enums.OrderStatus;
+import org.ordersMicroservice.exception.CustomerNotExistsException;
 import org.ordersMicroservice.exception.EmptyOrderDetailException;
 import org.ordersMicroservice.helper.ConverterEntitiesAndDtos;
 import org.ordersMicroservice.repository.OrderRepository;
@@ -17,12 +23,13 @@ import org.ordersMicroservice.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
+@RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -40,12 +47,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     ProductServiceFeignClient productServiceFeignClient;
 
+    private final WebClient.Builder webClient;
 
     @Override
     public OrderDto saveOrder(OrderRequest orderRequest) {
 
         OrderRequest orderInProcess = orderRequest;
-//        OrderDocument orderToSave = orderDocument;
 
         if (orderInProcess.getOrderDetail().isEmpty()) {
             throw new EmptyOrderDetailException("The order detail list is empty.");
@@ -53,6 +60,18 @@ public class OrderServiceImpl implements OrderService {
 
         // TODO : check CustomerUuid if customer do not exist then throw exception
 
+        BaseResponse result = this.webClient.build()
+                .get()
+                .uri("lb://customers/api/v1/customers/get/" + orderRequest.getCustomerUuid())
+//                .bodyValue(orderRequest.getCustomerUuid())
+                .retrieve()
+                .bodyToMono(BaseResponse.class)
+                .block()
+        ;
+
+        if(result.hasErrors()){
+            throw new CustomerNotExistsException("The selected customer does not exist on database");
+        }
 
         List<OrderDetailDocument> toCalculate = new ArrayList<>();
 
@@ -74,14 +93,12 @@ public class OrderServiceImpl implements OrderService {
         orderToSave.setCustomerUuid(orderRequest.getCustomerUuid());
         orderRepository.save(orderToSave);
         return converter.entityToDto(orderToSave);
-//        return converter.entityToDto(orderRepository.save(orderToSave));
+
     }
 
     public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
 
-//        String sku = String.valueOf(orderDetailDocument.getProductId());
         String sku = orderDetailDocument.getSku();
-//        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
         boolean productExist = productServiceFeignClient.confirmProductBySku(sku);
         if (!productExist) {
             return null;

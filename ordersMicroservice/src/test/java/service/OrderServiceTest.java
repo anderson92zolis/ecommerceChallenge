@@ -43,7 +43,7 @@ class OrderServiceTest {
     @Test
     void saveOrder_ThenGetExpectedId() {
 
-        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2,null, 2, 1, 2.0);
+        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2, null,2, 1, 2.0);
 
         orderDetailDocumentList.add(orderDetailDocument);
 
@@ -64,27 +64,22 @@ class OrderServiceTest {
     @Test
     void throwsEmptyOrderDetailException(){
 
-/*        OrderDocument orderDocument = OrderDocument.builder()
+        OrderDocument orderDocument = OrderDocument.builder()
                 .id(1)
                 .orderDate(Calendar.getInstance())
                 .orderDetail(orderDetailDocumentList)
                 .subtotal(2)
                 .tax(0.4)
                 .build();
-*/
-        OrderRequest orderRequest = OrderRequest.builder()
-                .customerUuid(null)
-                .orderDetail(orderDetailDocumentList)
-                .build();
 
-        OrderServiceImpl orderService1 = new OrderServiceImpl();
-        assertThrows(EmptyOrderDetailException.class, () -> orderService1.saveOrder(orderRequest));
+        OrderServiceImpl orderService1 = new OrderServiceImpl(null);
+        assertThrows(EmptyOrderDetailException.class, () -> orderService1.saveOrder(new OrderRequest()));
     }
 
     @Test
     void listAll_ThenCheckSize() {
 
-        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2,null, 2, 1, 2.0);
+        OrderDetailDocument orderDetailDocument = new OrderDetailDocument(1, 2, null, 2, 1, 2.0);
 
         orderDetailDocumentList.add(orderDetailDocument);
 
