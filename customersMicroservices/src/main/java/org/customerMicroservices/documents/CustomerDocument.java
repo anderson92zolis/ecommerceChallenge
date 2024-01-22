@@ -3,8 +3,10 @@ package org.customerMicroservices.documents;
 import lombok.*;
 import nonapi.io.github.classgraph.json.Id;
 import org.bson.types.ObjectId;
+import org.customerMicroservices.dto.AddressDTO;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -15,13 +17,14 @@ import java.util.UUID;
 @Document(collection = "customers")
 public class CustomerDocument {
     //region ATTRIBUTES
-    ////* @Field
     @Id
     private ObjectId _id;
     private UUID uuid;
-
-    ////* @Field(name="name")
+    private String pass;
     private String name;
+    private String dni;
+    private AddressDTO address;
+    private List<Integer> ordersList;
 
     //endregion ATTRIBUTES
 

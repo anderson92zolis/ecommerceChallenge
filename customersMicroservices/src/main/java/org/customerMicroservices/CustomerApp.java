@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "org.ecommerceChallenge.clients")
+
 public class CustomerApp {
 
 	public static void main(String[] args) {

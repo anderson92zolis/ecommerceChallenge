@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface CustomerRepository extends MongoRepository<CustomerDocument, UUID> {
 
     boolean existsByUuid(UUID uuid);
+    boolean existsByName(String name);
     CustomerDocument findByUuid(UUID uuid);
 
 }
