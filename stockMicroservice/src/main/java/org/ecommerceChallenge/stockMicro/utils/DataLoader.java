@@ -22,10 +22,10 @@ public class DataLoader implements CommandLineRunner {
         if (stockRepository.findAll().isEmpty()) {
             stockRepository.saveAll(
                     List.of(
-                            Stock.builder().productId(1).sku("000001").name("camera").quantity(1).build(),
-                            Stock.builder().productId(2).sku("000002").name("pot").quantity(20).build(),
-                            Stock.builder().productId(3).sku("000003").name("IA book").quantity(30).build(),
-                            Stock.builder().productId(4).sku("000004").name("crypto").quantity(40).build()
+                            Stock.builder().productId(1).sku("000001").name("camera").quantity(1000).build(),
+                            Stock.builder().productId(2).sku("000002").name("pot").quantity(2000).build()
+                            //Stock.builder().productId(3).sku("000003").name("IA book").quantity(30).build(),
+                            //Stock.builder().productId(4).sku("000004").name("crypto").quantity(40).build()
                     )
             );
         }
