@@ -3,6 +3,7 @@ package org.ordersMicroservice.service;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.customerMicroservices.documents.CustomerDocument;
+import org.customerMicroservices.dto.CustomerDTO;
 import org.ecommerceChallenge.clients.ProductServiceFeignClient;
 import org.ecommerceChallenge.clients.StockServiceFeignClient;
 import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     ProductServiceFeignClient productServiceFeignClient;
 
-    private final WebClient.Builder webClient;
+    private final WebClient.Builder webClientBuilder;
 
     @Override
     public OrderDto saveOrder(OrderRequest orderRequest) {
@@ -60,16 +61,16 @@ public class OrderServiceImpl implements OrderService {
 
         // TODO : check CustomerUuid if customer do not exist then throw exception
 
-        BaseResponse result = this.webClient.build()
+
+        CustomerDTO customer = this.webClientBuilder.build()
                 .get()
-                .uri("lb://customers/api/v1/customers/get/" + orderRequest.getCustomerUuid())
-//                .bodyValue(orderRequest.getCustomerUuid())
+                .uri("http://localhost:8080/api/v1/customers/get/" + orderRequest.getCustomerUuid())
                 .retrieve()
-                .bodyToMono(BaseResponse.class)
+                .bodyToMono(CustomerDTO.class)
                 .block()
         ;
 
-        if(result.hasErrors()){
+        if(customer == null){
             throw new CustomerNotExistsException("The selected customer does not exist on database");
         }
 
