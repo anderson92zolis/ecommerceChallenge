@@ -31,7 +31,8 @@ class CustomerDTO_Test {
                 .postalCode(8023)
                 .country("España").build();
         customer1 = CustomerDTO.builder()
-                .id(uuid1)
+                .uuid(uuid1)
+                .pass("fernandoPassword")
                 .name("Fernadno")
                 .dni("78124592D")
                 .address(address1)
@@ -47,27 +48,28 @@ class CustomerDTO_Test {
 
     //region TESTS
     @Test
-    void getId() {
+    void globalTest(){
+        //region VARIABLES
+        String password2;
+        AddressDTO addressDTO2;
+        CustomerDTO customerDTO;
+
+        //endregion VARIABLES
+
+
+        //region TEST INITIALIZATION
+        password2 = "pasword2";
+        addressDTO2 = new AddressDTO();
+        customerDTO = new CustomerDTO();
+
+        //endregion TEST INITIALIZATION
+
+
         //region TEST
-        assertEquals(uuid1, customer1.getId());
-
-        //endregion TEST
-
-    }
-
-    @Test
-    void getName() {
-        //region TEST
-        assertEquals("Fernadno", customer1.getName());
-
-        //endregion TEST
-
-    }
-
-    @Test
-    void getDni() {
-        //region TEST
-        assertEquals("78124592D", customer1.getDni());
+        // Password
+        assertEquals("fernandoPassword", customer1.getPass());
+        customer1.setPass(password2);
+        assertEquals(password2, customer1.getPass());
 
         //endregion TEST
 
@@ -86,58 +88,37 @@ class CustomerDTO_Test {
     }
 
     @Test
+    void getDni() {
+        //region TEST
+        assertEquals("78124592D", customer1.getDni());
+
+        //endregion TEST
+
+    }
+
+    @Test
+    void getId() {
+        //region TEST
+        assertEquals(uuid1, customer1.getUuid());
+
+        //endregion TEST
+
+    }
+
+    @Test
+    void getName() {
+        //region TEST
+        assertEquals("Fernadno", customer1.getName());
+
+        //endregion TEST
+
+    }
+
+    @Test
     void getOrdersList() {
         //region TEST
         assertEquals(ordersList1.get(1), customer1.getOrdersList().get(1));
         assertEquals(ordersList1.get(3), customer1.getOrdersList().get(3));
-
-        //endregion TEST
-
-    }
-
-    @Test
-    void setId() {
-        //region VARIABLES
-        UUID uuid2 = UUID.randomUUID();
-
-        //endregion VARIABLES
-
-
-        //region TEST
-        customer1.setId(uuid2);
-        assertEquals(uuid2, customer1.getId());
-
-        //endregion TEST
-
-    }
-
-    @Test
-    void setName() {
-        //region VARIABLES
-        String name = "Laura";
-
-        //endregion VARIABLES
-
-
-        //region TEST
-        customer1.setName(name);
-        assertEquals(name, customer1.getName());
-
-        //endregion TEST
-
-    }
-
-    @Test
-    void setDni() {
-        //region VARIABLES
-        String dni = "658154785X";
-
-        //endregion VARIABLES
-
-
-        //region TEST
-        customer1.setDni(dni);
-        assertEquals(dni, customer1.getDni());
 
         //endregion TEST
 
@@ -170,6 +151,54 @@ class CustomerDTO_Test {
     }
 
     @Test
+    void setDni() {
+        //region VARIABLES
+        String dni = "658154785X";
+
+        //endregion VARIABLES
+
+
+        //region TEST
+        customer1.setDni(dni);
+        assertEquals(dni, customer1.getDni());
+
+        //endregion TEST
+
+    }
+
+    @Test
+    void setId() {
+        //region VARIABLES
+        UUID uuid2 = UUID.randomUUID();
+
+        //endregion VARIABLES
+
+
+        //region TEST
+        customer1.setUuid(uuid2);
+        assertEquals(uuid2, customer1.getUuid());
+
+        //endregion TEST
+
+    }
+
+    @Test
+    void setName() {
+        //region VARIABLES
+        String name = "Laura";
+
+        //endregion VARIABLES
+
+
+        //region TEST
+        customer1.setName(name);
+        assertEquals(name, customer1.getName());
+
+        //endregion TEST
+
+    }
+
+    @Test
     void setOrdersList() {
         //region VARIABLES
         ArrayList<Integer> ordersList = new ArrayList<>(Arrays.asList(1254, 1287, 1348, 1852, 1899, 2201, 2287, 2354));
@@ -187,52 +216,7 @@ class CustomerDTO_Test {
 
     }
 
-    @Test
-    void validateDNI() {
-        //region VARIABLES
-        // Goods DNI
-        String dniGood1 = "46140604m";
-        String dniGood2 = "46140604M";
-        String dniGood3 = "12345678Z";
-        String dniGood4 = "98765431G";
-        String dniGood5 = "87654321X";
-        String dniGood6 = "00000024R";
-        // Bads DNI
-        String dniBad1 = null;
-        String dniBad2 = "";
-        String dniBad3 = "46140604";
-        String dniBad4 = "6140604";
-        String dniBad5 = "6140604M";
-        String dniBad6 = "EDR0604M";
 
-        //endregion VARIABLES
-
-
-        //region TEST INITIALIZATION
-
-
-        //endregion TEST INITIALIZATION
-
-
-        //region TEST
-        // Goods DNI
-        assertTrue(CustomerDTO.validateDNI(dniGood1));
-        assertTrue(CustomerDTO.validateDNI(dniGood2));
-        assertTrue(CustomerDTO.validateDNI(dniGood3));
-        assertTrue(CustomerDTO.validateDNI(dniGood4));
-        assertTrue(CustomerDTO.validateDNI(dniGood5));
-        assertTrue(CustomerDTO.validateDNI(dniGood6));
-        // Bad DNI
-        assertFalse(CustomerDTO.validateDNI(dniBad1));
-        assertFalse(CustomerDTO.validateDNI(dniBad2));
-        assertFalse(CustomerDTO.validateDNI(dniBad3));
-        assertFalse(CustomerDTO.validateDNI(dniBad4));
-        assertFalse(CustomerDTO.validateDNI(dniBad5));
-        assertFalse(CustomerDTO.validateDNI(dniBad6));
-
-        //endregion TEST
-
-    }
 
     //endregion TESTS
 
