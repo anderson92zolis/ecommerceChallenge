@@ -20,5 +20,14 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(CustomerNotExistsException.class)
+    public ResponseEntity<ErrorDto> handleCustomerNotFoudExistsException (CustomerNotExistsException ex) {
+
+        ErrorDto errorDto = ErrorDto.builder()
+                .message(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
+    }
 
 }

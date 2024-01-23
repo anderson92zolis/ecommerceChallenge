@@ -25,7 +25,7 @@ import java.util.List;
 @Tag(name = "eCommerce", description = "this controller contains the methods to work with the orders")
 public class OrderController {
 
-    private static Logger log = LoggerFactory.getLogger(OrderController.class);
+    public static Logger log = LoggerFactory.getLogger(OrderController.class);
     @Autowired
     private OrderService orderService;
 

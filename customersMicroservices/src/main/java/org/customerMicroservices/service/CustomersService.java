@@ -201,7 +201,7 @@ public class CustomersService {
                     responseEntity = new ResponseEntity<>(customerDTO, httpHeaders, HttpStatus.CREATED);
                 } else {
                     // CREATE ERROR ANSWER
-                    responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.CONFLICT);
+                    responseEntity = new ResponseEntity<>(null, httpHeaders,HttpStatus.NOT_FOUND ); //, HttpStatus.CONFLICT);
                 }
             } else {
                 // CREATE ERROR ANSWER
@@ -209,7 +209,7 @@ public class CustomersService {
             }
         } catch (Exception ex) {
             // CREATE ERROR ANSWER
-            responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+            responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.CONFLICT);
             //todo info of error for log
         }
         //endregion ACTIONS
@@ -303,6 +303,18 @@ public class CustomersService {
 
         // OUT
         return uuid;
+
+    }
+
+    public CustomerDTO getForOrder(String uuid) {
+
+        CustomerDocument toReturn = customerRepository.findByUuid(UUID.fromString(uuid));
+
+        if(toReturn == null){
+            return null;
+        }
+
+        return ConverterDocsAndDtos.docToDto(toReturn);
 
     }
 
