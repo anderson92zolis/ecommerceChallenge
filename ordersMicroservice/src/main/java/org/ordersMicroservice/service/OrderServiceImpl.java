@@ -87,6 +87,7 @@ public class OrderServiceImpl implements OrderService {
 
         OrderDocument orderToSave = new OrderDocument();
 
+        orderToSave.setCustomerUuid(customer.getUuid());
         orderToSave.setOrderDate(Calendar.getInstance());
         orderToSave.setOrderDetail(orderDetailwithSubtotal);
         orderToSave.setSubtotal(subtotal);
