@@ -26,7 +26,6 @@ public class ProductsController {
     public String greetings() {
         log.info("** Saludos desde el logger **");
 
-
         return "Hello from Products DB!!!";
     }
 
