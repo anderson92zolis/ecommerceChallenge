@@ -1,12 +1,16 @@
 package org.ecommerce.products.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ecommerce.products.dto.ProductResponse;
 import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.service.ProductsService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +20,18 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping(value = "api/v1/products")
+@Tag(name = "Documentation for controller layer of Porducts", description = "Test API operations")
 public class ProductsController {
 
     private final ProductsService productsService;
 
 
+
+    @Operation(summary = "Get a greeting message", description = "Returns a greeting message from the Products DB.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping(value = "/test")
     public String greetings() {

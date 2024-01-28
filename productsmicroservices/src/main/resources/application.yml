@@ -19,6 +19,8 @@ spring:
 
   # for thymeleaf
   open-in-view: true
+    
+
 
   thymeleaf:
     prefix: classpath:/templates/
@@ -34,4 +36,12 @@ eureka:
     fetchRegistry: true
   .instance:
     instance-id=${spring.application.name}:${spring.application.instance_id:${random:value}}
+
+# swagger-ui custom path
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
 
