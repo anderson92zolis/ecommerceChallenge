@@ -1,7 +1,6 @@
 package org.ecommerce.products.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,6 +20,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping(value = "api/v1/products")
 @Tag(name = "Documentation for controller layer of Porducts", description = "Test API operations")
+@CrossOrigin
 public class ProductsController {
 
     private final ProductsService productsService;
@@ -42,6 +42,12 @@ public class ProductsController {
 
     @GetMapping(value = "/getOneProduct/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get a product by ID", description = "Get detailed information about a product by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the product"),
+            @ApiResponse(responseCode = "404", description = "Product not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public ResponseEntity<ProductResponse> getOneProductById(@PathVariable("id") int id) {
         ProductResponse products = productsService.getOneProductById(id);
         return new ResponseEntity<>(products, HttpStatus.OK);

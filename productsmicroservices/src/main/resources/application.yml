@@ -1,5 +1,5 @@
 server:
-  port: 0   # HTTP (Tomcat) port
+  port: 0   # Automatically assign a random port
 # Spring properties
 spring:
   application:
@@ -19,29 +19,40 @@ spring:
 
   # for thymeleaf
   open-in-view: true
-    
-
 
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     cache: false # Set to true for production, false for development
 
+  # To order endpoints alphabetically:
+  #mvc:
+  #  pathmatch:
+  #    matching-strategy: ant-path-matcher
+
+  #doc:
+    #swagger-ui:
+      #tagsSorter: alpha
+
+  #spring-doc:
+  #  swagger-ui:
+  #    path: /swagger-ui/index.html
+  #    enabled: true
+  #  openapi-ui:
+  #    path: /v3/api-docs
+
 # for eureka server
 eureka:
   client:
     service-url:
       default-zone: http://localhost:8761/eureka/
-    registerWithEureka: true
-    fetchRegistry: true
-  .instance:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
     instance-id=${spring.application.name}:${spring.application.instance_id:${random:value}}
 
-# swagger-ui custom path
+# To access the API Documentation:
+# http://localhost:8083/swagger-ui/index.html
 
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-  api-docs:
-    path: /v3/api-docs
-
+# API Documentation in JSON format:
+# http://localhost:8083/v3/api-docs

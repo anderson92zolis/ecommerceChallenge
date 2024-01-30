@@ -7,14 +7,13 @@
 		<artifactId>ecommerceServices</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-<!--	<groupId>org.ecommerceChallenge</groupId> -->
+
 	<artifactId>gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gateway</name>
 	<description>this will be the gateway for the project</description>
 	<properties>
 		<java.version>17</java.version>
-
 	</properties>
 
 <dependencies>
@@ -57,21 +56,19 @@
         <artifactId>spring-boot</artifactId>
     </dependency>
 
+	<dependency>
+		<groupId>org.springdoc</groupId>
+		<artifactId>springdoc-openapi-ui</artifactId>
+		<version>1.6.11</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.springdoc</groupId>
+		<artifactId>springdoc-openapi-webflux-ui</artifactId>
+		<version>1.6.11</version>
+	</dependency>
 
 </dependencies>
-
-<!--	<dependencyManagement> CORTADO Y PEGADO EN EL POM DEL PROYECTO -->
-	<!--	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement> -->
 
 	<build>
 		<plugins>
@@ -89,5 +86,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
