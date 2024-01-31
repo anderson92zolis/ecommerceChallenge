@@ -22,8 +22,10 @@ public class OrderDocument {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Schema(description = "This is the id of the order")
     private int id;
+
     @Schema(description = "This is the UUID to store the customer into the order")
     private UUID customerUuid;
+
     @Temporal(TemporalType.DATE)
     @Schema(description = "This is the date when the order was created")
     private Calendar orderDate;

@@ -59,6 +59,13 @@ public class CustomerController {
         return customersService.update(customerDTO);
     }
 
+    // This endpoint is connected with Order ms
+    @GetMapping(value = "/getForOrder/{uuid}")
+    public CustomerDTO getForOrder (@PathVariable("uuid") String uuid){
+        return customersService.getForOrder(uuid);
+    }
+
+
 
     //endregion ENDPOINTS
 

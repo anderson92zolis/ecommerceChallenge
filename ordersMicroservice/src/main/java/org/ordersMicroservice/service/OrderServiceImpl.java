@@ -1,7 +1,13 @@
 package org.ordersMicroservice.service;
 
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.customerMicroservices.documents.CustomerDocument;
+import org.customerMicroservices.dto.CustomerDTO;
 import org.ecommerceChallenge.clients.ProductServiceFeignClient;
 import org.ecommerceChallenge.clients.StockServiceFeignClient;
+import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
+import org.ordersMicroservice.dto.BaseResponse;
 import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.dto.OrderRequest;
 import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
@@ -10,21 +16,31 @@ import org.ordersMicroservice.entity.OrderDetailDocument;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.ordersMicroservice.eventsKafka.entity.Message;
 import org.ordersMicroservice.eventsKafka.enums.OrderStatus;
+import org.ordersMicroservice.exception.CustomerNotExistsException;
 import org.ordersMicroservice.exception.EmptyOrderDetailException;
 import org.ordersMicroservice.helper.ConverterEntitiesAndDtos;
 import org.ordersMicroservice.repository.OrderRepository;
-import org.ordersMicroservice.utils.JsonUtils;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static org.ordersMicroservice.controller.OrderController.log;
 
+@RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
+
 
     @Autowired
     OrderRepository orderRepository;
@@ -40,53 +56,61 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     ProductServiceFeignClient productServiceFeignClient;
 
+    private final WebClient.Builder webClientBuilder;
 
     @Override
     public OrderDto saveOrder(OrderRequest orderRequest) {
 
         OrderRequest orderInProcess = orderRequest;
-//        OrderDocument orderToSave = orderDocument;
 
         if (orderInProcess.getOrderDetail().isEmpty()) {
             throw new EmptyOrderDetailException("The order detail list is empty.");
         }
 
-        // TODO : check CustomerUuid if customer do not exist then throw exception
+// check CustomerUuid. If customer do not exist then throw exception
 
+        CustomerDTO customer;
+            customer = this.webClientBuilder.build()
+                    .get()
+                    .uri("http://localhost:8080/api/v1/customers/getForOrder/" + orderRequest.getCustomerUuid())
+                    .retrieve()
+                    .bodyToMono(CustomerDTO.class)
+                    .block();
 
-        List<OrderDetailDocument> toCalculate = new ArrayList<>();
+        if(customer == null){
+            throw new CustomerNotExistsException("The selected customer does not exist on database");
+        }
 
-        toCalculate = orderInProcess.getOrderDetail();
+            List<OrderDetailDocument> toCalculate = new ArrayList<>();
 
-        List<OrderDetailDocument> orderDetailwithSubtotal = toCalculate.stream()
-                .map(this::calculateItemSubtotal)
-                .filter(x -> x != null)
-                .toList();
+            toCalculate = orderInProcess.getOrderDetail();
 
-        double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
+            List<OrderDetailDocument> orderDetailwithSubtotal = toCalculate.stream()
+                    .map(this::calculateItemSubtotal)
+                    .filter(x -> x != null)
+                    .toList();
 
-        OrderDocument orderToSave = new OrderDocument();
+            double subtotal = toCalculate.stream().mapToDouble(s -> s.getItemSubtotal()).sum();
 
-        orderToSave.setOrderDate(Calendar.getInstance());
-        orderToSave.setOrderDetail(orderDetailwithSubtotal);
-        orderToSave.setSubtotal(subtotal);
-        orderToSave.setTax(subtotal * 21 / 100);
-        orderToSave.setCustomerUuid(orderRequest.getCustomerUuid());
-        orderRepository.save(orderToSave);
-        return converter.entityToDto(orderToSave);
-//        return converter.entityToDto(orderRepository.save(orderToSave));
+            OrderDocument orderToSave = new OrderDocument();
+
+            orderToSave.setCustomerUuid(customer.getUuid());
+            orderToSave.setOrderDate(Calendar.getInstance());
+            orderToSave.setOrderDetail(orderDetailwithSubtotal);
+            orderToSave.setSubtotal(subtotal);
+            orderToSave.setTax(subtotal * 21 / 100);
+            orderToSave.setCustomerUuid(orderRequest.getCustomerUuid());
+            orderRepository.save(orderToSave);
+            return converter.entityToDto(orderToSave);
+
     }
+    public OrderDetailDocument calculateItemSubtotal (OrderDetailDocument orderDetailDocument) {
 
-    public OrderDetailDocument calculateItemSubtotal(OrderDetailDocument orderDetailDocument) {
-
-//        String sku = String.valueOf(orderDetailDocument.getProductId());
         String sku = orderDetailDocument.getSku();
-//        boolean productExist = productServiceFeignClient.confirmProductBySku(String.valueOf(orderDetailDocument.getProductId()));
         boolean productExist = productServiceFeignClient.confirmProductBySku(sku);
         if (!productExist) {
             return null;
         }
-        // TODO replace String.valueOf by sku
 
         double price = productServiceFeignClient.getProductById(sku).getPrice();
         int quantity = orderDetailDocument.getProductQuantity();
@@ -118,8 +142,7 @@ public class OrderServiceImpl implements OrderService {
         return OrdersToReturn;
     }
 
-
-    // OpenFeign
+// TODO : check if this code can be deleted
 
     public OrderVerifiedDto verifyOrderStocks(OrderDocument orderDocument) {
 
