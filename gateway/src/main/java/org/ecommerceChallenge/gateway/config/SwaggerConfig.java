@@ -1,6 +1,7 @@
 package org.ecommerceChallenge.gateway.config;
 
-import org.springdoc.core.SwaggerUiConfigParameters;
+
+import org.springdoc.core.properties.SwaggerUiConfigParameters;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
