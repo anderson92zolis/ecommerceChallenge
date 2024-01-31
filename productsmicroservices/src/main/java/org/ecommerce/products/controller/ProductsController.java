@@ -25,8 +25,6 @@ public class ProductsController {
 
     private final ProductsService productsService;
 
-
-
     @Operation(summary = "Get a greeting message", description = "Returns a greeting message from the Products DB.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),

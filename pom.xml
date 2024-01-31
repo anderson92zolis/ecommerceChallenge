@@ -83,6 +83,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.github.classgraph</groupId>
+                <artifactId>classgraph</artifactId>
+                <version>4.8.139</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -93,29 +98,8 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.maven.plugin.version}</version>
-                    <!-- -->
                 </plugin>
-
-                <!--
-
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.7.0.1746</version>
-                </plugin>
-
-
-                Coment because make a faild in github SonarCloud code analysis
-
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.7</version>
-                </plugin>
-                -->
-
             </plugins>
-
         </pluginManagement>
     </build>
 
@@ -155,9 +139,6 @@
         </profile>
     </profiles>
 
-
-    <!--
-
     <repositories>
         <repository>
             <id>netflix-candidates</id>
@@ -169,6 +150,5 @@
         </repository>
     </repositories>
 
-    -->
 
 </project>

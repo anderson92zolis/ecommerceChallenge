@@ -1,9 +1,11 @@
 server:
   port: 0   # Automatically assign a random port
 # Spring properties
+  servlet:
+    context-path: /
 spring:
   application:
-    name: products
+    name: product-service
   datasource:
     password: password
     url: jdbc:postgresql://localhost:5432/products
@@ -41,3 +43,14 @@ eureka:
 
 # API Documentation in JSON format:
 # http://localhost:8083/v3/api-docs
+
+openapi:
+  service:
+    title: product-service doc #title that you will want to display in the swagger ui
+    version: 1.0.0
+    url: http://localhost:8080 #api gateway url
+springdoc:
+  api-docs:
+    path: /product-service/v3/api-docs #these urls will used to load the swagger ui of this service by the api gateway
+  swagger-ui:
+    path: /product-service/swagger-ui.html
