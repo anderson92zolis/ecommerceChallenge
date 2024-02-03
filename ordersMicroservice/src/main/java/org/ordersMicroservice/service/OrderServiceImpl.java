@@ -1,13 +1,9 @@
 package org.ordersMicroservice.service;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.customerMicroservices.documents.CustomerDocument;
 import org.customerMicroservices.dto.CustomerDTO;
 import org.ecommerceChallenge.clients.ProductServiceFeignClient;
 import org.ecommerceChallenge.clients.StockServiceFeignClient;
-import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
-import org.ordersMicroservice.dto.BaseResponse;
 import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.dto.OrderRequest;
 import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
@@ -20,20 +16,16 @@ import org.ordersMicroservice.exception.CustomerNotExistsException;
 import org.ordersMicroservice.exception.EmptyOrderDetailException;
 import org.ordersMicroservice.helper.ConverterEntitiesAndDtos;
 import org.ordersMicroservice.repository.OrderRepository;
-
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static org.ordersMicroservice.controller.OrderController.log;
 
 @RequiredArgsConstructor
 @Service

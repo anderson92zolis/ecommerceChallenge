@@ -1,5 +1,6 @@
 package org.ecommerceChallenge.stockMicro.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ecommerceChallenge.stockMicro.dto.StockRequest;
@@ -10,12 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
 @Slf4j
 @RequestMapping(value = "api/v1/stock")
+@Tag(name = "Documentation for controller layer of Stocks", description = "Test API operations")
 public class StockController {
 
     private final StockService stockService;

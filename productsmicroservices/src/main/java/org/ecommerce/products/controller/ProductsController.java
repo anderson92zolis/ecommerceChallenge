@@ -1,12 +1,15 @@
 package org.ecommerce.products.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ecommerce.products.dto.ProductResponse;
 import org.ecommerce.products.dto.ProductsRequest;
 import org.ecommerce.products.service.ProductsService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,22 +19,33 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping(value = "api/v1/products")
+@Tag(name = "Documentation for controller layer of Products", description = "Test API operations")
+@CrossOrigin
 public class ProductsController {
 
     private final ProductsService productsService;
 
-
+    @Operation(summary = "Get a greeting message", description = "Returns a greeting message from the Products DB.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping(value = "/test")
     public String greetings() {
         log.info("** Saludos desde el logger **");
-
 
         return "Hello from Products DB!!!";
     }
 
     @GetMapping(value = "/getOneProduct/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get a product by ID", description = "Get detailed information about a product by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the product"),
+            @ApiResponse(responseCode = "404", description = "Product not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public ResponseEntity<ProductResponse> getOneProductById(@PathVariable("id") int id) {
         ProductResponse products = productsService.getOneProductById(id);
         return new ResponseEntity<>(products, HttpStatus.OK);

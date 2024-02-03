@@ -1,9 +1,16 @@
 server:
-  port: 0   # HTTP (Tomcat) port
+  port: 0   # Automatically assign a random port
+
+  # Swagger OpenApi
+
+  servlet:
+    context-path: /
+
 # Spring properties
+
 spring:
   application:
-    name: products
+      name: product-service
   datasource:
     password: password
     url: jdbc:postgresql://localhost:5432/products
@@ -17,7 +24,7 @@ spring:
         format_sql: true
     show-sql: true
 
-  # for thymeleaf
+# for thymeleaf
   open-in-view: true
 
   thymeleaf:
@@ -25,13 +32,30 @@ spring:
     suffix: .html
     cache: false # Set to true for production, false for development
 
+
 # for eureka server
 eureka:
   client:
     service-url:
       default-zone: http://localhost:8761/eureka/
-    registerWithEureka: true
-    fetchRegistry: true
-  .instance:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
     instance-id=${spring.application.name}:${spring.application.instance_id:${random:value}}
 
+# To access the API Documentation:
+# http://localhost:8080/swagger-ui/index.html
+
+# API Documentation in JSON format:
+# http://localhost:8080/v3/api-docs
+
+openapi:
+  service:
+    title: product-service doc #title that you will want to display in the swagger ui
+    version: 1.0.0
+    url: http://localhost:8080 #api gateway url
+springdoc:
+  api-docs:
+    path: /product-service/v3/api-docs #these urls will used to load the swagger ui of this service by the api gateway
+  swagger-ui:
+    path: /product-service/swagger-ui.html

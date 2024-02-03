@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/v1/orders")
-@Tag(name = "eCommerce", description = "this controller contains the methods to work with the orders")
+@Tag(name = "Documentation for controller layer of Orders", description = "Test API operations")
 public class OrderController {
 
     public static Logger log = LoggerFactory.getLogger(OrderController.class);
