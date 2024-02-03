@@ -2,10 +2,15 @@
 server:
   port: 0
 
+  # Swagger OpenApi
+
+  servlet:
+    context-path: /
+
 # SPRING PROPERTIES
 spring:
   application:
-    name: customers
+    name: customer-service
   # kafka configuration provider
   kafka:
     bootstrap-servers: localhost:9092
@@ -32,5 +37,20 @@ eureka:
   .instance:
     instance-id=${spring.application.name}:${spring.application.instance_id:${random:value}}
 
+# To access the API Documentation:
+# http://localhost:8080/swagger-ui/index.html
 
+# API Documentation in JSON format:
+# http://localhost:8080/v3/api-docs
+
+openapi:
+  service:
+    title: customer-service doc #title that you will want to display in the swagger ui
+    version: 1.0.0
+    url: http://localhost:8080 #api gateway url
+springdoc:
+  api-docs:
+    path: /customer-service/v3/api-docs #these urls will used to load the swagger ui of this service by the api gateway
+  swagger-ui:
+    path: /customer-service/swagger-ui.html
 

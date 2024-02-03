@@ -10,7 +10,7 @@ server:
 
 spring:
   application:
-    name: product-service
+      name: product-service
   datasource:
     password: password
     url: jdbc:postgresql://localhost:5432/products

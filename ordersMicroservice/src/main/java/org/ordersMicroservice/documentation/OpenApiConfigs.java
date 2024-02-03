@@ -1,4 +1,4 @@
-package org.ecommerce.products.documentation;
+package org.ordersMicroservice.documentation;
 
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;

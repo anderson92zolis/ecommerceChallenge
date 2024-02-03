@@ -3,7 +3,6 @@ package org.ordersMicroservice.helper;
 import org.modelmapper.ModelMapper;
 import org.ordersMicroservice.dto.OrderDto;
 import org.ordersMicroservice.dto.verify.OrderDetailDocumentVerifiedDto;
-import org.ordersMicroservice.dto.verify.OrderVerifiedDto;
 import org.ordersMicroservice.entity.OrderDetailDocument;
 import org.ordersMicroservice.entity.OrderDocument;
 import org.springframework.context.annotation.Bean;

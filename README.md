@@ -88,3 +88,90 @@ Conduct load testing to assess the performance of your microservices under high 
 Set up automated integration tests that span multiple microservices to ensure they work together seamlessly.
 
 These bonus challenges will further elevate your microservices architecture design skills and provide valuable insights into real-world scenarios and best practices. Choose the ones that align with your current level of expertise and desired learning objectives. Happy designing!
+
+# Ecommerce Challenge Project
+
+This project showcases the use of ecommerce shop, Postman, swagger to document and visualize APIs in a Spring Boot project.
+
+## Prerequisites
+
+Make sure you have the following installed:
+
+- [Java JDK](https://www.oracle.com/java/technologies/javase-downloads.html)
+- [Maven](https://maven.apache.org/download.cgi)
+- [Docker](https://www.docker.com/get-started)
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+
+## Project Setup
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/anderson92zolis/ecommerceChallenge.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd ecommerceChallenge
+    ```
+
+3. Build the project:
+
+    ```bash
+    mvn clean install
+    ```
+
+## Running the Application
+
+1. Run the Spring Boot application:
+   ```bash
+    cd docker
+    ```   
+    ```bash
+    docker compose up -d 
+    ```
+   * Create the database for ecommerce in PostgreSQL http://localhost:5050/browser/
+   * Create the tables for **products** **stocks** 
+
+2. Access the Postman to check the endpoints:
+
+3. Access the Swagger documentation:
+
+   Open your browser and go to [http://localhost:8080/webjars/swagger-ui/4.15.5/index.html](http://localhost:8080/webjars/swagger-ui/4.15.5/index.html).
+
+   Here, you will find the Swagger interface to explore and test your APIs.
+
+## Docker
+   
+   you can start and stop the container in the docker program directly (**some microservices are interconnect**)
+
+## Project Modules
+
+- `customersMicroservices`
+- `ordersMicroservices`
+- `productsMicroservice`
+- `stockMicroservice`
+- `notification-server`   - Kafka
+- `ApiGateway` - Manager of Microservices.
+- `discovery-server` - Eureka Service
+
+## Resource
+
+- [Configuring Swagger in a Spring Cloud Gateway Project](https://medium.com/@pubuduc.14/swagger-openapi-specification-3-integration-with-spring-cloud-gateway-part-2-1d670d4ab69a)
+
+## How to Contribute
+
+If you wish to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your contribution: `git checkout -b feature/new-feature`.
+3. Make your changes and commit: `git commit -m "Add new feature"`.
+4. Push your changes to the remote repository: `git push origin feature/new-feature`.
+5. Open a pull request on GitHub.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+

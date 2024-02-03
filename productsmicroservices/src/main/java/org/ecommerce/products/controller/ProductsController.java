@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping(value = "api/v1/products")
-@Tag(name = "Documentation for controller layer of Porducts", description = "Test API operations")
+@Tag(name = "Documentation for controller layer of Products", description = "Test API operations")
 @CrossOrigin
 public class ProductsController {
 
