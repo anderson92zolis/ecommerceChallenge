@@ -124,19 +124,25 @@ Make sure you have the following installed:
 
 ## Running the Application
 
-1. Run the Spring Boot application:
+1. Download the images and create the containers in docker:
    ```bash
     cd docker
     ```   
     ```bash
     docker compose up -d 
     ```
+2. Create the database in PostgreSQL the other DB are create automatically
+    
    * Create the database for ecommerce in PostgreSQL http://localhost:5050/browser/
-   * Create the tables for **products** **stocks** 
+   * Create the tables for **products** **stocks**
+     
+3. Run the Spring Boot application in Intellij
 
-2. Access the Postman to check the endpoints:
+   * DiscoveryServerApplication & GatewayApplication  are mandatory
 
-3. Access the Swagger documentation:
+5. Access the Postman to check the endpoints:
+   
+6. Access the Swagger documentation:
 
    Open your browser and go to [http://localhost:8080/webjars/swagger-ui/4.15.5/index.html](http://localhost:8080/webjars/swagger-ui/4.15.5/index.html).
 
