@@ -25,7 +25,7 @@ spring:
       #password: 1234567891011
       #authentication-database: root
 
-      uri: mongodb://root:1234567891011@localhost:28017/CustomersDDBB?authSource=admin&authMechanism=SCRAM-SHA-1
+      uri: mongodb://root:1234567891011@localhost:27017/CustomersDDBB?authSource=admin&authMechanism=SCRAM-SHA-1
       #uuid-representation: standard
 
 eureka:

@@ -1,5 +1,7 @@
 package org.ordersMicroservice.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -49,6 +51,7 @@ public class OrderController {
                 @ApiResponse(responseCode = "400", description = "The item list is empty.", content = {@Content(schema = @Schema())})
     })
     @PostMapping("/add")
+    @CircuitBreaker(name = "orders-service", fallbackMethod = "saveOrderFallback")
     public ResponseEntity<OrderDto> saveOrder (@RequestBody OrderRequest orderRequest){
         OrderDto documentSaved = orderService.saveOrder(orderRequest);
         return ResponseEntity.status(201).body(documentSaved);
@@ -56,6 +59,7 @@ public class OrderController {
 
     @Operation(summary = "Get every order", description = "Creates and displays a list containing every order in the database")
     @GetMapping("/getAll")
+    @CircuitBreaker(name = "orders-service", fallbackMethod = "getAllOrderFallback")
     public ResponseEntity<List<OrderDto>> getAllOrders (){
 
         return ResponseEntity.ok(orderService.findAll());
@@ -79,4 +83,15 @@ public class OrderController {
         return ResponseEntity.status(201).body(documentVerified);
 
     }
+
+
+    private ResponseEntity<OrderDto> saveOrderFallback(OrderRequest orderRequest, Throwable throwable){
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+    }
+
+    private ResponseEntity<OrderDto> getAllOrderFallback(Throwable throwable){
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+    }
+
+
 }
